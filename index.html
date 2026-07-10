@@ -1,0 +1,3229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التعليم الاحترافي المتقدمة | Premium EdTech</title>
+    
+    <!-- خطوط عربية فاخرة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@300;400;500;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- مكتبة الأيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- مكتبات Firebase SDK v10 (Compat لسهولة العمل داخل ملف منفرد) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <style>
+        /* المتغيرات البصرية الخاصة بالتصميم العالمي الفاخر */
+        :root {
+            --primary-yellow: #D97706; /* أصفر ذهبي دافئ وعميق */
+            --primary-yellow-light: #FEF3C7; /* تدرج خلفية أصفر دافئ */
+            --primary-yellow-hover: #B45309;
+            --bg-white: #FFFFFF;
+            --bg-light: #F8FAFC; /* خلفية ناصعة ومريحة جداً */
+            --text-dark: #0F172A; /* رصاصي داكن فاخر جداً للكتابة */
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --shadow-premium: 0 4px 20px rgba(217, 119, 6, 0.04), 0 1px 2px rgba(0,0,0,0.01);
+            --transition: all 0.25s ease-in-out;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+            transition: var(--transition);
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* تخصيص مظهر شريط التمرير الدقيق */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* شاشة المصادقة (التسجيل والدخول) */
+        .auth-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-yellow-light) 0%, var(--bg-light) 100%);
+        }
+
+        .auth-container {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            padding: 40px 30px;
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 580px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .auth-brand {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-brand i {
+            font-size: 3rem;
+            color: var(--primary-yellow);
+            margin-bottom: 12px;
+            filter: drop-shadow(0 4px 6px rgba(217, 119, 6, 0.2));
+        }
+
+        .auth-brand h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .auth-brand p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .auth-toggle-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background-color: var(--bg-light);
+            padding: 5px;
+            border-radius: var(--radius-md);
+        }
+
+        .auth-toggle-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .auth-toggle-btn.active {
+            background-color: var(--bg-white);
+            color: var(--primary-yellow);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .role-card {
+            background-color: var(--bg-light);
+            border: 2px solid transparent;
+            border-radius: var(--radius-md);
+            padding: 15px 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .role-card i {
+            font-size: 1.6rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .role-card span {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .role-card.active {
+            background-color: var(--bg-white);
+            border-color: var(--primary-yellow);
+        }
+
+        .role-card.active i {
+            color: var(--primary-yellow);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 576px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .form-grid-full {
+                grid-column: span 2;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-yellow);
+            background-color: var(--bg-white);
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 24px;
+            background-color: var(--primary-yellow);
+            color: var(--bg-white);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-yellow-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-dark);
+            border: 1.5px solid var(--border-color);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-light);
+            transform: none;
+        }
+
+        /* نظام القائمة الجانبية والمحتوى */
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-white);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 90;
+            transform: translateX(0);
+        }
+
+        .sidebar-brand {
+            padding: 24px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-brand i {
+            color: var(--primary-yellow);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-item.active a, .sidebar-item a:hover {
+            background-color: var(--primary-yellow-light);
+            color: var(--primary-yellow);
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* غطاء الشاشة عند فتح القائمة الجانبية في الجوال */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(2px);
+            z-index: 85;
+            display: none;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .main-container {
+            margin-right: var(--sidebar-width);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .navbar {
+            height: 70px;
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 80;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-icon-btn {
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            border: none;
+            background: none;
+            padding: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-icon-btn:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-yellow);
+        }
+
+        .content-body {
+            padding: 24px;
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* فئات مخصصة لمنع تعارض التصميم المتجاوب لحالات عدم الموافقة */
+        .app-layout.unapproved-mode .sidebar {
+            display: none !important;
+        }
+        .app-layout.unapproved-mode .main-container {
+            margin-right: 0 !important;
+            width: 100% !important;
+        }
+        .app-layout.unapproved-mode .navbar {
+            display: none !important;
+        }
+
+        /* التصنيفات والتأثيرات للبطاقات */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-premium);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(217, 119, 6, 0.08);
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-top: 4px;
+            color: var(--text-dark);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background-color: var(--primary-yellow-light);
+            color: var(--primary-yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .chart-container {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-premium);
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .chart-canvas-wrapper {
+            position: relative;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .chart-canvas {
+            display: block;
+            width: 100%;
+            min-width: 500px;
+            height: 240px;
+        }
+
+        .data-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-premium);
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: var(--bg-light);
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        /* محاكي مشغل الفيديو المدمج واليوتيوب */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            background-color: #000;
+        }
+
+        .video-container iframe, .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* واجهة بيئة تأدية الاختبارات (Exam Mode Interface) */
+        .exam-mode-card {
+            background-color: var(--bg-white);
+            border: 2px solid var(--primary-yellow);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: var(--shadow-premium);
+            margin-top: 15px;
+        }
+
+        .exam-header {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 576px) {
+            .exam-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .exam-timer {
+            background-color: var(--primary-yellow-light);
+            color: var(--primary-yellow);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            align-self: flex-start;
+        }
+
+        .exam-progress {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .exam-question-box {
+            margin-bottom: 20px;
+        }
+
+        .exam-question-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .exam-options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .exam-option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--bg-light);
+            border: 1.5px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .exam-option-label:hover {
+            border-color: var(--primary-yellow);
+            background-color: var(--primary-yellow-light);
+        }
+
+        .exam-option-label input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-yellow);
+        }
+
+        .exam-option-label.selected-option {
+            border-color: var(--primary-yellow);
+            background-color: var(--primary-yellow-light);
+        }
+
+        .exam-footer {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .exam-footer .btn {
+            width: auto;
+            min-width: 100px;
+        }
+
+        /* الهيكل التنظيمي للمراسلات والبريد الداخلي */
+        .inbox-layout {
+            display: flex;
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            height: 550px;
+            box-shadow: var(--shadow-premium);
+            margin-top: 15px;
+        }
+
+        .inbox-sidebar {
+            width: 280px;
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-light);
+        }
+
+        .inbox-sidebar-header {
+            padding: 15px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+        }
+
+        .inbox-user-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .inbox-user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            background-color: var(--bg-white);
+            border: 1.5px solid transparent;
+            cursor: pointer;
+        }
+
+        .inbox-user-card:hover {
+            background-color: var(--primary-yellow-light);
+        }
+
+        .inbox-user-card.active {
+            background-color: var(--primary-yellow-light);
+            border-color: var(--primary-yellow);
+        }
+
+        .inbox-user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background-color: var(--primary-yellow);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .inbox-user-info {
+            flex: 1;
+            min-width: 0;
+            text-align: right;
+        }
+
+        .inbox-user-name {
+            font-weight: 700;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-dark);
+        }
+
+        .inbox-user-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .inbox-chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-white);
+        }
+
+        .inbox-chat-placeholder {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            gap: 10px;
+        }
+
+        .inbox-chat-placeholder i {
+            font-size: 3.5rem;
+            color: var(--border-color);
+        }
+
+        .chat-layout {
+            display: flex;
+            flex-direction: column;
+            height: 480px;
+            background-color: var(--bg-white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin-top: 15px;
+        }
+
+        .chat-history {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-bubble {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            line-height: 1.6;
+            font-size: 0.9rem;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .chat-bubble.sent {
+            align-self: flex-start;
+            background-color: var(--primary-yellow);
+            color: #ffffff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bubble.received {
+            align-self: flex-end;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .chat-bar {
+            display: flex;
+            padding: 12px;
+            background-color: var(--bg-white);
+            border-top: 1px solid var(--border-color);
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-yellow);
+        }
+
+        .chat-btn {
+            padding: 0 20px;
+            background-color: var(--primary-yellow);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .chat-btn:hover {
+            background-color: var(--primary-yellow-hover);
+        }
+
+        /* شاشات التحقق من الحساب */
+        .status-screen-container {
+            max-width: 580px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 40px 30px;
+            background-color: var(--bg-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-premium);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .status-screen-icon {
+            font-size: 4rem;
+            margin-bottom: 24px;
+        }
+
+        .status-screen-icon.pending {
+            color: var(--warning);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .status-screen-icon.rejected {
+            color: var(--danger);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        /* النوافذ والمنبثقات */
+        .modal {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            padding: 15px;
+        }
+
+        .modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .alert-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            color: var(--text-dark);
+            font-weight: 700;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            z-index: 200;
+            transform: translateY(100px);
+            opacity: 0;
+            font-size: 0.9rem;
+        }
+
+        .alert-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .alert-toast.success { background-color: var(--success); color: #ffffff; }
+        .alert-toast.danger { background-color: var(--danger); color: #ffffff; }
+        .alert-toast.warning { background-color: var(--warning); color: var(--text-dark); }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .badge-success { background-color: rgba(16, 185, 129, 0.12); color: var(--success); }
+        .badge-warning { background-color: rgba(245, 158, 11, 0.12); color: var(--warning); }
+        .badge-danger { background-color: rgba(239, 68, 68, 0.12); color: var(--danger); }
+        .badge-accent { background-color: var(--primary-yellow-light); color: var(--primary-yellow); }
+
+        .mobile-toggle-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        /* الاستعلامات المتجاوبة */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(100%);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+            }
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            .main-container {
+                margin-right: 0;
+                width: 100%;
+            }
+            .mobile-toggle-btn {
+                display: block;
+            }
+            .inbox-layout {
+                flex-direction: column;
+                height: 650px;
+            }
+            .inbox-sidebar {
+                width: 100%;
+                height: 200px;
+                border-left: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toast" class="alert-toast"></div>
+
+    <!-- غطاء الشاشة للقائمة الجانبية في الجوال -->
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="App.toggleSidebar()"></div>
+
+    <!-- بوابة المصادقة والحسابات الفاخرة -->
+    <div id="auth-screen" class="auth-wrapper">
+        <div class="auth-container">
+            <div class="auth-brand">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h1>بوابة التعليم الاحترافي</h1>
+                <p>منصة الجيل القادم لتعلم ذكي ومستدام</p>
+            </div>
+
+            <div class="auth-toggle-group">
+                <button id="btn-login-tab" class="auth-toggle-btn active" onclick="AuthPage.switchTab('login')">تسجيل الدخول</button>
+                <button id="btn-register-tab" class="auth-toggle-btn" onclick="AuthPage.switchTab('register')">إنشاء حساب جديد</button>
+            </div>
+
+            <!-- نموذج تسجيل الدخول المشترك -->
+            <form id="login-form">
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="login-email" class="form-control" placeholder="أدخل البريد الإلكتروني" required>
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="أدخل كلمة المرور" required>
+                </div>
+                <div class="form-group" style="text-align:center; margin-top:-10px; margin-bottom:20px;">
+                    <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.5;">
+                        معلم أول: teacher@edtech.com (123) <br> طالب أول: student@edtech.com (123) <br> ولي أمر أول: parent@edtech.com (123)
+                    </p>
+                </div>
+                <button type="submit" class="btn"><i class="fa-solid fa-arrow-right-to-bracket"></i> دخول إلى المنصة</button>
+            </form>
+
+            <!-- نموذج إنشاء الحساب متعدد الصلاحيات -->
+            <form id="register-form" style="display: none;">
+                <div class="role-selector">
+                    <div id="role-teacher" class="role-card active" onclick="AuthPage.selectRole('teacher')">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                        <span>معلم</span>
+                    </div>
+                    <div id="role-student" class="role-card" onclick="AuthPage.selectRole('student')">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>طالب</span>
+                    </div>
+                    <div id="role-parent" class="role-card" onclick="AuthPage.selectRole('parent')">
+                        <i class="fa-solid fa-people-roof"></i>
+                        <span>ولي أمر</span>
+                    </div>
+                </div>
+
+                <!-- الحقول الديناميكية حسب الاختيار -->
+                <div id="dynamic-fields" class="form-grid">
+                    <!-- سيتم حقن الحقول هنا بواسطة جافا سكريبت -->
+                </div>
+
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="reg-password" class="form-control" placeholder="أدخل كلمة المرور (6 خانات فأكثر)" required>
+                </div>
+
+                <button type="submit" class="btn"><i class="fa-solid fa-user-plus"></i> إتمام التسجيل</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- واجهة المنصة السحابية والتنقل الداخلي -->
+    <div id="app-screen" class="app-layout" style="display: none;">
+        <!-- القائمة الجانبية المريحة -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-shapes"></i>
+                <span>بوابة التعليم الاحترافي</span>
+            </div>
+            <ul class="sidebar-menu" id="sidebar-menu"></ul>
+            <div class="sidebar-footer">
+                <div>
+                    <h4 id="sidebar-user-name" style="font-size:0.95rem; font-weight:800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">الاسم الثنائي</h4>
+                    <span id="sidebar-user-role" class="badge badge-accent" style="margin-top:6px;">الدور</span>
+                </div>
+                <button class="btn btn-secondary" onclick="App.logout()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> خروج
+                </button>
+            </div>
+        </aside>
+
+        <!-- المحتوى المركزي الفسيح -->
+        <main class="main-container">
+            <header class="navbar">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <button class="mobile-toggle-btn" onclick="App.toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h2 id="view-header-title" style="font-size:1.2rem; font-weight:800;">الرئيسية</h2>
+                </div>
+                <div class="navbar-actions">
+                    <button class="nav-icon-btn" onclick="App.openNotificationsModal()"><i class="fa-solid fa-bell"></i></button>
+                </div>
+            </header>
+
+            <div class="content-body" id="app-rendered-view">
+                <!-- المحتوى الديناميكي للوحات التحكم -->
+            </div>
+        </main>
+    </div>
+
+    <!-- نافذة الإشعارات السحابية -->
+    <div class="modal" id="notifications-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-bell"></i> التنبيهات والإعلانات الرسمية</h3>
+                <button class="modal-close" onclick="App.closeModal('notifications-modal')">&times;</button>
+            </div>
+            <div class="modal-body" id="notifications-list-container"></div>
+            <div class="modal-footer">
+                <button class="btn" onclick="App.closeModal('notifications-modal')">حسناً</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة النماذج العامة المنبثقة -->
+    <div class="modal" id="generic-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="generic-modal-title">تحديث الإعدادات</h3>
+                <button class="modal-close" onclick="App.closeModal('generic-modal')">&times;</button>
+            </div>
+            <div class="modal-body" id="generic-modal-body"></div>
+            <div class="modal-footer" id="generic-modal-footer"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. نظام جلب ومزامنة قواعد البيانات (سحابي / محلي)
+        // ==========================================
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC_3jULryF2V5c76_zPTRDMClRjj5BeUE8",
+            authDomain: "mansati-54357.firebaseapp.com",
+            databaseURL: "https://mansati-54357-default-rtdb.firebaseio.com",
+            projectId: "mansati-54357",
+            storageBucket: "mansati-54357.firebasestorage.app",
+            messagingSenderId: "300783042888",
+            appId: "1:300783042888:web:6645ba4e68fd794f24737d",
+            measurementId: "G-HMNHMX043F"
+        };
+
+        const DBService = {
+            isFirebase: false,
+            db: null,
+
+            async init() {
+                const isConfigured = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("YOUR_");
+                
+                if (isConfigured) {
+                    try {
+                        firebase.initializeApp(firebaseConfig);
+                        this.db = firebase.database();
+                        this.isFirebase = true;
+                        console.log("Firebase Connected Successfully.");
+                    } catch (e) {
+                        console.warn("Firebase Init Failed, falling back to LocalStorage:", e);
+                        this.isFirebase = false;
+                    }
+                } else {
+                    console.info("Using LocalStorage offline mode. Add real Firebase API keys for cloud syncing.");
+                    this.isFirebase = false;
+                }
+
+                await this.seedInitialDatabase();
+            },
+
+            async get(path) {
+                if (this.isFirebase) {
+                    try {
+                        const snapshot = await this.db.ref(path).once('value');
+                        const data = snapshot.val();
+                        if (data) {
+                            localStorage.setItem('edtech_' + path, JSON.stringify(data));
+                            return data;
+                        }
+                    } catch (e) {
+                        console.error("Firebase read error, falling back to LocalStorage:", e);
+                    }
+                }
+                return JSON.parse(localStorage.getItem('edtech_' + path)) || [];
+            },
+
+            async set(path, data) {
+                localStorage.setItem('edtech_' + path, JSON.stringify(data));
+                if (this.isFirebase) {
+                    try {
+                        await this.db.ref(path).set(data);
+                    } catch (e) {
+                        console.error("Firebase write error:", e);
+                    }
+                }
+            },
+
+            async seedInitialDatabase() {
+                const users = await this.get('users');
+                if (!users || users.length === 0) {
+                    const defaultUsers = [
+                        // تم تمييز معلمين منفصلين لإيضاح وضمان ميزة خصوصية وعزل البيانات
+                        { id: 'usr_t1', email: 'teacher@edtech.com', password: '123', name: 'أ. حسين نقد', role: 'teacher', phone: '+97150000000', specialization: 'الرياضيات المتقدمة', school: 'مدارس المستقبل النموذجية', status: 'approved' },
+                        { id: 'usr_t2', email: 'sara@edtech.com', password: '123', name: 'أ. سارة أحمد', role: 'teacher', phone: '+97152222222', specialization: 'الفيزياء الكونية', school: 'أكاديمية العلوم التطبيقية', status: 'approved' },
+                        
+                        // ربط الطلاب بالمعلم المناسب
+                        { id: 'usr_s1', email: 'student@edtech.com', password: '123', name: 'طارق المحسني', role: 'student', phone: '+971570000000', studentId: 'S-2026', grade: 'الصف العاشر', progress: 15, status: 'approved', teacherId: 'usr_t1' },
+                        { id: 'usr_s2', email: 'raed@edtech.com', password: '123', name: 'رائد اليافعي', role: 'student', phone: '+97159999999', studentId: 'S-2027', grade: 'الصف العاشر علمي', progress: 40, status: 'approved', teacherId: 'usr_t2' },
+                        
+                        // ربط أولياء الأمور
+                        { id: 'usr_p1', email: 'parent@edtech.com', password: '123', name: 'صدام حسين (أبو صدام)', role: 'parent', phone: '+9715000000', studentId: 'usr_s1', status: 'approved', teacherId: 'usr_t1' }
+                    ];
+                    await this.set('users', defaultUsers);
+                }
+
+                const lessons = await this.get('lessons');
+                if (!lessons || lessons.length === 0) {
+                    await this.set('lessons', [
+                        { id: 'les_1', title: 'مقدمة في الدوال الجبرية والمعادلات التفاضلية', content: 'الدالة هي علاقة تربط كل عنصر من عناصر المجموعة الأولى بعنصر واحد فقط من عناصر المجموعة الثانية. في هذا الدرس، نستكشف أنواع الدوال ورسمها البياني والتمثيلي.', videoType: 'youtube', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', teacherId: 'usr_t1' },
+                        { id: 'les_2', title: 'ميكانيكا الكم والنسبية العامة لأينشتاين', content: 'في هذا الدرس الفيزيائي المتقدم، نستعرض أسس ومبادئ ميكانيكا الكم والنسبية العامة ومفهوم تمدد الزمان الفضائي بطريقة رياضية تطبيقية.', videoType: 'youtube', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', teacherId: 'usr_t2' }
+                    ]);
+                }
+
+                const assignments = await this.get('assignments');
+                if (!assignments || assignments.length === 0) {
+                    await this.set('assignments', [
+                        {
+                            id: 'assign_1',
+                            title: 'واجب الدوال الرياضية الأول',
+                            duration: 5,
+                            teacherId: 'usr_t1',
+                            questions: [
+                                { qId: 1, text: 'أي مما يلي يمثل دالة خطية صحيحة؟', options: ['y = x^2', 'y = mx + b', 'y = 1/x', 'y = sin(x)'], correct: 'y = mx + b', points: 10 }
+                            ]
+                        },
+                        {
+                            id: 'assign_2',
+                            title: 'تقييم ميكانيكا الكم والنسبية',
+                            duration: 10,
+                            teacherId: 'usr_t2',
+                            questions: [
+                                { qId: 1, text: 'ما هي السرعة القصوى الثابتة في الكون الفيزيائي؟', options: ['سرعة الصوت', 'سرعة الضوء', 'سرعة الجاذبية الأرضية', 'سرعة الرياح القصوى'], correct: 'سرعة الضوء', points: 10 }
+                            ]
+                        }
+                    ]);
+                }
+
+                const attendance = await this.get('attendance');
+                if (!attendance || attendance.length === 0) {
+                    await this.set('attendance', [
+                        { date: '2026-07-06', studentId: 'usr_s1', status: 'present' },
+                        { date: '2026-07-07', studentId: 'usr_s1', status: 'present' },
+                        { date: '2026-07-08', studentId: 'usr_s1', status: 'absent' }
+                    ]);
+                }
+            }
+        };
+
+
+        // ==========================================
+        // 2. إدارة وتحديثات واجهات المصادقة والتسجيل
+        // ==========================================
+
+        const AppState = {
+            currentUser: null,
+            currentRoute: 'home',
+
+            getCurrentUser() {
+                if (!this.currentUser) {
+                    this.currentUser = JSON.parse(sessionStorage.getItem('ed_logged_user'));
+                }
+                return this.currentUser;
+            },
+            setCurrentUser(user) {
+                this.currentUser = user;
+                if (user) {
+                    sessionStorage.setItem('ed_logged_user', JSON.stringify(user));
+                } else {
+                    sessionStorage.removeItem('ed_logged_user');
+                }
+            },
+            async syncCurrentUser() {
+                const localUser = JSON.parse(sessionStorage.getItem('ed_logged_user'));
+                if (localUser) {
+                    const users = await DBService.get('users');
+                    const matched = users.find(u => u.id === localUser.id);
+                    if (matched) {
+                        this.setCurrentUser(matched);
+                        return matched;
+                    }
+                }
+                return localUser;
+            }
+        };
+
+        const AuthPage = {
+            activeTab: 'login',
+            selectedRole: 'teacher',
+
+            switchTab(tab) {
+                this.activeTab = tab;
+                document.getElementById('btn-login-tab').className = `auth-toggle-btn ${tab === 'login' ? 'active' : ''}`;
+                document.getElementById('btn-register-tab').className = `auth-toggle-btn ${tab === 'register' ? 'active' : ''}`;
+
+                if (tab === 'login') {
+                    document.getElementById('login-form').style.display = 'block';
+                    document.getElementById('register-form').style.display = 'none';
+                } else {
+                    document.getElementById('login-form').style.display = 'none';
+                    document.getElementById('register-form').style.display = 'block';
+                    this.selectRole(this.selectedRole);
+                }
+            },
+
+            async selectRole(role) {
+                this.selectedRole = role;
+                document.querySelectorAll('.role-card').forEach(el => el.classList.remove('active'));
+                const card = document.getElementById(`role-${role}`);
+                if (card) card.classList.add('active');
+                await this.renderDynamicFields(role);
+            },
+
+            async renderDynamicFields(role) {
+                const container = document.getElementById('dynamic-fields');
+                if (!container) return;
+                container.innerHTML = '';
+
+                const users = await DBService.get('users');
+                const teachers = users.filter(u => u.role === 'teacher');
+
+                if (role === 'teacher') {
+                    container.innerHTML = `
+                        <div class="form-group">
+                            <label>الاسم الكامل</label>
+                            <input type="text" id="reg-name" class="form-control" placeholder="أدخل الاسم الثنائي" required>
+                        </div>
+                        <div class="form-group">
+                            <label>البريد الإلكتروني</label>
+                            <input type="email" id="reg-email" class="form-control" placeholder="name@school.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>رقم الهاتف</label>
+                            <input type="tel" id="reg-phone" class="form-control" placeholder="009715xxxxxxx" required>
+                        </div>
+                        <div class="form-group">
+                            <label>التخصص الأكاديمي</label>
+                            <input type="text" id="reg-spec" class="form-control" placeholder="مثال: الرياضيات المتقدمة" required>
+                        </div>
+                        <div class="form-group form-grid-full">
+                            <label>اسم المدرسة</label>
+                            <input type="text" id="reg-school" class="form-control" placeholder="مثال: مدارس المستقبل النموذجية" required>
+                        </div>
+                    `;
+                } else if (role === 'student') {
+                    let teacherOptions = '';
+                    teachers.forEach(t => {
+                        teacherOptions += `<option value="${t.id}">${t.name} (${t.specialization || 'معلم المشرف'})</option>`;
+                    });
+
+                    container.innerHTML = `
+                        <div class="form-group">
+                            <label>اسم الطالب</label>
+                            <input type="text" id="reg-name" class="form-control" placeholder="أدخل اسم الطالب الثنائي" required>
+                        </div>
+                        <div class="form-group">
+                            <label>الرقم الطلابي</label>
+                            <input type="text" id="reg-student-id" class="form-control" placeholder="مثال: S-1002" required>
+                        </div>
+                        <div class="form-group">
+                            <label>الصف الدراسي</label>
+                            <input type="text" id="reg-grade" class="form-control" placeholder="مثال: الصف العاشر" required>
+                        </div>
+                        <div class="form-group">
+                            <label>البريد الإلكتروني أو الهاتف</label>
+                            <input type="text" id="reg-email" class="form-control" placeholder="name@domain.com" required>
+                        </div>
+                        <div class="form-group form-grid-full">
+                            <label>اختر المعلم المشرف (لضمان خصوصيتك)</label>
+                            <select id="reg-teacher-select" class="form-control" required>
+                                ${teacherOptions || '<option value="">لا يوجد معلمون مسجلون حالياً</option>'}
+                            </select>
+                        </div>
+                    `;
+                } else if (role === 'parent') {
+                    const students = users.filter(u => u.role === 'student' && u.status === 'approved');
+                    
+                    let studentOptions = '';
+                    students.forEach(s => {
+                        studentOptions += `<option value="${s.id}">${s.name} (${s.studentId || s.email})</option>`;
+                    });
+
+                    container.innerHTML = `
+                        <div class="form-group">
+                            <label>اسم ولي الأمر</label>
+                            <input type="text" id="reg-name" class="form-control" placeholder="أدخل الاسم واللقب" required>
+                        </div>
+                        <div class="form-group">
+                            <label>رقم الهاتف</label>
+                            <input type="tel" id="reg-phone" class="form-control" placeholder="009715xxxxxxx" required>
+                        </div>
+                        <div class="form-group">
+                            <label>البريد الإلكتروني</label>
+                            <input type="email" id="reg-email" class="form-control" placeholder="parent@domain.com" required>
+                        </div>
+                        <div class="form-group form-grid-full">
+                            <label>ربط حساب الأبناء</label>
+                            <select id="reg-parent-child" class="form-control" required>
+                                ${studentOptions || '<option value="">لا يوجد طلاب مقبولين بالمنصة حالياً</option>'}
+                            </select>
+                        </div>
+                    `;
+                }
+            }
+        };
+
+
+        // ==========================================
+        // 3. إدارة التنقل وهيكلة واجهة المستخدم (App)
+        // ==========================================
+
+        const App = {
+            activeChatUserId: null,
+            examTimerInterval: null,
+
+            async init() {
+                await DBService.init();
+
+                const user = await AppState.syncCurrentUser();
+                if (user) {
+                    this.launchDashboard(user);
+                } else {
+                    this.showAuthScreen();
+                }
+
+                // مستمعي النماذج
+                document.getElementById('login-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+
+                document.getElementById('register-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleRegistration();
+                });
+
+                window.addEventListener('resize', () => {
+                    if (document.getElementById('app-screen').style.display === 'flex') {
+                        if (AppState.currentRoute === 'home' || AppState.currentRoute === 'reports') {
+                            this.renderActiveView();
+                        }
+                    }
+                });
+            },
+
+            showAuthScreen() {
+                document.getElementById('auth-screen').style.display = 'flex';
+                document.getElementById('app-screen').style.display = 'none';
+            },
+
+            async handleLogin() {
+                const email = document.getElementById('login-email').value.trim();
+                const pass = document.getElementById('login-password').value;
+
+                const users = await DBService.get('users');
+                const matched = users.find(u => u.email === email && u.password === pass);
+
+                if (matched) {
+                    AppState.setCurrentUser(matched);
+                    this.showToast('مرحباً بك في منصة التعليم الاحترافي!', 'success');
+                    this.launchDashboard(matched);
+                } else {
+                    this.showToast('بيانات الدخول غير صحيحة، يرجى المحاولة ثانية.', 'danger');
+                }
+            },
+
+            async handleRegistration() {
+                const role = AuthPage.selectedRole;
+                const password = document.getElementById('reg-password').value;
+
+                if (password.length < 6) {
+                    this.showToast('يجب أن تكون كلمة المرور 6 خانات فأكثر.', 'warning');
+                    return;
+                }
+
+                const email = document.getElementById('reg-email').value.trim();
+                const name = document.getElementById('reg-name').value.trim();
+
+                const users = await DBService.get('users');
+                if (users.some(u => u.email === email)) {
+                    this.showToast('البريد الإلكتروني هذا مسجل مسبقاً بالمنصة.', 'warning');
+                    return;
+                }
+
+                const newUser = {
+                    id: 'usr_' + Date.now(),
+                    name,
+                    email,
+                    password,
+                    role,
+                    phone: document.getElementById('reg-phone') ? document.getElementById('reg-phone').value.trim() : '',
+                    status: 'approved' // تم ضبطه ليدخل للوحة مباشرة تلبية لرغبة توجيه المستخدم الفوري
+                };
+
+                if (role === 'teacher') {
+                    newUser.specialization = document.getElementById('reg-spec') ? document.getElementById('reg-spec').value.trim() : '';
+                    newUser.school = document.getElementById('reg-school') ? document.getElementById('reg-school').value.trim() : '';
+                    newUser.status = 'approved';
+                } else if (role === 'student') {
+                    newUser.studentId = document.getElementById('reg-student-id') ? document.getElementById('reg-student-id').value.trim() : '';
+                    newUser.grade = document.getElementById('reg-grade') ? document.getElementById('reg-grade').value.trim() : '';
+                    newUser.teacherId = document.getElementById('reg-teacher-select') ? document.getElementById('reg-teacher-select').value : '';
+                    newUser.progress = 0;
+                } else if (role === 'parent') {
+                    newUser.studentId = document.getElementById('reg-parent-child') ? document.getElementById('reg-parent-child').value : '';
+                    const linkedStudent = users.find(u => u.id === newUser.studentId);
+                    newUser.teacherId = linkedStudent ? linkedStudent.teacherId : '';
+                }
+
+                users.push(newUser);
+                await DBService.set('users', users);
+
+                // ربط الطالب بحساب والده
+                if (role === 'parent' && newUser.studentId) {
+                    const sIdx = users.findIndex(u => u.id === newUser.studentId);
+                    if (sIdx !== -1) {
+                        users[sIdx].parentId = newUser.id;
+                        await DBService.set('users', users);
+                    }
+                }
+
+                this.showToast('تم إنشاء الحساب بنجاح! جاري توجيهك مباشرة للوحة التحكم لضمان خصوصيتك.', 'success');
+                AppState.setCurrentUser(newUser);
+                this.launchDashboard(newUser);
+            },
+
+            launchDashboard(user) {
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('app-screen').style.display = 'flex';
+
+                const nameElement = document.getElementById('sidebar-user-name');
+                if (nameElement) nameElement.textContent = user.name;
+                
+                let roleStr = 'معلم ومحاضر';
+                if (user.role === 'student') roleStr = 'طالب مسجل';
+                if (user.role === 'parent') roleStr = 'ولي أمر';
+                
+                const roleElement = document.getElementById('sidebar-user-role');
+                if (roleElement) roleElement.textContent = roleStr;
+
+                const appScreen = document.getElementById('app-screen');
+
+                // التحقق من حالة الموافقة لضمان الخصوصية والتحقق الفعال
+                if (user.role === 'student' && user.status !== 'approved') {
+                    if (appScreen) appScreen.classList.add('unapproved-mode');
+                    this.renderApprovalStatusScreen(user);
+                    return;
+                } else {
+                    if (appScreen) appScreen.classList.remove('unapproved-mode');
+                }
+
+                this.renderSidebarMenu(user.role);
+                this.navigateTo('home');
+            },
+
+            async renderApprovalStatusScreen(student) {
+                const view = document.getElementById('app-rendered-view');
+                if (!view) return;
+
+                const users = await DBService.get('users');
+                const teacher = users.find(u => u.id === student.teacherId) || { name: 'المعلم المشرف', phone: '97150000000' };
+                const cleanPhone = teacher.phone.replace(/[^0-9]/g, '');
+
+                if (student.status === 'pending') {
+                    view.innerHTML = `
+                        <div class="status-screen-container">
+                            <div class="status-screen-icon pending">
+                                <i class="fa-solid fa-user-clock"></i>
+                            </div>
+                            <h2 style="font-weight: 800; margin-bottom: 12px; font-size: 1.4rem;">حسابك بانتظار مراجعة معلمك المشرف</h2>
+                            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px;">
+                                مرحباً <strong>${student.name}</strong>، تم إسناد حسابك للمراجعة عند المعلم المشرف <strong>(${teacher.name})</strong> لتفعيل خدمات المنصة. يرجى الانتظار والتحديث.
+                            </p>
+                            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                                <button class="btn" onclick="window.location.reload()" style="max-width: 200px; background-color: var(--success);">
+                                    <i class="fa-solid fa-rotate"></i> تحديث حالة الحساب
+                                </button>
+                                <button class="btn btn-secondary" onclick="App.logout()" style="max-width: 200px;">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else if (student.status === 'rejected') {
+                    const encodedMsg = encodeURIComponent(`مرحباً أستاذ، لقد تم رفض طلبي في المنصة وأود استكمال الإجراءات المتبقية لقَبول حسابي الطالب (${student.name}).`);
+                    const waUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
+
+                    view.innerHTML = `
+                        <div class="status-screen-container">
+                            <div class="status-screen-icon rejected">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </div>
+                            <h2 style="font-weight: 800; margin-bottom: 12px; font-size: 1.4rem; color: var(--danger);">لم يتم قبول حسابك حالياً</h2>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 25px;">
+                                عذراً، لم تكتمل متطلبات قَبول حسابك. يرجى التواصل مع المعلم المشرف <strong>(${teacher.name})</strong> لتثبيت بياناتك عبر الواتساب، أو إعادة التقديم بالأسفل.
+                            </p>
+                            
+                            <div style="margin-bottom: 25px;">
+                                <a href="${waUrl}" target="_blank" class="btn" style="background-color: #25D366; box-shadow: none; display: inline-flex; width: auto; font-size: 0.9rem;">
+                                    <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> مراسلة معلمك عبر واتساب
+                                </a>
+                            </div>
+
+                            <div style="border-top: 1px solid var(--border-color); padding-top: 25px; text-align: right;">
+                                <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 15px;">نموذج تعديل البيانات وإعادة التقديم:</h4>
+                                <div class="form-group">
+                                    <label>الاسم الكامل</label>
+                                    <input type="text" id="resubmit-name" class="form-control" value="${student.name}">
+                                </div>
+                                <div class="form-group">
+                                    <label>الرقم الدراسي</label>
+                                    <input type="text" id="resubmit-student-id" class="form-control" value="${student.studentId || ''}">
+                                </div>
+                                <div class="form-group">
+                                    <label>الصف الدراسي</label>
+                                    <input type="text" id="resubmit-grade" class="form-control" value="${student.grade || ''}">
+                                </div>
+                                <div class="form-group">
+                                    <label>البريد الإلكتروني</label>
+                                    <input type="email" id="resubmit-email" class="form-control" value="${student.email}">
+                                </div>
+                                <button class="btn" onclick="App.submitResubmission('${student.id}')" style="margin-top: 10px;">
+                                    <i class="fa-solid fa-paper-plane"></i> تحديث البيانات وإعادة إرسال الطلب
+                                </button>
+                            </div>
+
+                            <button class="btn btn-secondary" onclick="App.logout()" style="max-width: 200px; margin-top: 20px;">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج
+                            </button>
+                        </div>
+                    `;
+                }
+            },
+
+            async submitResubmission(studentId) {
+                const name = document.getElementById('resubmit-name').value.trim();
+                const studentNum = document.getElementById('resubmit-student-id').value.trim();
+                const grade = document.getElementById('resubmit-grade').value.trim();
+                const email = document.getElementById('resubmit-email').value.trim();
+
+                if (!name || !studentNum || !grade || !email) {
+                    this.showToast('يرجى تعبئة كافة حقول النموذج.', 'danger');
+                    return;
+                }
+
+                const users = await DBService.get('users');
+                const sIdx = users.findIndex(u => u.id === studentId);
+                if (sIdx !== -1) {
+                    users[sIdx].name = name;
+                    users[sIdx].studentId = studentNum;
+                    users[sIdx].grade = grade;
+                    users[sIdx].email = email;
+                    users[sIdx].status = 'pending';
+                    
+                    await DBService.set('users', users);
+                    AppState.setCurrentUser(users[sIdx]);
+
+                    this.showToast('تم تعديل بياناتك وإعادة إرسال طلب المراجعة بنجاح.', 'success');
+                    this.launchDashboard(users[sIdx]);
+                }
+            },
+
+            logout() {
+                AppState.setCurrentUser(null);
+                this.showAuthScreen();
+                this.showToast('تم الخروج الآمن من النظام.', 'warning');
+            },
+
+            toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                if (sidebar) sidebar.classList.toggle('mobile-open');
+                if (overlay) overlay.classList.toggle('active');
+            },
+
+            renderSidebarMenu(role) {
+                const menu = document.getElementById('sidebar-menu');
+                if (!menu) return;
+                menu.innerHTML = '';
+
+                const routes = {
+                    teacher: [
+                        { route: 'home', icon: 'fa-gauge', text: 'الإحصائيات والبيانات' },
+                        { route: 'students', icon: 'fa-users', text: 'إدارة الطلاب ومتابعتهم' },
+                        { route: 'lessons', icon: 'fa-book-open', text: 'المناهج والدروس' },
+                        { route: 'assignments', icon: 'fa-file-signature', text: 'الواجبات والاختبارات' },
+                        { route: 'grades', icon: 'fa-award', text: 'رصد الدرجات والتصحيح' },
+                        { route: 'messages', icon: 'fa-comments', text: 'صندوق المراسلات' }
+                    ],
+                    student: [
+                        { route: 'home', icon: 'fa-house', text: 'الرئيسية ونسبة الإنجاز' },
+                        { route: 'lessons', icon: 'fa-book-open', text: 'الدروس والشروحات' },
+                        { route: 'assignments', icon: 'fa-file-signature', text: 'الواجبات والاختبارات' },
+                        { route: 'grades', icon: 'fa-award', text: 'سجل درجاتي' },
+                        { route: 'messages', icon: 'fa-comments', text: 'الاتصال بالمعلم' }
+                    ],
+                    parent: [
+                        { route: 'home', icon: 'fa-people-roof', text: 'مراقبة أداء الأبناء' },
+                        { route: 'reports', icon: 'fa-file-invoice', text: 'التقرير والدرجات' },
+                        { route: 'attendance', icon: 'fa-calendar-check', text: 'الحضور والغياب' },
+                        { route: 'messages', icon: 'fa-comments', text: 'الاتصال بالمعلم' }
+                    ]
+                };
+
+                routes[role].forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = `sidebar-item ${AppState.currentRoute === item.route ? 'active' : ''}`;
+                    li.innerHTML = `
+                        <a href="#" onclick="App.navigateTo('${item.route}'); return false;">
+                            <i class="fa-solid ${item.icon}"></i>
+                            <span>${item.text}</span>
+                        </a>
+                    `;
+                    menu.appendChild(li);
+                });
+            },
+
+            navigateTo(route) {
+                if (this.examTimerInterval) {
+                    clearInterval(this.examTimerInterval);
+                    this.examTimerInterval = null;
+                }
+
+                const user = AppState.getCurrentUser();
+                if (user && user.role === 'student' && user.status !== 'approved') {
+                    this.renderApprovalStatusScreen(user);
+                    return;
+                }
+
+                AppState.currentRoute = route;
+                
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                if (sidebar) sidebar.classList.remove('mobile-open');
+                if (overlay) overlay.classList.remove('active');
+
+                this.renderSidebarMenu(user.role);
+                this.renderActiveView();
+            },
+
+            showToast(message, type = 'success') {
+                const toast = document.getElementById('toast');
+                if (!toast) return;
+                toast.textContent = message;
+                toast.className = `alert-toast show ${type}`;
+                setTimeout(() => toast.classList.remove('show'), 3500);
+            },
+
+            openModal(modalId) {
+                const m = document.getElementById(modalId);
+                if (m) m.classList.add('open');
+            },
+
+            closeModal(modalId) {
+                const m = document.getElementById(modalId);
+                if (m) m.classList.remove('open');
+            },
+
+
+            // ==========================================
+            // 4. نظام توجيه وحقن اللوحات الذكية
+            // ==========================================
+
+            async renderActiveView() {
+                const user = AppState.getCurrentUser();
+                const view = document.getElementById('app-rendered-view');
+                const title = document.getElementById('view-header-title');
+                if (!view) return;
+
+                // المعلم
+                if (user.role === 'teacher') {
+                    if (AppState.currentRoute === 'home') {
+                        if (title) title.textContent = 'لوحة الإشراف والمتابعة';
+                        this.renderTeacherHome(view);
+                    } else if (AppState.currentRoute === 'students') {
+                        if (title) title.textContent = 'إدارة ومتابعة الطلاب المباشرين';
+                        this.renderTeacherStudents(view);
+                    } else if (AppState.currentRoute === 'lessons') {
+                        if (title) title.textContent = 'الدروس والمناهج المعتمدة';
+                        this.renderTeacherLessons(view);
+                    } else if (AppState.currentRoute === 'assignments') {
+                        if (title) title.textContent = 'بنك الواجبات والاختبارات الخاصة بك';
+                        this.renderTeacherAssignments(view);
+                    } else if (AppState.currentRoute === 'grades') {
+                        if (title) title.textContent = 'رصد ودرجات واجبات طلابك';
+                        this.renderTeacherGrading(view);
+                    } else if (AppState.currentRoute === 'messages') {
+                        if (title) title.textContent = 'صندوق مراسلات طلابك وأولياء أمورهم';
+                        this.renderTeacherMessages(view);
+                    }
+                }
+
+                // الطالب
+                if (user.role === 'student') {
+                    if (AppState.currentRoute === 'home') {
+                        if (title) title.textContent = 'اللوحة الشخصية ومؤشر النجاح';
+                        this.renderStudentHome(view, user);
+                    } else if (AppState.currentRoute === 'lessons') {
+                        if (title) title.textContent = 'الدروس والوسائط المقررة';
+                        this.renderStudentLessons(view);
+                    } else if (AppState.currentRoute === 'assignments') {
+                        if (title) title.textContent = 'المهام الدراسية الواجبة';
+                        this.renderStudentAssignments(view, user);
+                    } else if (AppState.currentRoute === 'grades') {
+                        if (title) title.textContent = 'لوحة التميز ودرجاتي';
+                        this.renderStudentGrades(view, user);
+                    } else if (AppState.currentRoute === 'messages') {
+                        if (title) title.textContent = 'مكتب الاتصال مع معلمك المشرف';
+                        this.renderStudentMessages(view, user);
+                    }
+                }
+
+                // ولي الأمر
+                if (user.role === 'parent') {
+                    const student = (await DBService.get('users')).find(u => u.id === user.studentId);
+                    if (!student) {
+                        view.innerHTML = '<p style="text-align:center; padding:40px; color:var(--text-muted);">عذراً، لم يتم ربط حساب أي ابن بحسابكم.</p>';
+                        return;
+                    }
+
+                    if (AppState.currentRoute === 'home') {
+                        if (title) title.textContent = `متابعة أداء الطالب: ${student.name}`;
+                        this.renderParentHome(view, student);
+                    } else if (AppState.currentRoute === 'reports') {
+                        if (title) title.textContent = `التقرير والدرجات لـ ${student.name}`;
+                        this.renderParentReports(view, student);
+                    } else if (AppState.currentRoute === 'attendance') {
+                        if (title) title.textContent = `سجل الغياب والحضور لـ ${student.name}`;
+                        this.renderParentAttendance(view, student);
+                    } else if (AppState.currentRoute === 'messages') {
+                        if (title) title.textContent = 'غرفة المراسلة الفورية مع المعلم';
+                        this.renderParentMessages(view, user);
+                    }
+                }
+            },
+
+
+            // ==========================================
+            // 5. واجهات لوحة التحكم الخاصة بالمعلم
+            // ==========================================
+
+            async renderTeacherHome(view) {
+                const teacher = AppState.getCurrentUser();
+                const users = await DBService.get('users');
+                
+                // عزل كامل للبيانات والإحصائيات
+                const students = users.filter(u => u.role === 'student' && u.teacherId === teacher.id && u.status === 'approved');
+                const lessons = (await DBService.get('lessons')).filter(l => l.teacherId === teacher.id);
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === teacher.id);
+
+                view.innerHTML = `
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">طلابك النشطين</span>
+                                <div class="stat-value">${students.length}</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">مناهجك الخاصة</span>
+                                <div class="stat-value">${lessons.length}</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-book-open"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">اختباراتك المنجزة</span>
+                                <div class="stat-value">${assigns.length}</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:20px; display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn" style="width:auto;" onclick="App.openCreateAnnouncementModal()">
+                            <i class="fa-solid fa-bullhorn"></i> إرسال إعلان عام لطلابك
+                        </button>
+                    </div>
+
+                    <div class="chart-container">
+                        <h4 style="margin-bottom:15px; font-size:1rem; font-weight:800;">تتبع مستويات الاستيعاب لدى طلابك</h4>
+                        <div class="chart-canvas-wrapper">
+                            <canvas id="teacher-home-canvas" class="chart-canvas" width="600" height="240"></canvas>
+                        </div>
+                    </div>
+                `;
+
+                setTimeout(() => {
+                    this.drawCanvasChart('teacher-home-canvas', ['الوحدة الأولى', 'الوحدة الثانية', 'الوحدة الثالثة', 'الاختبار النصفي'], [78, 86, 81, 94], '#D97706');
+                }, 50);
+            },
+
+            openCreateAnnouncementModal() {
+                const body = document.getElementById('generic-modal-body');
+                const footer = document.getElementById('generic-modal-footer');
+                if (!body || !footer) return;
+                document.getElementById('generic-modal-title').textContent = 'إرسال إعلان عام للطلاب وأولياء الأمور المشرف عليهم';
+
+                body.innerHTML = `
+                    <div class="form-group">
+                        <label>تفاصيل محتوى الإعلان</label>
+                        <textarea id="ann-text" class="form-control" rows="4" placeholder="اكتب الإعلان هنا..."></textarea>
+                    </div>
+                `;
+
+                footer.innerHTML = `
+                    <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
+                    <button class="btn" onclick="App.saveAnnouncement()">إرسال ونشر الإعلان</button>
+                `;
+
+                this.openModal('generic-modal');
+            },
+
+            async saveAnnouncement() {
+                const text = document.getElementById('ann-text').value.trim();
+                if (!text) return;
+
+                const teacher = AppState.getCurrentUser();
+                const anns = await DBService.get('announcements') || [];
+                anns.push({
+                    id: 'ann_' + Date.now(),
+                    text: text,
+                    date: new Date().toISOString().split('T')[0],
+                    teacherId: teacher.id // ربط الإعلان بهوية المعلم
+                });
+                await DBService.set('announcements', anns);
+
+                const students = (await DBService.get('users')).filter(u => u.role === 'student' && u.teacherId === teacher.id);
+                const notifs = await DBService.get('notifications') || [];
+                students.forEach(s => {
+                    notifs.push({
+                        id: 'not_' + Date.now() + '_' + s.id,
+                        userId: s.id,
+                        text: `إعلان جديد من معلمك: ${text.substring(0, 30)}...`,
+                        read: false
+                    });
+                });
+                await DBService.set('notifications', notifs);
+
+                this.closeModal('generic-modal');
+                this.showToast('تم نشر الإعلان بنجاح وإخطار طلابك.', 'success');
+            },
+
+            async renderTeacherStudents(view) {
+                const teacher = AppState.getCurrentUser();
+                const users = await DBService.get('users');
+                
+                // عزل تام لبيانات الطلاب حسب المعلم المشرف المربوط بهم
+                const students = users.filter(u => u.role === 'student' && u.teacherId === teacher.id && u.status === 'approved');
+                const pendingStudents = users.filter(u => u.role === 'student' && u.teacherId === teacher.id && u.status === 'pending');
+
+                let pendingBlockHTML = '';
+                if (pendingStudents.length > 0) {
+                    let pendingRows = '';
+                    pendingStudents.forEach(ps => {
+                        pendingRows += `
+                            <tr>
+                                <td><strong>${ps.name}</strong></td>
+                                <td>${ps.studentId || 'بانتظار التسجيل'}</td>
+                                <td>${ps.grade || 'غير محدد'}</td>
+                                <td>${ps.email}</td>
+                                <td>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button class="btn" style="width:auto; padding:5px 10px; font-size:0.75rem; background-color: var(--success);" onclick="App.processApproval('${ps.id}', 'approved')">قبول</button>
+                                        <button class="btn" style="width:auto; padding:5px 10px; font-size:0.75rem; background-color: var(--danger);" onclick="App.processApproval('${ps.id}', 'rejected')">رفض</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    pendingBlockHTML = `
+                        <div style="background-color: var(--primary-yellow-light); border: 2px dashed var(--primary-yellow); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 25px;">
+                            <h4 style="margin-bottom: 12px; font-weight: 800; color: var(--primary-yellow-hover); font-size: 1rem;">
+                                <i class="fa-solid fa-user-clock"></i> طلبات تسجيل بانتظار موافقتك المباشرة (${pendingStudents.length})
+                            </h4>
+                            <div class="data-table-wrapper" style="margin-top: 10px; max-height: 250px; overflow-y: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>اسم الطالب</th>
+                                            <th>الرقم الدراسي</th>
+                                            <th>الصف</th>
+                                            <th>البريد الإلكتروني</th>
+                                            <th>الإجراء</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${pendingRows}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                let rows = '';
+                students.forEach(s => {
+                    const parent = users.find(u => u.id === s.parentId);
+                    rows += `
+                        <tr>
+                            <td><strong>${s.name}</strong></td>
+                            <td>${s.studentId || 'غير مسجل'}</td>
+                            <td>${s.grade || 'غير محدد'}</td>
+                            <td>${parent ? parent.name : '<span style="color:var(--text-muted);">غير مرتبط</span>'}</td>
+                            <td><span class="badge badge-accent">${s.progress || 0}% إنجاز</span></td>
+                        </tr>
+                    `;
+                });
+
+                view.innerHTML = `
+                    ${pendingBlockHTML}
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+                        <h4 style="font-size: 1rem; margin:0;"><i class="fa-solid fa-graduation-cap"></i> طلابك المسجلين بالمقرر</h4>
+                        <button class="btn" style="width:auto; font-size:0.85rem; padding:8px 16px; background-color:var(--success);" onclick="App.openTakeAttendanceModal()">
+                            <i class="fa-solid fa-calendar-check"></i> تسجيل حضور اليوم
+                        </button>
+                    </div>
+
+                    <div class="data-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>اسم الطالب</th>
+                                    <th>الرقم الطلابي</th>
+                                    <th>الصف الدراسي</th>
+                                    <th>ولي الأمر المرتبط</th>
+                                    <th>نسبة التقدم</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rows || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب مقيدين بانتظارك حالياً.</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            },
+
+            async openTakeAttendanceModal() {
+                const teacher = AppState.getCurrentUser();
+                const users = await DBService.get('users');
+                const students = users.filter(u => u.role === 'student' && u.teacherId === teacher.id && u.status === 'approved');
+                const today = new Date().toISOString().split('T')[0];
+
+                const body = document.getElementById('generic-modal-body');
+                const footer = document.getElementById('generic-modal-footer');
+                if (!body || !footer) return;
+
+                document.getElementById('generic-modal-title').textContent = `تسجيل الحضور لليوم - ${today}`;
+
+                let studentListHTML = '';
+                students.forEach(s => {
+                    studentListHTML += `
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-color);">
+                            <span><strong>${s.name}</strong> (${s.studentId || 'بدون رقم'})</span>
+                            <div style="display:flex; gap:15px;">
+                                <label style="display:flex; align-items:center; gap:5px; font-size:0.85rem; cursor:pointer;">
+                                    <input type="radio" name="att_state_${s.id}" value="present" checked style="accent-color:var(--success);"> حاضر
+                                </label>
+                                <label style="display:flex; align-items:center; gap:5px; font-size:0.85rem; cursor:pointer;">
+                                    <input type="radio" name="att_state_${s.id}" value="absent" style="accent-color:var(--danger);"> غائب
+                                </label>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                body.innerHTML = `
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">تسجيل حالة حضور لطلابك فقط لليوم الدراسي الحالي.</p>
+                    <div style="max-height:300px; overflow-y:auto; padding-left:5px;">
+                        ${studentListHTML || '<p style="text-align:center; color:var(--text-muted);">لا يوجد طلاب مقبولين مسجلين تحت إشرافك.</p>'}
+                    </div>
+                `;
+
+                footer.innerHTML = `
+                    <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
+                    <button class="btn" onclick="App.saveDailyAttendance()" ${students.length === 0 ? 'disabled' : ''}>حفظ وإرسال السجل</button>
+                `;
+
+                this.openModal('generic-modal');
+            },
+
+            async saveDailyAttendance() {
+                const teacher = AppState.getCurrentUser();
+                const users = await DBService.get('users');
+                const students = users.filter(u => u.role === 'student' && u.teacherId === teacher.id && u.status === 'approved');
+                const today = new Date().toISOString().split('T')[0];
+
+                const attendanceList = await DBService.get('attendance') || [];
+                let filteredAttendance = attendanceList.filter(a => !(a.date === today && students.some(s => s.id === a.studentId)));
+
+                students.forEach(s => {
+                    const radios = document.getElementsByName(`att_state_${s.id}`);
+                    let status = 'present';
+                    for (const r of radios) {
+                        if (r.checked) {
+                            status = r.value;
+                            break;
+                        }
+                    }
+                    filteredAttendance.push({
+                        date: today,
+                        studentId: s.id,
+                        status: status
+                    });
+                });
+
+                await DBService.set('attendance', filteredAttendance);
+                this.closeModal('generic-modal');
+                this.showToast('تم تسجيل وحفظ حضور طلابك بنجاح.', 'success');
+            },
+
+            async processApproval(studentId, action) {
+                const users = await DBService.get('users');
+                const idx = users.findIndex(u => u.id === studentId);
+                
+                if (idx !== -1) {
+                    users[idx].status = action;
+                    await DBService.set('users', users);
+                    
+                    const msg = action === 'approved' ? 'تم تفعيل حساب الطالب المشرف عليه بنجاح.' : 'تم توجيه الطالب للمراجعة وتعديل البيانات.';
+                    const type = action === 'approved' ? 'success' : 'warning';
+                    
+                    this.showToast(msg, type);
+                    this.renderTeacherStudents(document.getElementById('app-rendered-view'));
+                }
+            },
+
+            async renderTeacherLessons(view) {
+                const teacher = AppState.getCurrentUser();
+                
+                // عزل الدروس بحيث لا يرى المعلم سوى مناهجه الخاصة
+                const lessons = (await DBService.get('lessons')).filter(l => l.teacherId === teacher.id);
+
+                let listHTML = '';
+                lessons.forEach(l => {
+                    listHTML += `
+                        <div style="background-color: var(--bg-white); border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-lg); box-shadow: var(--shadow-premium); margin-bottom:15px; display:flex; flex-direction:column; gap:15px;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+                                <div style="flex:1; min-width:250px;">
+                                    <h4 style="margin-bottom:6px; font-size:1.1rem; font-weight:800;">${l.title}</h4>
+                                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:10px;">${l.content.substring(0, 160)}...</p>
+                                    <span class="badge ${l.videoType === 'youtube' ? 'badge-warning' : l.videoType === 'direct' ? 'badge-success' : 'badge-accent'}">
+                                        <i class="fa-solid fa-play"></i> ${l.videoType === 'youtube' ? 'فيديو يوتيوب' : l.videoType === 'direct' ? 'رابط مباشر' : 'بدون فيديو'}
+                                    </span>
+                                </div>
+                                <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.8rem; align-self:flex-start;" onclick="App.deleteLesson('${l.id}')">حذف الدرس</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                view.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                        <h4 style="font-size:1.1rem;">مناهجك ودروسك المنشورة</h4>
+                        <button class="btn" style="width:auto;" onclick="App.openCreateLessonModal()">
+                            <i class="fa-solid fa-plus"></i> إضافة درس جديد
+                        </button>
+                    </div>
+                    <div style="display:flex; flex-direction:column;">
+                        ${listHTML || '<p style="color:var(--text-muted); text-align:center; padding:30px;">لم تقم بنشر أي دروس تخصصية بعد.</p>'}
+                    </div>
+                `;
+            },
+
+            openCreateLessonModal() {
+                const body = document.getElementById('generic-modal-body');
+                const footer = document.getElementById('generic-modal-footer');
+                if (!body || !footer) return;
+                document.getElementById('generic-modal-title').textContent = 'نشر وتثبيت درس جديد';
+
+                body.innerHTML = `
+                    <div class="form-group">
+                        <label>عنوان الدرس</label>
+                        <input type="text" id="les-title" class="form-control" placeholder="مثال: الجبر والهندسة التفاضلية">
+                    </div>
+                    <div class="form-group">
+                        <label>شرح الدرس بالتفصيل</label>
+                        <textarea id="les-content" class="form-control" rows="5" placeholder="اكتب الشرح هنا..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>نوع الفيديو المرفق</label>
+                        <select id="les-video-type" class="form-control" onchange="App.toggleLessonVideoFields()">
+                            <option value="none">بدون فيديو</option>
+                            <option value="youtube">فيديو يوتيوب (YouTube Embed Link)</option>
+                            <option value="direct">رابط فيديو مباشر (Direct MP4 URL)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="video-url-container" style="display:none;">
+                        <label id="video-url-label">رابط الفيديو</label>
+                        <input type="url" id="les-video-url" class="form-control" placeholder="">
+                    </div>
+                `;
+
+                footer.innerHTML = `
+                    <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
+                    <button class="btn" onclick="App.saveLesson()">نشر الدرس الآن</button>
+                `;
+
+                this.openModal('generic-modal');
+            },
+
+            toggleLessonVideoFields() {
+                const type = document.getElementById('les-video-type').value;
+                const container = document.getElementById('video-url-container');
+                const label = document.getElementById('video-url-label');
+                const input = document.getElementById('les-video-url');
+                if (!container || !label || !input) return;
+
+                if (type === 'none') {
+                    container.style.display = 'none';
+                } else if (type === 'youtube') {
+                    container.style.display = 'block';
+                    label.textContent = 'رابط التضمين من يوتيوب (مثال: https://www.youtube.com/embed/xxxxxx)';
+                    input.placeholder = 'https://www.youtube.com/embed/dQw4w9WgXcQ';
+                } else if (type === 'direct') {
+                    container.style.display = 'block';
+                    label.textContent = 'رابط الفيديو المباشر (MP4/WebM)';
+                    input.placeholder = 'https://example.com/lecture.mp4';
+                }
+            },
+
+            async saveLesson() {
+                const title = document.getElementById('les-title').value.trim();
+                const content = document.getElementById('les-content').value.trim();
+                const videoType = document.getElementById('les-video-type').value;
+                const videoUrl = document.getElementById('les-video-url') ? document.getElementById('les-video-url').value.trim() : '';
+
+                if (!title || !content) {
+                    this.showToast('يرجى كتابة العنوان ومحتوى الشرح أولاً.', 'danger');
+                    return;
+                }
+
+                if (videoType !== 'none' && !videoUrl) {
+                    this.showToast('الرجاء إدخال رابط الفيديو المرفق.', 'danger');
+                    return;
+                }
+
+                const teacher = AppState.getCurrentUser();
+                const lessons = await DBService.get('lessons');
+                lessons.push({
+                    id: 'les_' + Date.now(),
+                    title, content, videoType, videoUrl,
+                    teacherId: teacher.id // ربط الدرس بالمعلم لضمان الخصوصية
+                });
+                await DBService.set('lessons', lessons);
+
+                this.closeModal('generic-modal');
+                this.showToast('تم نشر الدرس الجديد بنجاح.', 'success');
+                this.renderTeacherLessons(document.getElementById('app-rendered-view'));
+            },
+
+            async deleteLesson(id) {
+                let lessons = await DBService.get('lessons');
+                lessons = lessons.filter(l => l.id !== id);
+                await DBService.set('lessons', lessons);
+                this.showToast('تم حذف الدرس بنجاح.', 'warning');
+                this.renderTeacherLessons(document.getElementById('app-rendered-view'));
+            },
+
+            async renderTeacherAssignments(view) {
+                const teacher = AppState.getCurrentUser();
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === teacher.id);
+
+                let listHTML = '';
+                assigns.forEach(a => {
+                    listHTML += `
+                        <div style="background-color:var(--bg-white); border:1px solid var(--border-color); padding:16px; border-radius:var(--radius-lg); box-shadow:var(--shadow-premium); margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                            <div>
+                                <h4 style="margin-bottom:4px; font-weight:800; font-size:1rem;">${a.title}</h4>
+                                <span style="font-size:0.8rem; color:var(--text-muted);">الوقت: ${a.duration} دقيقة | عدد الأسئلة: ${a.questions.length}</span>
+                            </div>
+                            <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.deleteAssignment('${a.id}')">حذف</button>
+                        </div>
+                    `;
+                });
+
+                view.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                        <h4 style="font-size:1.1rem;">قائمة اختباراتك النشطة</h4>
+                        <button class="btn" style="width:auto;" onclick="App.openCreateAssignmentModal()">
+                            <i class="fa-solid fa-plus"></i> إنشاء اختبار تفاعلي
+                        </button>
+                    </div>
+                    <div>
+                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد اختبارات مدرجة بملفك بعد.</p>'}
+                    </div>
+                `;
+            },
+
+            openCreateAssignmentModal() {
+                const body = document.getElementById('generic-modal-body');
+                const footer = document.getElementById('generic-modal-footer');
+                if (!body || !footer) return;
+                document.getElementById('generic-modal-title').textContent = 'إنشاء اختبار تفاعلي جديد';
+
+                body.innerHTML = `
+                    <div class="form-group">
+                        <label>عنوان الاختبار</label>
+                        <input type="text" id="assign-title" class="form-control" placeholder="مثال: الاختبار الفصلي الأول">
+                    </div>
+                    <div class="form-group">
+                        <label>زمن الاختبار التنازلي بالدقائق</label>
+                        <input type="number" id="assign-duration" class="form-control" value="10" min="1" required>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <h4 style="font-size:0.85rem;">الأسئلة والخيارات:</h4>
+                        <button type="button" class="btn btn-secondary" style="width:auto; padding:4px 10px; font-size:0.75rem;" onclick="App.addDynamicQuestionBlock()">
+                            <i class="fa-solid fa-plus"></i> إضافة سؤال جديد
+                        </button>
+                    </div>
+                    <div id="dynamic-questions-builder"></div>
+                `;
+
+                footer.innerHTML = `
+                    <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
+                    <button class="btn" onclick="App.saveDynamicAssignment()">حفظ ونشر التقييم</button>
+                `;
+
+                this.openModal('generic-modal');
+                this.addDynamicQuestionBlock();
+            },
+
+            addDynamicQuestionBlock() {
+                const container = document.getElementById('dynamic-questions-builder');
+                if (!container) return;
+                const qIndex = container.children.length;
+                const qNum = qIndex + 1;
+
+                const qBlock = document.createElement('div');
+                qBlock.className = 'dynamic-question-block';
+                qBlock.setAttribute('data-q-index', qIndex);
+                qBlock.style = 'border: 1px solid var(--border-color); padding: 15px; border-radius: var(--radius-md); margin-bottom: 15px; background-color: var(--bg-light);';
+                qBlock.innerHTML = `
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <label style="margin:0; font-size:0.8rem;">السؤال ${qNum}</label>
+                            <button type="button" class="btn btn-secondary" style="width:auto; padding:2px 6px; font-size:0.7rem;" onclick="this.parentElement.parentElement.parentElement.remove()">حذف</button>
+                        </div>
+                        <input type="text" class="form-control q-text-input" placeholder="مثال: ما قيمة الزاوية س؟" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label>الدرجة المخصصة</label>
+                        <input type="number" class="form-control q-points-input" value="10" min="1" required style="max-width:120px;">
+                    </div>
+                    <div class="options-container" id="opts-container-${qIndex}">
+                        <label style="font-weight:700; font-size:0.8rem; display:block; margin-bottom:6px;">خيارات الإجابة (حدد الخيار الصحيح بالزر الدائري):</label>
+                        <div class="option-row" style="display:flex; gap:8px; margin-bottom:8px;">
+                            <input type="text" class="form-control opt-value-input" placeholder="الخيار الأول" required>
+                            <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-yellow);" checked>
+                        </div>
+                        <div class="option-row" style="display:flex; gap:8px; margin-bottom:8px;">
+                            <input type="text" class="form-control opt-value-input" placeholder="الخيار الثاني" required>
+                            <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-yellow);">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem; margin-top:5px;" onclick="App.addOptionToQuestion(${qIndex})">
+                        <i class="fa-solid fa-plus-circle"></i> إضافة خيار آخر
+                    </button>
+                `;
+                container.appendChild(qBlock);
+            },
+
+            addOptionToQuestion(qIndex) {
+                const container = document.getElementById(`opts-container-${qIndex}`);
+                if (!container) return;
+                const optRow = document.createElement('div');
+                optRow.className = 'option-row';
+                optRow.style = 'display:flex; gap:8px; margin-bottom:8px; align-items:center;';
+                optRow.innerHTML = `
+                    <input type="text" class="form-control opt-value-input" placeholder="خيار إضافي" required>
+                    <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-yellow);">
+                    <button type="button" class="btn btn-secondary" style="width:auto; padding:5px; font-size:0.75rem;" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>
+                `;
+                container.appendChild(optRow);
+            },
+
+            async saveDynamicAssignment() {
+                const title = document.getElementById('assign-title').value.trim();
+                const duration = parseInt(document.getElementById('assign-duration').value) || 10;
+
+                if (!title) {
+                    this.showToast('يرجى كتابة عنوان الاختبار.', 'danger');
+                    return;
+                }
+
+                const blocks = document.querySelectorAll('.dynamic-question-block');
+                const questions = [];
+
+                blocks.forEach((block, qIdx) => {
+                    const text = block.querySelector('.q-text-input').value.trim();
+                    const points = parseInt(block.querySelector('.q-points-input').value) || 10;
+                    const optRows = block.querySelectorAll('.option-row');
+                    
+                    const options = [];
+                    let correctValue = '';
+
+                    optRows.forEach(row => {
+                        const val = row.querySelector('.opt-value-input').value.trim();
+                        const isCorrect = row.querySelector('.correct-radio').checked;
+                        if (val) {
+                            options.push(val);
+                            if (isCorrect) {
+                                correctValue = val;
+                            }
+                        }
+                    });
+
+                    if (text && options.length > 1 && correctValue) {
+                        questions.push({
+                            qId: qIdx + 1,
+                            text,
+                            options,
+                            correct: correctValue,
+                            points
+                        });
+                    }
+                });
+
+                if (questions.length === 0) {
+                    this.showToast('يرجى إنشاء سؤال واحد على الأقل مع تحديد الخيار الصحيح.', 'danger');
+                    return;
+                }
+
+                const teacher = AppState.getCurrentUser();
+                const assigns = await DBService.get('assignments');
+                assigns.push({
+                    id: 'assign_' + Date.now(),
+                    title,
+                    duration,
+                    questions,
+                    teacherId: teacher.id // حصر وربط الاختبار بالمعلم لمنع تداخل الخصوصية
+                });
+                await DBService.set('assignments', assigns);
+
+                this.closeModal('generic-modal');
+                this.showToast('تم نشر الاختبار التفاعلي بنجاح.', 'success');
+                this.renderTeacherAssignments(document.getElementById('app-rendered-view'));
+            },
+
+            async deleteAssignment(id) {
+                let assigns = await DBService.get('assignments');
+                assigns = assigns.filter(a => a.id !== id);
+                await DBService.set('assignments', assigns);
+                this.showToast('تم حذف الواجب المختار.', 'warning');
+                this.renderTeacherAssignments(document.getElementById('app-rendered-view'));
+            },
+
+            async renderTeacherGrading(view) {
+                const teacher = AppState.getCurrentUser();
+                const subs = await DBService.get('submissions') || [];
+                
+                // عزل تصفية الدرجات ورصدها للطلاب التابعين للمعلم الحالي فقط
+                const students = (await DBService.get('users')).filter(u => u.role === 'student' && u.teacherId === teacher.id);
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === teacher.id);
+
+                let rows = '';
+                subs.forEach(s => {
+                    const student = students.find(u => u.id === s.studentId);
+                    const assign = assigns.find(u => u.id === s.assignmentId);
+
+                    if (student && assign) {
+                        rows += `
+                            <tr>
+                                <td><strong>${student.name}</strong></td>
+                                <td>${assign.title}</td>
+                                <td><span class="badge ${s.graded ? 'badge-success' : 'badge-warning'}">${s.graded ? s.score + '%' : 'بانتظار الرصد'}</span></td>
+                                <td>
+                                    <button class="btn" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.openGradeSubmissionModal('${s.id}')">رصد الدرجة</button>
+                                </td>
+                            </tr>
+                        `;
+                    }
+                });
+
+                view.innerHTML = `
+                    <div class="data-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>اسم الطالب</th>
+                                    <th>اسم الواجب</th>
+                                    <th>الدرجة</th>
+                                    <th>الإجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rows || '<tr><td colspan="4" style="text-align:center;">لا توجد أي إجابات تم حلها بعد من قبل طلابك.</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            },
+
+            async openGradeSubmissionModal(subId) {
+                const subs = await DBService.get('submissions');
+                const sub = subs.find(s => s.id === subId);
+                const student = (await DBService.get('users')).find(u => u.id === sub.studentId);
+
+                const body = document.getElementById('generic-modal-body');
+                const footer = document.getElementById('generic-modal-footer');
+                if (!body || !footer) return;
+                document.getElementById('generic-modal-title').textContent = `رصد درجة الطالب: ${student.name}`;
+
+                body.innerHTML = `
+                    <div class="form-group">
+                        <label>الدرجة المكتسبة (%)</label>
+                        <input type="number" id="grade-score" class="form-control" value="${sub.score || ''}" min="0" max="100">
+                    </div>
+                    <div class="form-group">
+                        <label>ملاحظات وتوجيهات المعلم</label>
+                        <textarea id="grade-feedback" class="form-control" rows="3" placeholder="ملاحظات تشجيعية...">${sub.feedback || ''}</textarea>
+                    </div>
+                `;
+
+                footer.innerHTML = `
+                    <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
+                    <button class="btn" onclick="App.submitGrading('${sub.id}')">اعتماد الدرجة</button>
+                `;
+
+                this.openModal('generic-modal');
+            },
+
+            async submitGrading(subId) {
+                const score = parseInt(document.getElementById('grade-score').value);
+                const feedback = document.getElementById('grade-feedback').value.trim();
+
+                if (isNaN(score) || score < 0 || score > 100) {
+                    this.showToast('يرجى تحديد درجة صحيحة بين 0 و 100.', 'danger');
+                    return;
+                }
+
+                const subs = await DBService.get('submissions');
+                const sub = subs.find(s => s.id === subId);
+                sub.score = score;
+                sub.feedback = feedback;
+                sub.graded = true;
+
+                await DBService.set('submissions', subs);
+
+                const notifs = await DBService.get('notifications') || [];
+                notifs.push({
+                    id: 'not_' + Date.now(),
+                    userId: sub.studentId,
+                    text: `تم رصد درجة تقييمك بنجاح! النتيجة النهائية: ${score}%`,
+                    read: false
+                });
+                await DBService.set('notifications', notifs);
+
+                this.closeModal('generic-modal');
+                this.showToast('تم رصد الدرجة بنجاح وإرسال الإخطار لطلابك المعنيين.', 'success');
+                this.renderTeacherGrading(document.getElementById('app-rendered-view'));
+            },
+
+            // ==========================================
+            // نظام المراسلات المطور للمعلم (Inbox)
+            // ==========================================
+            async renderTeacherMessages(view) {
+                const teacher = AppState.getCurrentUser();
+                const users = await DBService.get('users');
+                
+                // عزل جهات الاتصال بحيث لا يرى المعلم سوى طلابه النشطين وأولياء أمورهم لضمان الخصوصية والسرية
+                const chatableUsers = users.filter(u => u.id !== teacher.id && u.teacherId === teacher.id && u.status === 'approved');
+
+                let userCardsHTML = '';
+                chatableUsers.forEach(u => {
+                    const isActive = this.activeChatUserId === u.id ? 'active' : '';
+                    const roleText = u.role === 'student' ? 'طالب' : 'ولي أمر';
+                    userCardsHTML += `
+                        <div class="inbox-user-card ${isActive}" onclick="App.selectInboxUser('${u.id}', '${u.name}')">
+                            <div class="inbox-user-avatar">${u.name.substring(0, 1)}</div>
+                            <div class="inbox-user-info">
+                                <div class="inbox-user-name">${u.name}</div>
+                                <div class="inbox-user-role">${roleText}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                view.innerHTML = `
+                    <div class="inbox-layout">
+                        <div class="inbox-sidebar">
+                            <div class="inbox-sidebar-header"><i class="fa-solid fa-address-book"></i> طلابك وأولياء أمورهم</div>
+                            <div class="inbox-user-list">
+                                ${userCardsHTML || '<div style="text-align:center; padding:20px; font-size:0.8rem; color:var(--text-muted);">لا يوجد جهات اتصال مسجلة تحت إشرافك حالياً.</div>'}
+                            </div>
+                        </div>
+                        <div class="inbox-chat-area" id="inbox-chat-container">
+                            <div class="inbox-chat-placeholder">
+                                <i class="fa-solid fa-comments"></i>
+                                <span>الرجاء اختيار مستخدم من القائمة الجانبية لبدء المحادثة معه</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                if (this.activeChatUserId) {
+                    const activeUser = users.find(u => u.id === this.activeChatUserId);
+                    if (activeUser) {
+                        this.selectInboxUser(activeUser.id, activeUser.name);
+                    }
+                }
+            },
+
+            async selectInboxUser(userId, name) {
+                this.activeChatUserId = userId;
+                const container = document.getElementById('inbox-chat-container');
+                if (!container) return;
+
+                document.querySelectorAll('.inbox-user-card').forEach(el => el.classList.remove('active'));
+                
+                const myUser = AppState.getCurrentUser();
+                const allMsgs = await DBService.get('messages') || [];
+                const conversations = allMsgs.filter(m => 
+                    (m.senderId === myUser.id && m.receiverId === userId) || 
+                    (m.senderId === userId && m.receiverId === myUser.id)
+                );
+
+                let msgsHTML = '';
+                conversations.forEach(m => {
+                    const isMe = m.senderId === myUser.id;
+                    msgsHTML += `
+                        <div class="chat-bubble ${isMe ? 'sent' : 'received'}">
+                            <p>${m.text}</p>
+                            <small style="font-size:0.65rem; opacity:0.8; display:block; text-align:left; margin-top:4px;">${m.timestamp || ''}</small>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = `
+                    <div style="padding:15px; border-bottom:1px solid var(--border-color); font-weight:bold; font-size:0.95rem; display:flex; align-items:center; gap:8px; background-color: var(--bg-light);">
+                        <i class="fa-solid fa-circle-user" style="color:var(--primary-yellow); font-size:1.2rem;"></i> ${name}
+                    </div>
+                    <div class="chat-history" id="chat-history-box" style="flex:1;">
+                        ${msgsHTML || '<p style="color:var(--text-muted); text-align:center; margin-top:100px; font-size:0.85rem;">لم تبدأ المراسلة بعد، اكتب رسالتك الأولى بالأسفل.</p>'}
+                    </div>
+                    <div class="chat-bar">
+                        <input type="text" id="chat-input-field" class="chat-input" placeholder="اكتب رسالتك هنا..." onkeypress="if(event.key === 'Enter') App.sendInboxMessage('${myUser.id}', '${userId}', '${name}')">
+                        <button class="chat-btn" onclick="App.sendInboxMessage('${myUser.id}', '${userId}', '${name}')">إرسال</button>
+                    </div>
+                `;
+
+                setTimeout(() => {
+                    const box = document.getElementById('chat-history-box');
+                    if (box) box.scrollTop = box.scrollHeight;
+                }, 50);
+            },
+
+            async sendInboxMessage(myId, recipientId, recipientName) {
+                const input = document.getElementById('chat-input-field');
+                if (!input) return;
+                const text = input.value.trim();
+                if (!text) return;
+
+                const allMsgs = await DBService.get('messages') || [];
+                const now = new Date();
+                const timeString = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+                allMsgs.push({
+                    id: 'msg_' + Date.now(),
+                    senderId: myId,
+                    recipientId: recipientId,
+                    receiverId: recipientId,
+                    text,
+                    timestamp: timeString
+                });
+
+                await DBService.set('messages', allMsgs);
+                input.value = '';
+                
+                this.selectInboxUser(recipientId, recipientName);
+                this.showToast('تم إرسال رسالتك.', 'success');
+            },
+
+
+            // ==========================================
+            // 6. واجهات لوحة التحكم الخاصة بالطالب
+            // ==========================================
+
+            async renderStudentHome(view, student) {
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
+                const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id && assigns.some(a => a.id === s.assignmentId));
+                const gradedSubs = subs.filter(s => s.graded);
+
+                let avgGrade = 0;
+                if (gradedSubs.length > 0) {
+                    avgGrade = Math.round(gradedSubs.reduce((acc, c) => acc + c.score, 0) / gradedSubs.length);
+                }
+
+                view.innerHTML = `
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">معدل إنجاز المقررات</span>
+                                <div class="stat-value" style="color:var(--primary-yellow);">${student.progress || 0}%</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">المهام المنجزة</span>
+                                <div class="stat-value">${subs.length}</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">متوسط التحصيل الدراسي</span>
+                                <div class="stat-value" style="color:var(--success);">${avgGrade}%</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h4 style="margin-bottom:15px; font-size:1rem; font-weight:800;">تتبع مستواك التعليمي والتحصيلي البياني</h4>
+                        <div class="chart-canvas-wrapper">
+                            <canvas id="student-home-canvas" class="chart-canvas" width="600" height="240"></canvas>
+                        </div>
+                    </div>
+                `;
+
+                const labels = subs.map((s, idx) => `المهمة ${idx + 1}`);
+                const dataPoints = subs.map(s => s.score || 0);
+
+                setTimeout(() => {
+                    this.drawCanvasChart('student-home-canvas', labels.length > 0 ? labels : ['مسارك الدراسي'], dataPoints.length > 0 ? dataPoints : [0], '#10B981');
+                }, 50);
+            },
+
+            async renderStudentLessons(view) {
+                const student = AppState.getCurrentUser();
+                
+                // عزل الدروس تلافياً لتداخل خصوصية المواد بين المعلمين
+                const lessons = (await DBService.get('lessons')).filter(l => l.teacherId === student.teacherId);
+
+                let listHTML = '';
+                lessons.forEach(l => {
+                    listHTML += `
+                        <div style="background-color:var(--bg-white); border:1px solid var(--border-color); padding:20px; border-radius:var(--radius-lg); box-shadow:var(--shadow-premium); margin-bottom:15px;">
+                            <h4 style="margin-bottom:6px; font-weight:800; font-size:1.1rem;">${l.title}</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:12px;">${l.content.substring(0, 160)}...</p>
+                            <button class="btn" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.openViewLessonModal('${l.id}')">فتح ودراسة الدرس</button>
+                        </div>
+                    `;
+                });
+
+                view.innerHTML = `
+                    <div style="display:flex; flex-direction:column;">
+                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد دروس مدرجة من قبل معلمك المشرف حالياً.</p>'}
+                    </div>
+                `;
+            },
+
+            async openViewLessonModal(lessonId) {
+                const lessons = await DBService.get('lessons');
+                const lesson = lessons.find(l => l.id === lessonId);
+
+                const body = document.getElementById('generic-modal-body');
+                const footer = document.getElementById('generic-modal-footer');
+                if (!body || !footer) return;
+                document.getElementById('generic-modal-title').textContent = lesson.title;
+
+                let mediaHTML = '';
+                if (lesson.videoType && lesson.videoType !== 'none') {
+                    if (lesson.videoType === 'youtube') {
+                        mediaHTML = `
+                            <div class="video-container">
+                                <iframe src="${lesson.videoUrl}" allowfullscreen></iframe>
+                            </div>
+                        `;
+                    } else if (lesson.videoType === 'direct') {
+                        mediaHTML = `
+                            <div class="video-container">
+                                <video controls>
+                                    <source src="${lesson.videoUrl}" type="video/mp4">
+                                    تصفحك لا يدعم مشغلات الفيديو الافتراضية.
+                                </video>
+                            </div>
+                        `;
+                    }
+                }
+
+                body.innerHTML = `
+                    ${mediaHTML}
+                    <p style="font-size:0.9rem; line-height:1.7; white-space:pre-wrap; margin-bottom:15px; color:var(--text-dark);">${lesson.content}</p>
+                `;
+
+                footer.innerHTML = `
+                    <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إغلاق</button>
+                    <button class="btn" style="background-color:var(--success); color:#ffffff; box-shadow:none;" onclick="App.markLessonCompleted()">تأكيد الدراسة ✓</button>
+                `;
+
+                this.openModal('generic-modal');
+            },
+
+            async markLessonCompleted() {
+                const user = AppState.getCurrentUser();
+                let currentProgress = user.progress || 0;
+                if (currentProgress < 100) {
+                    currentProgress = Math.min(100, currentProgress + 15);
+                }
+
+                user.progress = currentProgress;
+                AppState.setCurrentUser(user);
+
+                const users = await DBService.get('users');
+                const uIdx = users.findIndex(u => u.id === user.id);
+                if (uIdx !== -1) {
+                    users[uIdx].progress = currentProgress;
+                    await DBService.set('users', users);
+                }
+
+                this.closeModal('generic-modal');
+                this.showToast('تم تسجيل تقدمك بنجاح وتحديث نسبة الإنجاز.', 'success');
+                this.renderActiveView();
+            },
+
+            async renderStudentAssignments(view, student) {
+                // تصفية وعزل الواجبات الموجهة من معلم هذا الطالب فقط لضمان الخصوصية والسرية
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
+                const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id);
+
+                let listHTML = '';
+                assigns.forEach(a => {
+                    const hasSubmitted = subs.find(s => s.assignmentId === a.id);
+                    listHTML += `
+                        <div style="background-color:var(--bg-white); border:1px solid var(--border-color); padding:16px; border-radius:var(--radius-lg); box-shadow:var(--shadow-premium); margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                            <div>
+                                <h4 style="margin-bottom:4px; font-weight:800; font-size:1rem;">${a.title}</h4>
+                                <span style="font-size:0.8rem; color:var(--text-muted);">زمن الاختبار: ${a.duration} دقيقة | عدد الأسئلة: ${a.questions.length}</span>
+                            </div>
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                ${hasSubmitted ? `<span class="badge badge-success">تم التقديم (${hasSubmitted.score}%)</span>` : '<span class="badge badge-warning">مطلوب للحل</span>'}
+                                ${hasSubmitted ? '' : `<button class="btn" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.startInteractiveExamMode('${a.id}')">دخول الاختبار</button>`}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                view.innerHTML = `
+                    <div id="student-assignments-container" style="display:flex; flex-direction:column;">
+                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد أي مهام واجبة مرسلة من معلمك حالياً.</p>'}
+                    </div>
+                `;
+            },
+
+            async renderStudentGrades(view, student) {
+                // حصر درجات الواجبات التابعة لمعلم الطالب الحالي فقط
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
+                const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id && assigns.some(a => a.id === s.assignmentId));
+
+                let rows = '';
+                subs.forEach(s => {
+                    const assign = assigns.find(u => u.id === s.assignmentId);
+                    if (assign) {
+                        rows += `
+                            <tr>
+                                <td><strong>${assign.title}</strong></td>
+                                <td><span class="badge badge-success">${s.score}%</span></td>
+                                <td>${s.feedback || 'أداء مستقر'}</td>
+                            </tr>
+                        `;
+                    }
+                });
+
+                view.innerHTML = `
+                    <div class="data-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>اسم التقييم</th>
+                                    <th>الدرجة النهائية</th>
+                                    <th>ملاحظات المعلم</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rows || '<tr><td colspan="3" style="text-align:center;">لم يتم تسجيل أي درجات لك حالياً.</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            },
+
+            async renderStudentMessages(view, student) {
+                const users = await DBService.get('users');
+                const myTeacher = users.find(u => u.id === student.teacherId) || { name: 'معلم المادة' };
+                this.renderChatInterface(view, student.id, student.teacherId, `أ. ${myTeacher.name}`);
+            },
+
+
+            // ==========================================
+            // 7. واجهات لوحة التحكم الخاصة بولي الأمر
+            // ==========================================
+
+            async renderParentHome(view, student) {
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
+                const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id && assigns.some(a => a.id === s.assignmentId));
+
+                let listHTML = '';
+                subs.forEach(s => {
+                    const assign = assigns.find(a => a.id === s.assignmentId);
+                    if (assign) {
+                        listHTML += `
+                            <div class="stat-card" style="margin-bottom:10px; border-right:4px solid ${s.score >= 80 ? 'var(--success)' : 'var(--warning)'};">
+                                <div class="stat-info">
+                                    <h4 style="font-size:0.9rem; margin-bottom:4px; font-weight:800;">${assign.title}</h4>
+                                    <span style="font-size:0.8rem; color:var(--text-muted);">النتيجة: ${s.score}% - الملاحظات: ${s.feedback || 'أداء مستقر'}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                view.innerHTML = `
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">الابن الخاضع للمتابعة</span>
+                                <div class="stat-value" style="font-size:1.1rem; color:var(--primary-yellow);">${student.name}</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-child"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">معدل الإنجاز والمقررات</span>
+                                <div class="stat-value">${student.progress || 0}%</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-bottom:12px; font-size:1rem;">أوراق التقييم الأخيرة وحلول الابن</h4>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد واجبات تم حلها مسبقاً.</p>'}
+                    </div>
+                `;
+            },
+
+            async renderParentReports(view, student) {
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
+                const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id && assigns.some(a => a.id === s.assignmentId));
+
+                view.innerHTML = `
+                    <div class="chart-container">
+                        <h4 style="margin-bottom:15px; font-size:1rem;">منحنى تتبع مستويات وتحصيل الابن البياني</h4>
+                        <div class="chart-canvas-wrapper">
+                            <canvas id="parent-home-canvas" class="chart-canvas" width="600" height="240"></canvas>
+                        </div>
+                    </div>
+                `;
+
+                const labels = subs.map((s, idx) => `الواجب ${idx + 1}`);
+                const dataPoints = subs.map(s => s.score || 0);
+
+                setTimeout(() => {
+                    this.drawCanvasChart('parent-home-canvas', labels.length > 0 ? labels : ['بداية المراقبة'], dataPoints.length > 0 ? dataPoints : [0], '#D97706');
+                }, 50);
+            },
+
+            async renderParentAttendance(view, student) {
+                const attList = await DBService.get('attendance') || [];
+                const studentAtt = attList.filter(a => a.studentId === student.id);
+
+                let rows = '';
+                studentAtt.forEach(a => {
+                    rows += `
+                        <tr>
+                            <td><strong>${a.date}</strong></td>
+                            <td>
+                                <span class="badge ${a.status === 'present' ? 'badge-success' : 'badge-danger'}">
+                                    ${a.status === 'present' ? 'حاضر' : 'غائب'}
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                view.innerHTML = `
+                    <div class="data-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>تاريخ اليوم الدراسي</th>
+                                    <th>حالة الحضور</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rows || '<tr><td colspan="2" style="text-align:center;">لا توجد بيانات غياب وحضور مسجلة حالياً.</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            },
+
+            async renderParentMessages(view, parentUser) {
+                const users = await DBService.get('users');
+                const linkedStudent = users.find(u => u.id === parentUser.studentId);
+                if (linkedStudent) {
+                    const myTeacher = users.find(u => u.id === linkedStudent.teacherId) || { name: 'معلم المادة' };
+                    this.renderChatInterface(view, parentUser.id, linkedStudent.teacherId, `أ. ${myTeacher.name}`);
+                }
+            },
+
+
+            // ==========================================
+            // 8. غرف المراسلات والتواصل الفوري
+            // ==========================================
+
+            async renderChatInterface(view, myId, recipientId, recipientName) {
+                const allMsgs = await DBService.get('messages') || [];
+                const conversations = allMsgs.filter(m => 
+                    (m.senderId === myId && m.receiverId === recipientId) || 
+                    (m.senderId === recipientId && m.receiverId === myId)
+                );
+
+                let msgsHTML = '';
+                conversations.forEach(m => {
+                    const isMe = m.senderId === myId;
+                    msgsHTML += `
+                        <div class="chat-bubble ${isMe ? 'sent' : 'received'}">
+                            <p>${m.text}</p>
+                            <small style="font-size:0.65rem; opacity:0.8; display:block; text-align:left; margin-top:4px;">${m.timestamp || ''}</small>
+                        </div>
+                    `;
+                });
+
+                view.innerHTML = `
+                    <div style="background-color:var(--bg-white); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:20px; box-shadow:var(--shadow-premium);">
+                        <h4 style="margin-bottom:12px; font-size:1rem;"><i class="fa-solid fa-circle-user" style="color:var(--primary-yellow); margin-left:5px;"></i> تواصل مباشر مع: ${recipientName}</h4>
+                        <div class="chat-layout">
+                            <div class="chat-history" id="chat-history-box">
+                                ${msgsHTML || '<p style="color:var(--text-muted); text-align:center; margin-top:100px; font-size:0.85rem;">لم تبدأ المراسلة بعد، اكتب رسالتك الأولى بالأسفل.</p>'}
+                            </div>
+                            <div class="chat-bar">
+                                <input type="text" id="chat-input-field" class="chat-input" placeholder="اكتب سؤالك أو استفسارك هنا..." onkeypress="if(event.key === 'Enter') App.sendDirectMessage('${myId}', '${recipientId}')">
+                                <button class="chat-btn" onclick="App.sendDirectMessage('${myId}', '${recipientId}')">إرسال</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                setTimeout(() => {
+                    const box = document.getElementById('chat-history-box');
+                    if (box) box.scrollTop = box.scrollHeight;
+                }, 50);
+            },
+
+            async sendDirectMessage(myId, recipientId) {
+                const input = document.getElementById('chat-input-field');
+                if (!input) return;
+                const text = input.value.trim();
+                if (!text) return;
+
+                const allMsgs = await DBService.get('messages') || [];
+                
+                const now = new Date();
+                const timeString = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+                allMsgs.push({
+                    id: 'msg_' + Date.now(),
+                    senderId: myId,
+                    recipientId: recipientId,
+                    receiverId: recipientId,
+                    text,
+                    timestamp: timeString
+                });
+
+                await DBService.set('messages', allMsgs);
+                input.value = '';
+                this.renderActiveView();
+                this.showToast('تم إرسال رسالتك بنجاح.', 'success');
+            },
+
+
+            // ==========================================
+            // 9. محرك الرسم البياني باستخدام Canvas النقي
+            // ==========================================
+
+            drawCanvasChart(canvasId, labels, dataPoints, color) {
+                const canvas = document.getElementById(canvasId);
+                if (!canvas) return;
+
+                const wrapper = canvas.parentElement;
+                if (!wrapper) return;
+                canvas.width = wrapper.clientWidth || 600;
+
+                const ctx = canvas.getContext('2d');
+                
+                const width = canvas.width;
+                const height = canvas.height;
+                ctx.clearRect(0, 0, width, height);
+
+                const padding = 40;
+                const chartHeight = height - padding * 2;
+                const chartWidth = width - padding * 2;
+
+                ctx.strokeStyle = '#F1F5F9';
+                ctx.lineWidth = 1;
+                for (let i = 0; i <= 4; i++) {
+                    const y = padding + (chartHeight * i) / 4;
+                    ctx.beginPath();
+                    ctx.moveTo(padding, y);
+                    ctx.lineTo(width - padding, y);
+                    ctx.stroke();
+                }
+
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(padding, padding);
+                ctx.lineTo(padding, height - padding);
+                ctx.lineTo(width - padding, height - padding);
+                ctx.stroke();
+
+                if (dataPoints.length === 0) return;
+                const maxVal = 100;
+                const xStep = chartWidth / (dataPoints.length - 1 || 1);
+
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+
+                dataPoints.forEach((val, index) => {
+                    const x = padding + index * xStep;
+                    const y = height - padding - (val / maxVal) * chartHeight;
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+                ctx.stroke();
+
+                dataPoints.forEach((val, index) => {
+                    const x = padding + index * xStep;
+                    const y = height - padding - (val / maxVal) * chartHeight;
+
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#0F172A';
+                    ctx.font = 'bold 11px IBM Plex Sans Arabic, Tajawal';
+                    ctx.fillText(`${val}%`, x - 12, y - 10);
+
+                    if (labels[index]) {
+                        ctx.fillStyle = '#475569';
+                        ctx.font = '10px IBM Plex Sans Arabic, Tajawal';
+                        ctx.fillText(labels[index], x - 18, height - padding + 22);
+                    }
+                });
+            },
+
+            async openNotificationsModal() {
+                const container = document.getElementById('notifications-list-container');
+                if (!container) return;
+                container.innerHTML = '';
+
+                const user = AppState.getCurrentUser();
+                const anns = await DBService.get('announcements') || [];
+                const notifs = await DBService.get('notifications') || [];
+                
+                // تصفية وعزل الإشعارات والإعلانات المخصصة لمعلم هذا المستخدم فقط
+                const myTeacherId = user.role === 'teacher' ? user.id : user.teacherId;
+                const myAnns = anns.filter(a => a.teacherId === myTeacherId);
+                const myNotifs = notifs.filter(n => n.userId === user.id);
+
+                if (myAnns.length === 0 && myNotifs.length === 0) {
+                    container.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-size:0.85rem; padding:15px;">لا توجد تنبيهات حالياً.</p>';
+                } else {
+                    if (myAnns.length > 0) {
+                        container.innerHTML += '<h4 style="margin-bottom:10px; color:var(--primary-yellow); font-size:0.9rem;">إعلانات معلمك المشرف:</h4>';
+                        myAnns.forEach(a => {
+                            container.innerHTML += `
+                                <div style="padding:12px; border:1px solid var(--border-color); border-radius:var(--radius-md); margin-bottom:10px; background-color:var(--primary-yellow-light);">
+                                    <p style="font-weight:700; font-size:0.85rem; color:var(--text-dark);">${a.text}</p>
+                                    <small style="color:var(--text-muted); display:block; margin-top:5px;"><i class="fa-solid fa-clock"></i> التاريخ: ${a.date}</small>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    if (myNotifs.length > 0) {
+                        container.innerHTML += '<h4 style="margin-top:15px; margin-bottom:10px; color:var(--success); font-size:0.9rem;">إشعاراتك الخاصة:</h4>';
+                        myNotifs.forEach(n => {
+                            container.innerHTML += `
+                                <div style="padding:10px; border:1px solid var(--border-color); border-radius:var(--radius-md); margin-bottom:8px; background-color: var(--bg-light);">
+                                    <p style="font-size:0.85rem; color:var(--text-dark);">${n.text}</p>
+                                </div>
+                            `;
+                        });
+                    }
+                }
+                this.openModal('notifications-modal');
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            App.init();
+        });
+    </script>
+</body>
+</html>
