@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -13,19 +14,19 @@
     <!-- مكتبة الأيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- مكتبات Firebase SDK v10 (Compat لسهولة العمل داخل ملف منفرد) -->
+    <!-- مكتبات Firebase SDK v10 -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        /* المتغيرات البصرية الخاصة بالتصميم العالمي الفاخر */
+        /* المتغيرات البصرية الخاصة بالتصميم العالمي الفاخر باللون الأزرق والأبيض */
         :root {
-            --primary-yellow: #D97706; /* أصفر ذهبي دافئ وعميق */
-            --primary-yellow-light: #FEF3C7; /* تدرج خلفية أصفر دافئ */
-            --primary-yellow-hover: #B45309;
+            --primary-blue: #1E40AF; /* أزرق ملكي عميق وراقي */
+            --primary-blue-light: #EFF6FF; /* تدرج خلفية أزرق ناصع وناعم */
+            --primary-blue-hover: #1D4ED8;
             --bg-white: #FFFFFF;
-            --bg-light: #F8FAFC; /* خلفية ناصعة ومريحة جداً */
-            --text-dark: #0F172A; /* رصاصي داكن فاخر جداً للكتابة */
+            --bg-light: #F8FAFC; /* خلفية ناصعة ومريحة */
+            --text-dark: #0F172A; /* رصاصي داكن فاخر للكتابة */
             --text-muted: #64748B;
             --border-color: #E2E8F0;
             --success: #10B981;
@@ -33,7 +34,7 @@
             --warning: #F59E0B;
             --radius-lg: 16px;
             --radius-md: 10px;
-            --shadow-premium: 0 4px 20px rgba(217, 119, 6, 0.04), 0 1px 2px rgba(0,0,0,0.01);
+            --shadow-premium: 0 4px 20px rgba(30, 64, 175, 0.04), 0 1px 2px rgba(0,0,0,0.01);
             --transition: all 0.25s ease-in-out;
             --sidebar-width: 280px;
         }
@@ -55,7 +56,7 @@
             overflow-x: hidden;
         }
 
-        /* تخصيص مظهر شريط التمرير الدقيق */
+        /* تخصيص مظهر شريط التمرير */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -71,14 +72,14 @@
             background: #94a3b8;
         }
 
-        /* شاشة المصادقة (التسجيل والدخول) */
+        /* شاشة المصادقة */
         .auth-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
-            background: linear-gradient(135deg, var(--primary-yellow-light) 0%, var(--bg-light) 100%);
+            background: linear-gradient(135deg, var(--primary-blue-light) 0%, var(--bg-light) 100%);
         }
 
         .auth-container {
@@ -87,7 +88,7 @@
             padding: 40px 30px;
             border-radius: var(--radius-lg);
             width: 100%;
-            max-width: 580px;
+            max-width: 620px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
@@ -98,9 +99,9 @@
 
         .auth-brand i {
             font-size: 3rem;
-            color: var(--primary-yellow);
+            color: var(--primary-blue);
             margin-bottom: 12px;
-            filter: drop-shadow(0 4px 6px rgba(217, 119, 6, 0.2));
+            filter: drop-shadow(0 4px 6px rgba(30, 64, 175, 0.2));
         }
 
         .auth-brand h1 {
@@ -138,14 +139,14 @@
 
         .auth-toggle-btn.active {
             background-color: var(--bg-white);
-            color: var(--primary-yellow);
+            color: var(--primary-blue);
             box-shadow: var(--shadow-premium);
         }
 
         .role-selector {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 25px;
         }
 
@@ -173,11 +174,11 @@
 
         .role-card.active {
             background-color: var(--bg-white);
-            border-color: var(--primary-yellow);
+            border-color: var(--primary-blue);
         }
 
         .role-card.active i {
-            color: var(--primary-yellow);
+            color: var(--primary-blue);
         }
 
         .form-grid {
@@ -220,9 +221,9 @@
         }
 
         .form-control:focus {
-            border-color: var(--primary-yellow);
+            border-color: var(--primary-blue);
             background-color: var(--bg-white);
-            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
         }
 
         .btn {
@@ -232,18 +233,18 @@
             gap: 8px;
             width: 100%;
             padding: 12px 24px;
-            background-color: var(--primary-yellow);
+            background-color: var(--primary-blue);
             color: var(--bg-white);
             border: none;
             border-radius: var(--radius-md);
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
         }
 
         .btn:hover {
-            background-color: var(--primary-yellow-hover);
+            background-color: var(--primary-blue-hover);
             transform: translateY(-1px);
         }
 
@@ -291,7 +292,7 @@
         }
 
         .sidebar-brand i {
-            color: var(--primary-yellow);
+            color: var(--primary-blue);
         }
 
         .sidebar-menu {
@@ -317,8 +318,8 @@
         }
 
         .sidebar-item.active a, .sidebar-item a:hover {
-            background-color: var(--primary-yellow-light);
-            color: var(--primary-yellow);
+            background-color: var(--primary-blue-light);
+            color: var(--primary-blue);
         }
 
         .sidebar-footer {
@@ -389,7 +390,7 @@
 
         .nav-icon-btn:hover {
             background-color: var(--bg-light);
-            color: var(--primary-yellow);
+            color: var(--primary-blue);
         }
 
         .content-body {
@@ -400,7 +401,7 @@
             margin: 0 auto;
         }
 
-        /* فئات مخصصة لمنع تعارض التصميم المتجاوب لحالات عدم الموافقة */
+        /* منع تعارض التصميم في حالة عدم الموافقة */
         .app-layout.unapproved-mode .sidebar {
             display: none !important;
         }
@@ -412,7 +413,7 @@
             display: none !important;
         }
 
-        /* التصنيفات والتأثيرات للبطاقات */
+        /* البطاقات */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -432,7 +433,7 @@
         }
         .stat-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(217, 119, 6, 0.08);
+            box-shadow: 0 8px 30px rgba(30, 64, 175, 0.08);
         }
 
         .stat-value {
@@ -446,8 +447,8 @@
             width: 48px;
             height: 48px;
             border-radius: var(--radius-md);
-            background-color: var(--primary-yellow-light);
-            color: var(--primary-yellow);
+            background-color: var(--primary-blue-light);
+            color: var(--primary-blue);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -506,7 +507,7 @@
             color: var(--text-dark);
         }
 
-        /* محاكي مشغل الفيديو المدمج واليوتيوب */
+        /* مشغلات الفيديو */
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
@@ -526,10 +527,10 @@
             border: none;
         }
 
-        /* واجهة بيئة تأدية الاختبارات (Exam Mode Interface) */
+        /* بيئة تقديم الاختبارات */
         .exam-mode-card {
             background-color: var(--bg-white);
-            border: 2px solid var(--primary-yellow);
+            border: 2px solid var(--primary-blue);
             border-radius: var(--radius-lg);
             padding: 25px;
             box-shadow: var(--shadow-premium);
@@ -554,8 +555,8 @@
         }
 
         .exam-timer {
-            background-color: var(--primary-yellow-light);
-            color: var(--primary-yellow);
+            background-color: var(--primary-blue-light);
+            color: var(--primary-blue);
             padding: 8px 16px;
             border-radius: 50px;
             font-weight: 800;
@@ -603,19 +604,19 @@
         }
 
         .exam-option-label:hover {
-            border-color: var(--primary-yellow);
-            background-color: var(--primary-yellow-light);
+            border-color: var(--primary-blue);
+            background-color: var(--primary-blue-light);
         }
 
         .exam-option-label input[type="radio"] {
             width: 16px;
             height: 16px;
-            accent-color: var(--primary-yellow);
+            accent-color: var(--primary-blue);
         }
 
         .exam-option-label.selected-option {
-            border-color: var(--primary-yellow);
-            background-color: var(--primary-yellow-light);
+            border-color: var(--primary-blue);
+            background-color: var(--primary-blue-light);
         }
 
         .exam-footer {
@@ -632,7 +633,7 @@
             min-width: 100px;
         }
 
-        /* الهيكل التنظيمي للمراسلات والبريد الداخلي */
+        /* صندوق المراسلات */
         .inbox-layout {
             display: flex;
             background-color: var(--bg-white);
@@ -682,19 +683,19 @@
         }
 
         .inbox-user-card:hover {
-            background-color: var(--primary-yellow-light);
+            background-color: var(--primary-blue-light);
         }
 
         .inbox-user-card.active {
-            background-color: var(--primary-yellow-light);
-            border-color: var(--primary-yellow);
+            background-color: var(--primary-blue-light);
+            border-color: var(--primary-blue);
         }
 
         .inbox-user-avatar {
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            background-color: var(--primary-yellow);
+            background-color: var(--primary-blue);
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -780,7 +781,7 @@
 
         .chat-bubble.sent {
             align-self: flex-start;
-            background-color: var(--primary-yellow);
+            background-color: var(--primary-blue);
             color: #ffffff;
             border-bottom-right-radius: 4px;
         }
@@ -812,12 +813,12 @@
         }
 
         .chat-input:focus {
-            border-color: var(--primary-yellow);
+            border-color: var(--primary-blue);
         }
 
         .chat-btn {
             padding: 0 20px;
-            background-color: var(--primary-yellow);
+            background-color: var(--primary-blue);
             color: #ffffff;
             border: none;
             border-radius: var(--radius-md);
@@ -826,10 +827,10 @@
         }
 
         .chat-btn:hover {
-            background-color: var(--primary-yellow-hover);
+            background-color: var(--primary-blue-hover);
         }
 
-        /* شاشات التحقق من الحساب */
+        /* التحقق من حالة الحساب */
         .status-screen-container {
             max-width: 580px;
             width: 100%;
@@ -962,7 +963,7 @@
         .badge-success { background-color: rgba(16, 185, 129, 0.12); color: var(--success); }
         .badge-warning { background-color: rgba(245, 158, 11, 0.12); color: var(--warning); }
         .badge-danger { background-color: rgba(239, 68, 68, 0.12); color: var(--danger); }
-        .badge-accent { background-color: var(--primary-yellow-light); color: var(--primary-yellow); }
+        .badge-accent { background-color: var(--primary-blue-light); color: var(--primary-blue); }
 
         .mobile-toggle-btn {
             display: none;
@@ -973,7 +974,6 @@
             color: var(--text-dark);
         }
 
-        /* الاستعلامات المتجاوبة */
         @media (max-width: 992px) {
             .sidebar {
                 transform: translateX(100%);
@@ -1005,11 +1005,9 @@
 <body>
 
     <div id="toast" class="alert-toast"></div>
-
-    <!-- غطاء الشاشة للقائمة الجانبية في الجوال -->
     <div id="sidebar-overlay" class="sidebar-overlay" onclick="App.toggleSidebar()"></div>
 
-    <!-- بوابة المصادقة والحسابات الفاخرة -->
+    <!-- بوابة المصادقة والتسجيل -->
     <div id="auth-screen" class="auth-wrapper">
         <div class="auth-container">
             <div class="auth-brand">
@@ -1023,7 +1021,7 @@
                 <button id="btn-register-tab" class="auth-toggle-btn" onclick="AuthPage.switchTab('register')">إنشاء حساب جديد</button>
             </div>
 
-            <!-- نموذج تسجيل الدخول المشترك -->
+            <!-- نموذج الدخول المشترك -->
             <form id="login-form">
                 <div class="form-group">
                     <label>البريد الإلكتروني</label>
@@ -1033,11 +1031,10 @@
                     <label>كلمة المرور</label>
                     <input type="password" id="login-password" class="form-control" placeholder="أدخل كلمة المرور" required>
                 </div>
-               
                 <button type="submit" class="btn"><i class="fa-solid fa-arrow-right-to-bracket"></i> دخول إلى المنصة</button>
             </form>
 
-            <!-- نموذج إنشاء الحساب متعدد الصلاحيات -->
+            <!-- نموذج إنشاء حساب جديد (مستثنى منه المدير تماماً ومقتصر على المعلم والطالب وولي الأمر) -->
             <form id="register-form" style="display: none;">
                 <div class="role-selector">
                     <div id="role-teacher" class="role-card active" onclick="AuthPage.selectRole('teacher')">
@@ -1054,10 +1051,7 @@
                     </div>
                 </div>
 
-                <!-- الحقول الديناميكية حسب الاختيار -->
-                <div id="dynamic-fields" class="form-grid">
-                    <!-- سيتم حقن الحقول هنا بواسطة جافا سكريبت -->
-                </div>
+                <div id="dynamic-fields" class="form-grid"></div>
 
                 <div class="form-group">
                     <label>كلمة المرور</label>
@@ -1069,13 +1063,12 @@
         </div>
     </div>
 
-    <!-- واجهة المنصة السحابية والتنقل الداخلي -->
+    <!-- واجهة المنصة الرئيسية -->
     <div id="app-screen" class="app-layout" style="display: none;">
-        <!-- القائمة الجانبية المريحة -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
                 <i class="fa-solid fa-shapes"></i>
-                <span>بوابة التعليم الاحترافي</span>
+                <span>منصتي المتقدمة</span>
             </div>
             <ul class="sidebar-menu" id="sidebar-menu"></ul>
             <div class="sidebar-footer">
@@ -1089,7 +1082,6 @@
             </div>
         </aside>
 
-        <!-- المحتوى المركزي الفسيح -->
         <main class="main-container">
             <header class="navbar">
                 <div style="display: flex; align-items: center; gap: 12px;">
@@ -1103,31 +1095,29 @@
                 </div>
             </header>
 
-            <div class="content-body" id="app-rendered-view">
-                <!-- المحتوى الديناميكي للوحات التحكم -->
-            </div>
+            <div class="content-body" id="app-rendered-view"></div>
         </main>
     </div>
 
-    <!-- نافذة الإشعارات السحابية -->
+    <!-- الإشعارات -->
     <div class="modal" id="notifications-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-bell"></i> التنبيهات والإعلانات الرسمية</h3>
+                <h3><i class="fa-solid fa-bell"></i> التنبيهات والإعلانات</h3>
                 <button class="modal-close" onclick="App.closeModal('notifications-modal')">&times;</button>
             </div>
             <div class="modal-body" id="notifications-list-container"></div>
             <div class="modal-footer">
-                <button class="btn" onclick="App.closeModal('notifications-modal')">حسناً</button>
+                <button class="btn" onclick="App.closeModal('notifications-modal')">موافق</button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة النماذج العامة المنبثقة -->
+    <!-- النوافذ المنبثقة العامة -->
     <div class="modal" id="generic-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="generic-modal-title">تحديث الإعدادات</h3>
+                <h3 id="generic-modal-title">تحديث</h3>
                 <button class="modal-close" onclick="App.closeModal('generic-modal')">&times;</button>
             </div>
             <div class="modal-body" id="generic-modal-body"></div>
@@ -1137,7 +1127,7 @@
 
     <script>
         // ==========================================
-        // 1. نظام جلب ومزامنة قواعد البيانات (سحابي / محلي)
+        // 1. نظام مزامنة وقواعد البيانات
         // ==========================================
 
         const firebaseConfig = {
@@ -1163,16 +1153,14 @@
                         firebase.initializeApp(firebaseConfig);
                         this.db = firebase.database();
                         this.isFirebase = true;
-                        console.log("Firebase Connected Successfully.");
+                        console.log("Firebase Database Loaded.");
                     } catch (e) {
-                        console.warn("Firebase Init Failed, falling back to LocalStorage:", e);
+                        console.warn("Firebase offline fallback mode active.");
                         this.isFirebase = false;
                     }
                 } else {
-                    console.info("Using LocalStorage offline mode. Add real Firebase API keys for cloud syncing.");
                     this.isFirebase = false;
                 }
-
                 await this.seedInitialDatabase();
             },
 
@@ -1186,7 +1174,7 @@
                             return data;
                         }
                     } catch (e) {
-                        console.error("Firebase read error, falling back to LocalStorage:", e);
+                        console.error("Local storage fallback loaded.", e);
                     }
                 }
                 return JSON.parse(localStorage.getItem('edtech_' + path)) || [];
@@ -1205,27 +1193,43 @@
 
             async seedInitialDatabase() {
                 const users = await this.get('users');
+                
+                // حساب مدير النظام الثابت والآمن والمقرر من قبلك
+                const staticAdmin = {
+                    id: 'usr_admin',
+                    email: 'srk87srk@gmail.com',
+                    password: '606486',
+                    name: 'المدير العام للمنصة',
+                    role: 'admin',
+                    status: 'approved'
+                };
+
                 if (!users || users.length === 0) {
                     const defaultUsers = [
-                        // تم تمييز معلمين منفصلين لإيضاح وضمان ميزة خصوصية وعزل البيانات
-                        { id: 'usr_t1', email: 'teacher@edtech.com', password: '123', name: 'أ. حسين نقد', role: 'teacher', phone: '+97150000000', specialization: 'الرياضيات المتقدمة', school: 'مدارس المستقبل النموذجية', status: 'approved' },
-                        { id: 'usr_t2', email: 'sara@edtech.com', password: '123', name: 'أ. سارة أحمد', role: 'teacher', phone: '+97152222222', specialization: 'الفيزياء الكونية', school: 'أكاديمية العلوم التطبيقية', status: 'approved' },
-                        
-                        // ربط الطلاب بالمعلم المناسب
+                        staticAdmin,
+                        { id: 'usr_t1', email: 'teacher@edtech.com', password: '123', name: 'أ. حسين نقد', role: 'teacher', phone: '+97150000000', specialization: 'الرياضيات المتقدمة', school: 'مدارس الثروات', status: 'approved' },
                         { id: 'usr_s1', email: 'student@edtech.com', password: '123', name: 'طارق المحسني', role: 'student', phone: '+971570000000', studentId: 'S-2026', grade: 'الصف العاشر', progress: 15, status: 'approved', teacherId: 'usr_t1' },
-                        { id: 'usr_s2', email: 'raed@edtech.com', password: '123', name: 'رائد اليافعي', role: 'student', phone: '+97159999999', studentId: 'S-2027', grade: 'الصف العاشر علمي', progress: 40, status: 'approved', teacherId: 'usr_t2' },
-                        
-                        // ربط أولياء الأمور
                         { id: 'usr_p1', email: 'parent@edtech.com', password: '123', name: 'صدام حسين (أبو صدام)', role: 'parent', phone: '+9715000000', studentId: 'usr_s1', status: 'approved', teacherId: 'usr_t1' }
                     ];
                     await this.set('users', defaultUsers);
+                } else {
+                    // التحقق للتأكد من وجود حساب مدير النظام الثابت وتحديثه دائماً للأمان والتحقق
+                    const adminIndex = users.findIndex(u => u.email === staticAdmin.email);
+                    if (adminIndex === -1) {
+                        users.push(staticAdmin);
+                        await this.set('users', users);
+                    } else {
+                        users[adminIndex].password = staticAdmin.password; // تأكيد تثبيت كلمة المرور المدخلة
+                        users[adminIndex].role = 'admin';
+                        users[adminIndex].status = 'approved';
+                        await this.set('users', users);
+                    }
                 }
 
                 const lessons = await this.get('lessons');
                 if (!lessons || lessons.length === 0) {
                     await this.set('lessons', [
-                        { id: 'les_1', title: 'مقدمة في الدوال الجبرية والمعادلات التفاضلية', content: 'الدالة هي علاقة تربط كل عنصر من عناصر المجموعة الأولى بعنصر واحد فقط من عناصر المجموعة الثانية. في هذا الدرس، نستكشف أنواع الدوال ورسمها البياني والتمثيلي.', videoType: 'youtube', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', teacherId: 'usr_t1' },
-                        { id: 'les_2', title: 'ميكانيكا الكم والنسبية العامة لأينشتاين', content: 'في هذا الدرس الفيزيائي المتقدم، نستعرض أسس ومبادئ ميكانيكا الكم والنسبية العامة ومفهوم تمدد الزمان الفضائي بطريقة رياضية تطبيقية.', videoType: 'youtube', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', teacherId: 'usr_t2' }
+                        { id: 'les_1', title: 'مقدمة في الدوال الجبرية والمعادلات التفاضلية', grade: 'الصف العاشر', content: 'الدالة هي علاقة تربط كل عنصر من عناصر المجموعة الأولى بعنصر واحد فقط من عناصر المجموعة الثانية. في هذا الدرس، نستكشف أنواع الدوال ورسمها البياني والتمثيلي.', videoType: 'youtube', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', teacherId: 'usr_t1' }
                     ]);
                 }
 
@@ -1236,37 +1240,19 @@
                             id: 'assign_1',
                             title: 'واجب الدوال الرياضية الأول',
                             duration: 5,
+                            grade: 'الصف العاشر',
                             teacherId: 'usr_t1',
                             questions: [
-                                { qId: 1, text: 'أي مما يلي يمثل دالة خطية صحيحة؟', options: ['y = x^2', 'y = mx + b', 'y = 1/x', 'y = sin(x)'], correct: 'y = mx + b', points: 10 }
-                            ]
-                        },
-                        {
-                            id: 'assign_2',
-                            title: 'تقييم ميكانيكا الكم والنسبية',
-                            duration: 10,
-                            teacherId: 'usr_t2',
-                            questions: [
-                                { qId: 1, text: 'ما هي السرعة القصوى الثابتة في الكون الفيزيائي؟', options: ['سرعة الصوت', 'سرعة الضوء', 'سرعة الجاذبية الأرضية', 'سرعة الرياح القصوى'], correct: 'سرعة الضوء', points: 10 }
+                                { qId: 1, text: 'أي مما يلي يمثل دالة خطية صحيحة؟', options: ['y = x^2', 'y = mx + b', 'y = 1/x', 'y = sin(x)'], correct: 'y = mx + b', points: 10, image: '' }
                             ]
                         }
-                    ]);
-                }
-
-                const attendance = await this.get('attendance');
-                if (!attendance || attendance.length === 0) {
-                    await this.set('attendance', [
-                        { date: '2026-07-06', studentId: 'usr_s1', status: 'present' },
-                        { date: '2026-07-07', studentId: 'usr_s1', status: 'present' },
-                        { date: '2026-07-08', studentId: 'usr_s1', status: 'absent' }
                     ]);
                 }
             }
         };
 
-
         // ==========================================
-        // 2. إدارة وتحديثات واجهات المصادقة والتسجيل
+        // 2. إدارة وتحديثات واجهات المصادقة
         // ==========================================
 
         const AppState = {
@@ -1334,7 +1320,22 @@
                 container.innerHTML = '';
 
                 const users = await DBService.get('users');
-                const teachers = users.filter(u => u.role === 'teacher');
+                const teachers = users.filter(u => u.role === 'teacher' && u.status === 'approved');
+
+                const gradeOptions = `
+                    <option value="الصف الأول">الصف الأول</option>
+                    <option value="الصف الثاني">الصف الثاني</option>
+                    <option value="الصف الثالث">الصف الثالث</option>
+                    <option value="الصف الرابع">الصف الرابع</option>
+                    <option value="الصف الخامس">الصف الخامس</option>
+                    <option value="الصف السادس">الصف السادس</option>
+                    <option value="الصف السابع">الصف السابع</option>
+                    <option value="الصف الثامن">الصف الثامن</option>
+                    <option value="الصف التاسع">الصف التاسع</option>
+                    <option value="الصف العاشر">الصف العاشر</option>
+                    <option value="الصف الحادي عشر">الصف الحادي عشر</option>
+                    <option value="الصف الثاني عشر">الصف الثاني عشر</option>
+                `;
 
                 if (role === 'teacher') {
                     container.innerHTML = `
@@ -1356,45 +1357,47 @@
                         </div>
                         <div class="form-group form-grid-full">
                             <label>اسم المدرسة</label>
-                            <input type="text" id="reg-school" class="form-control" placeholder="مثال: مدارس المستقبل النموذجية" required>
+                            <input type="text" id="reg-school" class="form-control" placeholder="مثال: مدارس الثروات" required>
                         </div>
                     `;
                 } else if (role === 'student') {
                     let teacherOptions = '';
                     teachers.forEach(t => {
-                        teacherOptions += `<option value="${t.id}">${t.name} (${t.specialization || 'معلم المشرف'})</option>`;
+                        teacherOptions += `<option value="${t.id}">${t.name} (${t.specialization || 'المشرف'})</option>`;
                     });
 
                     container.innerHTML = `
                         <div class="form-group">
                             <label>اسم الطالب</label>
-                            <input type="text" id="reg-name" class="form-control" placeholder="أدخل اسم الطالب الثنائي" required>
+                            <input type="text" id="reg-name" class="form-control" placeholder="أدخل الاسم الثنائي" required>
                         </div>
                         <div class="form-group">
                             <label>الرقم الطلابي</label>
-                            <input type="text" id="reg-student-id" class="form-control" placeholder="مثال: S-1002" required>
+                            <input type="text" id="reg-student-id" class="form-control" placeholder="مثال: 1234" required>
                         </div>
                         <div class="form-group">
                             <label>الصف الدراسي</label>
-                            <input type="text" id="reg-grade" class="form-control" placeholder="مثال: الصف العاشر" required>
+                            <select id="reg-grade" class="form-control" required>
+                                <option value="">اختر الصف الدراسي</option>
+                                ${gradeOptions}
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label>البريد الإلكتروني أو الهاتف</label>
-                            <input type="text" id="reg-email" class="form-control" placeholder="name@domain.com" required>
+                            <label>البريد الإلكتروني</label>
+                            <input type="email" id="reg-email" class="form-control" placeholder="student@domain.com" required>
                         </div>
                         <div class="form-group form-grid-full">
-                            <label>اختر المعلم المشرف (لضمان خصوصيتك)</label>
+                            <label>اختر المعلم المشرف</label>
                             <select id="reg-teacher-select" class="form-control" required>
-                                ${teacherOptions || '<option value="">لا يوجد معلمون مسجلون حالياً</option>'}
+                                ${teacherOptions || '<option value="">لا يوجد معلمون مسجلون ومفعلون حالياً</option>'}
                             </select>
                         </div>
                     `;
                 } else if (role === 'parent') {
                     const students = users.filter(u => u.role === 'student' && u.status === 'approved');
-                    
                     let studentOptions = '';
                     students.forEach(s => {
-                        studentOptions += `<option value="${s.id}">${s.name} (${s.studentId || s.email})</option>`;
+                        studentOptions += `<option value="${s.id}">${s.name} (${s.grade})</option>`;
                     });
 
                     container.innerHTML = `
@@ -1421,18 +1424,17 @@
             }
         };
 
-
         // ==========================================
-        // 3. إدارة التنقل وهيكلة واجهة المستخدم (App)
+        // 3. إدارة التنقل وهيكلة الواجهة
         // ==========================================
 
         const App = {
             activeChatUserId: null,
             examTimerInterval: null,
+            tempQuestionImages: {}, // لتخزين الصور المؤقتة المرفوعة للاختبار
 
             async init() {
                 await DBService.init();
-
                 const user = await AppState.syncCurrentUser();
                 if (user) {
                     this.launchDashboard(user);
@@ -1440,7 +1442,6 @@
                     this.showAuthScreen();
                 }
 
-                // مستمعي النماذج
                 document.getElementById('login-form').addEventListener('submit', (e) => {
                     e.preventDefault();
                     this.handleLogin();
@@ -1453,7 +1454,7 @@
 
                 window.addEventListener('resize', () => {
                     if (document.getElementById('app-screen').style.display === 'flex') {
-                        if (AppState.currentRoute === 'home' || AppState.currentRoute === 'reports') {
+                        if (AppState.currentRoute === 'home') {
                             this.renderActiveView();
                         }
                     }
@@ -1473,11 +1474,16 @@
                 const matched = users.find(u => u.email === email && u.password === pass);
 
                 if (matched) {
+                    if ((matched.role === 'teacher' || matched.role === 'student') && matched.status !== 'approved') {
+                        AppState.setCurrentUser(matched);
+                        this.launchDashboard(matched);
+                        return;
+                    }
                     AppState.setCurrentUser(matched);
-                    this.showToast('مرحباً بك في منصة التعليم الاحترافي!', 'success');
+                    this.showToast('مرحباً بك في منصتك التعليمية المحدثة!', 'success');
                     this.launchDashboard(matched);
                 } else {
-                    this.showToast('بيانات الدخول غير صحيحة، يرجى المحاولة ثانية.', 'danger');
+                    this.showToast('البيانات غير صحيحة، يرجى المحاولة مجدداً.', 'danger');
                 }
             },
 
@@ -1506,16 +1512,15 @@
                     password,
                     role,
                     phone: document.getElementById('reg-phone') ? document.getElementById('reg-phone').value.trim() : '',
-                    status: 'approved' // تم ضبطه ليدخل للوحة مباشرة تلبية لرغبة توجيه المستخدم الفوري
+                    status: (role === 'parent') ? 'approved' : 'pending' // المعلم والطالب بانتظار الموافقة لأمان تام
                 };
 
                 if (role === 'teacher') {
                     newUser.specialization = document.getElementById('reg-spec') ? document.getElementById('reg-spec').value.trim() : '';
                     newUser.school = document.getElementById('reg-school') ? document.getElementById('reg-school').value.trim() : '';
-                    newUser.status = 'approved';
                 } else if (role === 'student') {
                     newUser.studentId = document.getElementById('reg-student-id') ? document.getElementById('reg-student-id').value.trim() : '';
-                    newUser.grade = document.getElementById('reg-grade') ? document.getElementById('reg-grade').value.trim() : '';
+                    newUser.grade = document.getElementById('reg-grade') ? document.getElementById('reg-grade').value : '';
                     newUser.teacherId = document.getElementById('reg-teacher-select') ? document.getElementById('reg-teacher-select').value : '';
                     newUser.progress = 0;
                 } else if (role === 'parent') {
@@ -1527,7 +1532,6 @@
                 users.push(newUser);
                 await DBService.set('users', users);
 
-                // ربط الطالب بحساب والده
                 if (role === 'parent' && newUser.studentId) {
                     const sIdx = users.findIndex(u => u.id === newUser.studentId);
                     if (sIdx !== -1) {
@@ -1536,7 +1540,7 @@
                     }
                 }
 
-                this.showToast('تم إنشاء الحساب بنجاح! جاري توجيهك مباشرة للوحة التحكم لضمان خصوصيتك.', 'success');
+                this.showToast('تم التسجيل بنجاح! حسابك تحت المراجعة أو تم التفعيل حسب نوع حسابك.', 'success');
                 AppState.setCurrentUser(newUser);
                 this.launchDashboard(newUser);
             },
@@ -1548,17 +1552,18 @@
                 const nameElement = document.getElementById('sidebar-user-name');
                 if (nameElement) nameElement.textContent = user.name;
                 
-                let roleStr = 'معلم ومحاضر';
+                let roleStr = 'معلم';
                 if (user.role === 'student') roleStr = 'طالب مسجل';
                 if (user.role === 'parent') roleStr = 'ولي أمر';
+                if (user.role === 'admin') roleStr = 'مدير النظام';
                 
                 const roleElement = document.getElementById('sidebar-user-role');
                 if (roleElement) roleElement.textContent = roleStr;
 
                 const appScreen = document.getElementById('app-screen');
 
-                // التحقق من حالة الموافقة لضمان الخصوصية والتحقق الفعال
-                if (user.role === 'student' && user.status !== 'approved') {
+                // التحقق من الحظر أو الموافقة الأمنية لضمان الخصوصية
+                if ((user.role === 'student' || user.role === 'teacher') && user.status !== 'approved') {
                     if (appScreen) appScreen.classList.add('unapproved-mode');
                     this.renderApprovalStatusScreen(user);
                     return;
@@ -1570,38 +1575,31 @@
                 this.navigateTo('home');
             },
 
-            async renderApprovalStatusScreen(student) {
+            async renderApprovalStatusScreen(user) {
                 const view = document.getElementById('app-rendered-view');
                 if (!view) return;
 
-                const users = await DBService.get('users');
-                const teacher = users.find(u => u.id === student.teacherId) || { name: 'المعلم المشرف', phone: '97150000000' };
-                const cleanPhone = teacher.phone.replace(/[^0-9]/g, '');
-
-                if (student.status === 'pending') {
+                if (user.status === 'pending') {
                     view.innerHTML = `
                         <div class="status-screen-container">
                             <div class="status-screen-icon pending">
                                 <i class="fa-solid fa-user-clock"></i>
                             </div>
-                            <h2 style="font-weight: 800; margin-bottom: 12px; font-size: 1.4rem;">حسابك بانتظار مراجعة معلمك المشرف</h2>
+                            <h2 style="font-weight: 800; margin-bottom: 12px; font-size: 1.4rem;">حسابك بانتظار موافقة الإدارة المشرفة</h2>
                             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px;">
-                                مرحباً <strong>${student.name}</strong>، تم إسناد حسابك للمراجعة عند المعلم المشرف <strong>(${teacher.name})</strong> لتفعيل خدمات المنصة. يرجى الانتظار والتحديث.
+                                مرحباً <strong>${user.name}</strong>، حسابك قيد المراجعة والتحقق لضمان أمان وخصوصية البيانات. الرجاء مراجعة الإدارة أو المشرفين لتفعيل حسابك.
                             </p>
-                            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                                <button class="btn" onclick="window.location.reload()" style="max-width: 200px; background-color: var(--success);">
-                                    <i class="fa-solid fa-rotate"></i> تحديث حالة الحساب
+                            <div style="display: flex; gap: 10px; justify-content: center;">
+                                <button class="btn" onclick="window.location.reload()" style="max-width: 200px; background-color: var(--primary-blue);">
+                                    <i class="fa-solid fa-rotate"></i> تحديث الحالة
                                 </button>
                                 <button class="btn btn-secondary" onclick="App.logout()" style="max-width: 200px;">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج
+                                    تسجيل الخروج
                                 </button>
                             </div>
                         </div>
                     `;
-                } else if (student.status === 'rejected') {
-                    const encodedMsg = encodeURIComponent(`مرحباً أستاذ، لقد تم رفض طلبي في المنصة وأود استكمال الإجراءات المتبقية لقَبول حسابي الطالب (${student.name}).`);
-                    const waUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
-
+                } else if (user.status === 'rejected') {
                     view.innerHTML = `
                         <div class="status-screen-container">
                             <div class="status-screen-icon rejected">
@@ -1609,71 +1607,13 @@
                             </div>
                             <h2 style="font-weight: 800; margin-bottom: 12px; font-size: 1.4rem; color: var(--danger);">لم يتم قبول حسابك حالياً</h2>
                             <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 25px;">
-                                عذراً، لم تكتمل متطلبات قَبول حسابك. يرجى التواصل مع المعلم المشرف <strong>(${teacher.name})</strong> لتثبيت بياناتك عبر الواتساب، أو إعادة التقديم بالأسفل.
+                                عذراً، تعذر تفعيل حسابك من قبل إدارة المنصة بسبب عدم استكمال المتطلبات الأمنية. يرجى مراجعة إدارة المدرسة للتأكد من بياناتك.
                             </p>
-                            
-                            <div style="margin-bottom: 25px;">
-                                <a href="${waUrl}" target="_blank" class="btn" style="background-color: #25D366; box-shadow: none; display: inline-flex; width: auto; font-size: 0.9rem;">
-                                    <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> مراسلة معلمك عبر واتساب
-                                </a>
-                            </div>
-
-                            <div style="border-top: 1px solid var(--border-color); padding-top: 25px; text-align: right;">
-                                <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 15px;">نموذج تعديل البيانات وإعادة التقديم:</h4>
-                                <div class="form-group">
-                                    <label>الاسم الكامل</label>
-                                    <input type="text" id="resubmit-name" class="form-control" value="${student.name}">
-                                </div>
-                                <div class="form-group">
-                                    <label>الرقم الدراسي</label>
-                                    <input type="text" id="resubmit-student-id" class="form-control" value="${student.studentId || ''}">
-                                </div>
-                                <div class="form-group">
-                                    <label>الصف الدراسي</label>
-                                    <input type="text" id="resubmit-grade" class="form-control" value="${student.grade || ''}">
-                                </div>
-                                <div class="form-group">
-                                    <label>البريد الإلكتروني</label>
-                                    <input type="email" id="resubmit-email" class="form-control" value="${student.email}">
-                                </div>
-                                <button class="btn" onclick="App.submitResubmission('${student.id}')" style="margin-top: 10px;">
-                                    <i class="fa-solid fa-paper-plane"></i> تحديث البيانات وإعادة إرسال الطلب
-                                </button>
-                            </div>
-
-                            <button class="btn btn-secondary" onclick="App.logout()" style="max-width: 200px; margin-top: 20px;">
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج
+                            <button class="btn btn-secondary" onclick="App.logout()" style="max-width: 200px;">
+                                تسجيل الخروج
                             </button>
                         </div>
                     `;
-                }
-            },
-
-            async submitResubmission(studentId) {
-                const name = document.getElementById('resubmit-name').value.trim();
-                const studentNum = document.getElementById('resubmit-student-id').value.trim();
-                const grade = document.getElementById('resubmit-grade').value.trim();
-                const email = document.getElementById('resubmit-email').value.trim();
-
-                if (!name || !studentNum || !grade || !email) {
-                    this.showToast('يرجى تعبئة كافة حقول النموذج.', 'danger');
-                    return;
-                }
-
-                const users = await DBService.get('users');
-                const sIdx = users.findIndex(u => u.id === studentId);
-                if (sIdx !== -1) {
-                    users[sIdx].name = name;
-                    users[sIdx].studentId = studentNum;
-                    users[sIdx].grade = grade;
-                    users[sIdx].email = email;
-                    users[sIdx].status = 'pending';
-                    
-                    await DBService.set('users', users);
-                    AppState.setCurrentUser(users[sIdx]);
-
-                    this.showToast('تم تعديل بياناتك وإعادة إرسال طلب المراجعة بنجاح.', 'success');
-                    this.launchDashboard(users[sIdx]);
                 }
             },
 
@@ -1696,6 +1636,11 @@
                 menu.innerHTML = '';
 
                 const routes = {
+                    admin: [
+                        { route: 'home', icon: 'fa-gauge', text: 'إحصائيات النظام' },
+                        { route: 'admin_teachers', icon: 'fa-chalkboard-user', text: 'إدارة حسابات المعلمين' },
+                        { route: 'admin_students', icon: 'fa-users', text: 'إدارة الطلاب وأولياء الأمور' }
+                    ],
                     teacher: [
                         { route: 'home', icon: 'fa-gauge', text: 'الإحصائيات والبيانات' },
                         { route: 'students', icon: 'fa-users', text: 'إدارة الطلاب ومتابعتهم' },
@@ -1739,7 +1684,7 @@
                 }
 
                 const user = AppState.getCurrentUser();
-                if (user && user.role === 'student' && user.status !== 'approved') {
+                if (user && (user.role === 'student' || user.role === 'teacher') && user.status !== 'approved') {
                     this.renderApprovalStatusScreen(user);
                     return;
                 }
@@ -1773,7 +1718,6 @@
                 if (m) m.classList.remove('open');
             },
 
-
             // ==========================================
             // 4. نظام توجيه وحقن اللوحات الذكية
             // ==========================================
@@ -1784,54 +1728,68 @@
                 const title = document.getElementById('view-header-title');
                 if (!view) return;
 
-                // المعلم
+                // لوحات تحكم مدير النظام
+                if (user.role === 'admin') {
+                    if (AppState.currentRoute === 'home') {
+                        if (title) title.textContent = 'لوحة تحكم مدير المنصة';
+                        this.renderAdminHome(view);
+                    } else if (AppState.currentRoute === 'admin_teachers') {
+                        if (title) title.textContent = 'إدارة حسابات وموافقات المعلمين';
+                        this.renderAdminTeachers(view);
+                    } else if (AppState.currentRoute === 'admin_students') {
+                        if (title) title.textContent = 'إدارة وتعيين كلمات مرور المستخدمين';
+                        this.renderAdminStudents(view);
+                    }
+                }
+
+                // لوحات تحكم المعلم
                 if (user.role === 'teacher') {
                     if (AppState.currentRoute === 'home') {
                         if (title) title.textContent = 'لوحة الإشراف والمتابعة';
                         this.renderTeacherHome(view);
                     } else if (AppState.currentRoute === 'students') {
-                        if (title) title.textContent = 'إدارة ومتابعة الطلاب المباشرين';
+                        if (title) title.textContent = 'إدارة وتعديل الطلاب التابعين لك';
                         this.renderTeacherStudents(view);
                     } else if (AppState.currentRoute === 'lessons') {
                         if (title) title.textContent = 'الدروس والمناهج المعتمدة';
                         this.renderTeacherLessons(view);
                     } else if (AppState.currentRoute === 'assignments') {
-                        if (title) title.textContent = 'بنك الواجبات والاختبارات الخاصة بك';
+                        if (title) title.textContent = 'بنك الاختبارات والتقييمات';
                         this.renderTeacherAssignments(view);
                     } else if (AppState.currentRoute === 'grades') {
                         if (title) title.textContent = 'رصد ودرجات واجبات طلابك';
                         this.renderTeacherGrading(view);
                     } else if (AppState.currentRoute === 'messages') {
-                        if (title) title.textContent = 'صندوق مراسلات طلابك وأولياء أمورهم';
+                        if (title) title.textContent = 'غرفة التواصل الفوري والرسائل';
                         this.renderTeacherMessages(view);
                     }
                 }
 
-                // الطالب
+                // لوحات تحكم الطالب
                 if (user.role === 'student') {
                     if (AppState.currentRoute === 'home') {
-                        if (title) title.textContent = 'اللوحة الشخصية ومؤشر النجاح';
+                        if (title) title.textContent = 'اللوحة الشخصية ومؤشر التقدم';
                         this.renderStudentHome(view, user);
                     } else if (AppState.currentRoute === 'lessons') {
-                        if (title) title.textContent = 'الدروس والوسائط المقررة';
+                        if (title) title.textContent = 'الدروس والوسائط المقررة لصفك';
                         this.renderStudentLessons(view);
                     } else if (AppState.currentRoute === 'assignments') {
-                        if (title) title.textContent = 'المهام الدراسية الواجبة';
+                        if (title) title.textContent = 'الاختبارات والمهام المتاحة لصفك';
                         this.renderStudentAssignments(view, user);
                     } else if (AppState.currentRoute === 'grades') {
-                        if (title) title.textContent = 'لوحة التميز ودرجاتي';
+                        if (title) title.textContent = 'سجل درجاتي وملاحظات معلمي';
                         this.renderStudentGrades(view, user);
                     } else if (AppState.currentRoute === 'messages') {
-                        if (title) title.textContent = 'مكتب الاتصال مع معلمك المشرف';
+                        if (title) title.textContent = 'مكتب الاتصال المباشر مع المعلم';
                         this.renderStudentMessages(view, user);
                     }
                 }
 
-                // ولي الأمر
+                // لوحات تحكم ولي الأمر
                 if (user.role === 'parent') {
                     const student = (await DBService.get('users')).find(u => u.id === user.studentId);
                     if (!student) {
-                        view.innerHTML = '<p style="text-align:center; padding:40px; color:var(--text-muted);">عذراً، لم يتم ربط حساب أي ابن بحسابكم.</p>';
+                        view.innerHTML = '<p style="text-align:center; padding:40px; color:var(--text-muted);">تنبيه: لم يتم ربط حساب ابن حتى الآن.</p>';
                         return;
                     }
 
@@ -1842,10 +1800,10 @@
                         if (title) title.textContent = `التقرير والدرجات لـ ${student.name}`;
                         this.renderParentReports(view, student);
                     } else if (AppState.currentRoute === 'attendance') {
-                        if (title) title.textContent = `سجل الغياب والحضور لـ ${student.name}`;
+                        if (title) title.textContent = `سجل الحضور والغياب لـ ${student.name}`;
                         this.renderParentAttendance(view, student);
                     } else if (AppState.currentRoute === 'messages') {
-                        if (title) title.textContent = 'غرفة المراسلة الفورية مع المعلم';
+                        if (title) title.textContent = 'مكتب المراسلات مع معلم الابن';
                         this.renderParentMessages(view, user);
                     }
                 }
@@ -1853,14 +1811,212 @@
 
 
             // ==========================================
-            // 5. واجهات لوحة التحكم الخاصة بالمعلم
+            // 5. لوحة تحكم مدير النظام (Admin)
+            // ==========================================
+
+            async renderAdminHome(view) {
+                const users = await DBService.get('users');
+                const teachers = users.filter(u => u.role === 'teacher');
+                const pendingTeachers = teachers.filter(u => u.status === 'pending');
+                const students = users.filter(u => u.role === 'student');
+
+                view.innerHTML = `
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">إجمالي المعلمين</span>
+                                <div class="stat-value">${teachers.length}</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">طلبات معلم بانتظار موافقتك</span>
+                                <div class="stat-value" style="color:var(--warning);">${pendingTeachers.length}</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-user-clock"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">إجمالي الطلاب المسجلين</span>
+                                <div class="stat-value">${students.length}</div>
+                            </div>
+                            <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h4 style="margin-bottom:15px; font-size:1rem; font-weight:800;">إحصائيات المنصة العامة</h4>
+                        <div class="chart-canvas-wrapper">
+                            <canvas id="admin-home-canvas" class="chart-canvas" width="600" height="240"></canvas>
+                        </div>
+                    </div>
+                `;
+
+                setTimeout(() => {
+                    this.drawCanvasChart('admin-home-canvas', ['المعلمون', 'الطلاب', 'أولياء الأمور'], [teachers.length, students.length, users.filter(u => u.role === 'parent').length], '#1E40AF');
+                }, 50);
+            },
+
+            async renderAdminTeachers(view) {
+                const users = await DBService.get('users');
+                const teachers = users.filter(u => u.role === 'teacher');
+
+                let rows = '';
+                teachers.forEach(t => {
+                    let statusBadge = `<span class="badge badge-warning">بانتظار الموافقة</span>`;
+                    if (t.status === 'approved') statusBadge = `<span class="badge badge-success">نشط ومقبول</span>`;
+                    if (t.status === 'rejected') statusBadge = `<span class="badge badge-danger">مرفوض</span>`;
+
+                    rows += `
+                        <tr>
+                            <td><strong>${t.name}</strong></td>
+                            <td>${t.email}</td>
+                            <td>${t.specialization || 'عام'}</td>
+                            <td>${t.school || 'غير محدد'}</td>
+                            <td>${statusBadge}</td>
+                            <td>
+                                <div style="display:flex; gap:8px;">
+                                    <button class="btn" style="width:auto; padding:6px 12px; font-size:0.75rem; background-color:var(--success);" onclick="App.updateUserStatus('${t.id}', 'approved')">قبول</button>
+                                    <button class="btn" style="width:auto; padding:6px 12px; font-size:0.75rem; background-color:var(--danger);" onclick="App.updateUserStatus('${t.id}', 'rejected')">حظر/رفض</button>
+                                    <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="App.promptResetPassword('${t.id}')">إعادة كلمة المرور</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                view.innerHTML = `
+                    <div class="data-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>اسم المعلم</th>
+                                    <th>البريد الإلكتروني</th>
+                                    <th>التخصص</th>
+                                    <th>المدرسة</th>
+                                    <th>حالة الحساب</th>
+                                    <th>خيارات التحكم</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rows || '<tr><td colspan="6" style="text-align:center;">لا يوجد معلمون مسجلون حالياً في المنصة.</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            },
+
+            async renderAdminStudents(view) {
+                const users = await DBService.get('users');
+                const filtered = users.filter(u => u.role === 'student' || u.role === 'parent');
+
+                let rows = '';
+                filtered.forEach(u => {
+                    const roleText = u.role === 'student' ? 'طالب' : 'ولي أمر';
+                    rows += `
+                        <tr>
+                            <td><strong>${u.name}</strong></td>
+                            <td>${u.email}</td>
+                            <td><span class="badge badge-accent">${roleText}</span></td>
+                            <td>${u.grade || 'غير معروف'}</td>
+                            <td>
+                                <button class="btn" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="App.promptResetPassword('${u.id}')">
+                                    <i class="fa-solid fa-key"></i> تعيين كلمة مرور جديدة
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                view.innerHTML = `
+                    <div class="data-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>البريد الإلكتروني</th>
+                                    <th>نوع الحساب</th>
+                                    <th>الصف الدراسي</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rows || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب أو أولياء أمور مسجلين حالياً.</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            },
+
+            async updateUserStatus(userId, newStatus) {
+                const users = await DBService.get('users');
+                const idx = users.findIndex(u => u.id === userId);
+                if (idx !== -1) {
+                    users[idx].status = newStatus;
+                    await DBService.set('users', users);
+                    this.showToast('تم تحديث حالة حساب المعلم واعتماده بنجاح.', 'success');
+                    this.renderAdminTeachers(document.getElementById('app-rendered-view'));
+                }
+            },
+
+            async promptResetPassword(userId) {
+                const users = await DBService.get('users');
+                const user = users.find(u => u.id === userId);
+                if (!user) return;
+
+                const body = document.getElementById('generic-modal-body');
+                const footer = document.getElementById('generic-modal-footer');
+                if (!body || !footer) return;
+
+                document.getElementById('generic-modal-title').textContent = `تعيين كلمة مرور لـ: ${user.name}`;
+                body.innerHTML = `
+                    <div class="form-group">
+                        <label>كلمة المرور الجديدة</label>
+                        <input type="text" id="admin-new-pass" class="form-control" placeholder="أدخل كلمة مرور قوية" required>
+                    </div>
+                `;
+
+                footer.innerHTML = `
+                    <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
+                    <button class="btn" onclick="App.executeResetPassword('${userId}')">حفظ التعديل الآمن</button>
+                `;
+
+                this.openModal('generic-modal');
+            },
+
+            async executeResetPassword(userId) {
+                const newPass = document.getElementById('admin-new-pass').value.trim();
+                if (newPass.length < 4) {
+                    this.showToast('يرجى كتابة كلمة مرور صالحة.', 'danger');
+                    return;
+                }
+
+                const users = await DBService.get('users');
+                const idx = users.findIndex(u => u.id === userId);
+                if (idx !== -1) {
+                    users[idx].password = newPass;
+                    await DBService.set('users', users);
+                    this.closeModal('generic-modal');
+                    this.showToast('تم إعادة تعيين كلمة المرور بنجاح للمستخدم.', 'success');
+                    
+                    if (AppState.currentRoute === 'admin_teachers') {
+                        this.renderAdminTeachers(document.getElementById('app-rendered-view'));
+                    } else {
+                        this.renderAdminStudents(document.getElementById('app-rendered-view'));
+                    }
+                }
+            },
+
+
+            // ==========================================
+            // 6. واجهات لوحة تحكم المعلم (Teacher)
             // ==========================================
 
             async renderTeacherHome(view) {
                 const teacher = AppState.getCurrentUser();
                 const users = await DBService.get('users');
                 
-                // عزل كامل للبيانات والإحصائيات
                 const students = users.filter(u => u.role === 'student' && u.teacherId === teacher.id && u.status === 'approved');
                 const lessons = (await DBService.get('lessons')).filter(l => l.teacherId === teacher.id);
                 const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === teacher.id);
@@ -1883,21 +2039,21 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-info">
-                                <span style="font-size:0.8rem; color:var(--text-muted);">اختباراتك المنجزة</span>
+                                <span style="font-size:0.8rem; color:var(--text-muted);">تقييماتك واختباراتك</span>
                                 <div class="stat-value">${assigns.length}</div>
                             </div>
                             <div class="stat-icon"><i class="fa-solid fa-file-invoice"></i></div>
                         </div>
                     </div>
 
-                    <div style="margin-bottom:20px; display:flex; gap:10px; flex-wrap:wrap;">
+                    <div style="margin-bottom:20px; display:flex; gap:10px;">
                         <button class="btn" style="width:auto;" onclick="App.openCreateAnnouncementModal()">
-                            <i class="fa-solid fa-bullhorn"></i> إرسال إعلان عام لطلابك
+                            <i class="fa-solid fa-bullhorn"></i> نشر تنبيه عام لطلابك
                         </button>
                     </div>
 
                     <div class="chart-container">
-                        <h4 style="margin-bottom:15px; font-size:1rem; font-weight:800;">تتبع مستويات الاستيعاب لدى طلابك</h4>
+                        <h4 style="margin-bottom:15px; font-size:1rem; font-weight:800;">تحليل أداء طلابك</h4>
                         <div class="chart-canvas-wrapper">
                             <canvas id="teacher-home-canvas" class="chart-canvas" width="600" height="240"></canvas>
                         </div>
@@ -1905,7 +2061,7 @@
                 `;
 
                 setTimeout(() => {
-                    this.drawCanvasChart('teacher-home-canvas', ['الوحدة الأولى', 'الوحدة الثانية', 'الوحدة الثالثة', 'الاختبار النصفي'], [78, 86, 81, 94], '#D97706');
+                    this.drawCanvasChart('teacher-home-canvas', ['الوحدة 1', 'الوحدة 2', 'الاختبار النصفي'], [75, 88, 92], '#1E40AF');
                 }, 50);
             },
 
@@ -1913,7 +2069,7 @@
                 const body = document.getElementById('generic-modal-body');
                 const footer = document.getElementById('generic-modal-footer');
                 if (!body || !footer) return;
-                document.getElementById('generic-modal-title').textContent = 'إرسال إعلان عام للطلاب وأولياء الأمور المشرف عليهم';
+                document.getElementById('generic-modal-title').textContent = 'إرسال إعلان عام للطلاب المتربطين بحسابك';
 
                 body.innerHTML = `
                     <div class="form-group">
@@ -1924,7 +2080,7 @@
 
                 footer.innerHTML = `
                     <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
-                    <button class="btn" onclick="App.saveAnnouncement()">إرسال ونشر الإعلان</button>
+                    <button class="btn" onclick="App.saveAnnouncement()">نشر الإعلان</button>
                 `;
 
                 this.openModal('generic-modal');
@@ -1940,7 +2096,7 @@
                     id: 'ann_' + Date.now(),
                     text: text,
                     date: new Date().toISOString().split('T')[0],
-                    teacherId: teacher.id // ربط الإعلان بهوية المعلم
+                    teacherId: teacher.id
                 });
                 await DBService.set('announcements', anns);
 
@@ -1957,14 +2113,13 @@
                 await DBService.set('notifications', notifs);
 
                 this.closeModal('generic-modal');
-                this.showToast('تم نشر الإعلان بنجاح وإخطار طلابك.', 'success');
+                this.showToast('تم نشر وتعميم الإعلان بنجاح.', 'success');
             },
 
             async renderTeacherStudents(view) {
                 const teacher = AppState.getCurrentUser();
                 const users = await DBService.get('users');
                 
-                // عزل تام لبيانات الطلاب حسب المعلم المشرف المربوط بهم
                 const students = users.filter(u => u.role === 'student' && u.teacherId === teacher.id && u.status === 'approved');
                 const pendingStudents = users.filter(u => u.role === 'student' && u.teacherId === teacher.id && u.status === 'pending');
 
@@ -1976,11 +2131,11 @@
                             <tr>
                                 <td><strong>${ps.name}</strong></td>
                                 <td>${ps.studentId || 'بانتظار التسجيل'}</td>
-                                <td>${ps.grade || 'غير محدد'}</td>
+                                <td>${ps.grade || 'غير حدد'}</td>
                                 <td>${ps.email}</td>
                                 <td>
                                     <div style="display: flex; gap: 8px;">
-                                        <button class="btn" style="width:auto; padding:5px 10px; font-size:0.75rem; background-color: var(--success);" onclick="App.processApproval('${ps.id}', 'approved')">قبول</button>
+                                        <button class="btn" style="width:auto; padding:5px 10px; font-size:0.75rem; background-color: var(--success);" onclick="App.processApproval('${ps.id}', 'approved')">تفعيل وقبول</button>
                                         <button class="btn" style="width:auto; padding:5px 10px; font-size:0.75rem; background-color: var(--danger);" onclick="App.processApproval('${ps.id}', 'rejected')">رفض</button>
                                     </div>
                                 </td>
@@ -1989,9 +2144,9 @@
                     });
 
                     pendingBlockHTML = `
-                        <div style="background-color: var(--primary-yellow-light); border: 2px dashed var(--primary-yellow); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 25px;">
-                            <h4 style="margin-bottom: 12px; font-weight: 800; color: var(--primary-yellow-hover); font-size: 1rem;">
-                                <i class="fa-solid fa-user-clock"></i> طلبات تسجيل بانتظار موافقتك المباشرة (${pendingStudents.length})
+                        <div style="background-color: var(--primary-blue-light); border: 2px dashed var(--primary-blue); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 25px;">
+                            <h4 style="margin-bottom: 12px; font-weight: 800; color: var(--primary-blue); font-size: 1rem;">
+                                <i class="fa-solid fa-user-clock"></i> طلبات تسجيل الطلاب بانتظار موافقتك (${pendingStudents.length})
                             </h4>
                             <div class="data-table-wrapper" style="margin-top: 10px; max-height: 250px; overflow-y: auto;">
                                 <table>
@@ -2000,8 +2155,8 @@
                                             <th>اسم الطالب</th>
                                             <th>الرقم الدراسي</th>
                                             <th>الصف</th>
-                                            <th>البريد الإلكتروني</th>
-                                            <th>الإجراء</th>
+                                            <th>البريد</th>
+                                            <th>الإجراء المباشر</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2023,6 +2178,11 @@
                             <td>${s.grade || 'غير محدد'}</td>
                             <td>${parent ? parent.name : '<span style="color:var(--text-muted);">غير مرتبط</span>'}</td>
                             <td><span class="badge badge-accent">${s.progress || 0}% إنجاز</span></td>
+                            <td>
+                                <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="App.openEditStudentModal('${s.id}')">
+                                    <i class="fa-solid fa-pen-to-square"></i> تعديل البيانات
+                                </button>
+                            </td>
                         </tr>
                     `;
                 });
@@ -2031,9 +2191,9 @@
                     ${pendingBlockHTML}
 
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-                        <h4 style="font-size: 1rem; margin:0;"><i class="fa-solid fa-graduation-cap"></i> طلابك المسجلين بالمقرر</h4>
-                        <button class="btn" style="width:auto; font-size:0.85rem; padding:8px 16px; background-color:var(--success);" onclick="App.openTakeAttendanceModal()">
-                            <i class="fa-solid fa-calendar-check"></i> تسجيل حضور اليوم
+                        <h4 style="font-size: 1rem; margin:0;"><i class="fa-solid fa-graduation-cap"></i> طلابك النشطين في الفصول</h4>
+                        <button class="btn" style="width:auto; font-size:0.85rem; padding:8px 16px;" onclick="App.openTakeAttendanceModal()">
+                            <i class="fa-solid fa-calendar-check"></i> تسجيل حضور وغياب اليوم
                         </button>
                     </div>
 
@@ -2044,16 +2204,112 @@
                                     <th>اسم الطالب</th>
                                     <th>الرقم الطلابي</th>
                                     <th>الصف الدراسي</th>
-                                    <th>ولي الأمر المرتبط</th>
-                                    <th>نسبة التقدم</th>
+                                    <th>ولي الأمر</th>
+                                    <th>نسبة الإنجاز</th>
+                                    <th>التحكم</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${rows || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب مقيدين بانتظارك حالياً.</td></tr>'}
+                                ${rows || '<tr><td colspan="6" style="text-align:center;">لا يوجد طلاب نشطين تحت إشرافك حالياً.</td></tr>'}
                             </tbody>
                         </table>
                     </div>
                 `;
+            },
+
+            async processApproval(studentId, action) {
+                const users = await DBService.get('users');
+                const idx = users.findIndex(u => u.id === studentId);
+                
+                if (idx !== -1) {
+                    users[idx].status = action;
+                    await DBService.set('users', users);
+                    
+                    const msg = action === 'approved' ? 'تم تفعيل حساب الطالب بنجاح.' : 'تم رفض طلب الطالب.';
+                    this.showToast(msg, 'success');
+                    this.renderTeacherStudents(document.getElementById('app-rendered-view'));
+                }
+            },
+
+            async openEditStudentModal(studentId) {
+                const users = await DBService.get('users');
+                const student = users.find(u => u.id === studentId);
+                if (!student) return;
+
+                const body = document.getElementById('generic-modal-body');
+                const footer = document.getElementById('generic-modal-footer');
+                if (!body || !footer) return;
+
+                document.getElementById('generic-modal-title').textContent = `تعديل بيانات الطالب: ${student.name}`;
+
+                const gradeOptions = `
+                    <option value="الصف الأول" ${student.grade === 'الصف الأول' ? 'selected' : ''}>الصف الأول</option>
+                    <option value="الصف الثاني" ${student.grade === 'الصف الثاني' ? 'selected' : ''}>الصف الثاني</option>
+                    <option value="الصف الثالث" ${student.grade === 'الصف الثالث' ? 'selected' : ''}>الصف الثالث</option>
+                    <option value="الصف الرابع" ${student.grade === 'الصف الرابع' ? 'selected' : ''}>الصف الرابع</option>
+                    <option value="الصف الخامس" ${student.grade === 'الصف الخامس' ? 'selected' : ''}>الصف الخامس</option>
+                    <option value="الصف السادس" ${student.grade === 'الصف السادس' ? 'selected' : ''}>الصف السادس</option>
+                    <option value="الصف السابع" ${student.grade === 'الصف السابع' ? 'selected' : ''}>الصف السابع</option>
+                    <option value="الصف الثامن" ${student.grade === 'الصف الثامن' ? 'selected' : ''}>الصف الثامن</option>
+                    <option value="الصف التاسع" ${student.grade === 'الصف التاسع' ? 'selected' : ''}>الصف التاسع</option>
+                    <option value="الصف العاشر" ${student.grade === 'الصف العاشر' ? 'selected' : ''}>الصف العاشر</option>
+                    <option value="الصف الحادي عشر" ${student.grade === 'الصف الحادي عشر' ? 'selected' : ''}>الصف الحادي عشر</option>
+                    <option value="الصف الثاني عشر" ${student.grade === 'الصف الثاني عشر' ? 'selected' : ''}>الصف الثاني عشر</option>
+                `;
+
+                body.innerHTML = `
+                    <div class="form-group">
+                        <label>الاسم الكامل</label>
+                        <input type="text" id="edit-std-name" class="form-control" value="${student.name}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>الرقم الطلابي</label>
+                        <input type="text" id="edit-std-sid" class="form-control" value="${student.studentId || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>الصف الدراسي</label>
+                        <select id="edit-std-grade" class="form-control" required>
+                            ${gradeOptions}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        <input type="email" id="edit-std-email" class="form-control" value="${student.email}" required>
+                    </div>
+                `;
+
+                footer.innerHTML = `
+                    <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
+                    <button class="btn" onclick="App.saveEditedStudent('${studentId}')">حفظ التغييرات</button>
+                `;
+
+                this.openModal('generic-modal');
+            },
+
+            async saveEditedStudent(studentId) {
+                const name = document.getElementById('edit-std-name').value.trim();
+                const studentIdVal = document.getElementById('edit-std-sid').value.trim();
+                const grade = document.getElementById('edit-std-grade').value;
+                const email = document.getElementById('edit-std-email').value.trim();
+
+                if (!name || !email) {
+                    this.showToast('يرجى تعبئة كافة البيانات الإلزامية.', 'danger');
+                    return;
+                }
+
+                const users = await DBService.get('users');
+                const idx = users.findIndex(u => u.id === studentId);
+                if (idx !== -1) {
+                    users[idx].name = name;
+                    users[idx].studentId = studentIdVal;
+                    users[idx].grade = grade;
+                    users[idx].email = email;
+                    
+                    await DBService.set('users', users);
+                    this.closeModal('generic-modal');
+                    this.showToast('تم تحديث بيانات الطالب وحفظها بنجاح.', 'success');
+                    this.renderTeacherStudents(document.getElementById('app-rendered-view'));
+                }
             },
 
             async openTakeAttendanceModal() {
@@ -2066,16 +2322,16 @@
                 const footer = document.getElementById('generic-modal-footer');
                 if (!body || !footer) return;
 
-                document.getElementById('generic-modal-title').textContent = `تسجيل الحضور لليوم - ${today}`;
+                document.getElementById('generic-modal-title').textContent = `تسجيل الحضور والغياب - اليوم ${today}`;
 
                 let studentListHTML = '';
                 students.forEach(s => {
                     studentListHTML += `
                         <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-color);">
-                            <span><strong>${s.name}</strong> (${s.studentId || 'بدون رقم'})</span>
+                            <span><strong>${s.name}</strong> (${s.grade})</span>
                             <div style="display:flex; gap:15px;">
                                 <label style="display:flex; align-items:center; gap:5px; font-size:0.85rem; cursor:pointer;">
-                                    <input type="radio" name="att_state_${s.id}" value="present" checked style="accent-color:var(--success);"> حاضر
+                                    <input type="radio" name="att_state_${s.id}" value="present" checked style="accent-color:var(--primary-blue);"> حاضر
                                 </label>
                                 <label style="display:flex; align-items:center; gap:5px; font-size:0.85rem; cursor:pointer;">
                                     <input type="radio" name="att_state_${s.id}" value="absent" style="accent-color:var(--danger);"> غائب
@@ -2086,7 +2342,6 @@
                 });
 
                 body.innerHTML = `
-                    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">تسجيل حالة حضور لطلابك فقط لليوم الدراسي الحالي.</p>
                     <div style="max-height:300px; overflow-y:auto; padding-left:5px;">
                         ${studentListHTML || '<p style="text-align:center; color:var(--text-muted);">لا يوجد طلاب مقبولين مسجلين تحت إشرافك.</p>'}
                     </div>
@@ -2094,7 +2349,7 @@
 
                 footer.innerHTML = `
                     <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
-                    <button class="btn" onclick="App.saveDailyAttendance()" ${students.length === 0 ? 'disabled' : ''}>حفظ وإرسال السجل</button>
+                    <button class="btn" onclick="App.saveDailyAttendance()" ${students.length === 0 ? 'disabled' : ''}>حفظ الحضور والغياب</button>
                 `;
 
                 this.openModal('generic-modal');
@@ -2127,29 +2382,12 @@
 
                 await DBService.set('attendance', filteredAttendance);
                 this.closeModal('generic-modal');
-                this.showToast('تم تسجيل وحفظ حضور طلابك بنجاح.', 'success');
+                this.showToast('تم تسجيل وحفظ الحضور بنجاح.', 'success');
             },
 
-            async processApproval(studentId, action) {
-                const users = await DBService.get('users');
-                const idx = users.findIndex(u => u.id === studentId);
-                
-                if (idx !== -1) {
-                    users[idx].status = action;
-                    await DBService.set('users', users);
-                    
-                    const msg = action === 'approved' ? 'تم تفعيل حساب الطالب المشرف عليه بنجاح.' : 'تم توجيه الطالب للمراجعة وتعديل البيانات.';
-                    const type = action === 'approved' ? 'success' : 'warning';
-                    
-                    this.showToast(msg, type);
-                    this.renderTeacherStudents(document.getElementById('app-rendered-view'));
-                }
-            },
-
+            // إدارة الدروس والمناهج مع ميزة اختيار الصف وتعديله
             async renderTeacherLessons(view) {
                 const teacher = AppState.getCurrentUser();
-                
-                // عزل الدروس بحيث لا يرى المعلم سوى مناهجه الخاصة
                 const lessons = (await DBService.get('lessons')).filter(l => l.teacherId === teacher.id);
 
                 let listHTML = '';
@@ -2158,13 +2396,19 @@
                         <div style="background-color: var(--bg-white); border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-lg); box-shadow: var(--shadow-premium); margin-bottom:15px; display:flex; flex-direction:column; gap:15px;">
                             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
                                 <div style="flex:1; min-width:250px;">
-                                    <h4 style="margin-bottom:6px; font-size:1.1rem; font-weight:800;">${l.title}</h4>
+                                    <div style="display:flex; gap:8px; align-items:center; margin-bottom:6px;">
+                                        <h4 style="font-size:1.1rem; font-weight:800; margin:0;">${l.title}</h4>
+                                        <span class="badge badge-accent">${l.grade || 'كل الصفوف (عام)'}</span>
+                                    </div>
                                     <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:10px;">${l.content.substring(0, 160)}...</p>
-                                    <span class="badge ${l.videoType === 'youtube' ? 'badge-warning' : l.videoType === 'direct' ? 'badge-success' : 'badge-accent'}">
-                                        <i class="fa-solid fa-play"></i> ${l.videoType === 'youtube' ? 'فيديو يوتيوب' : l.videoType === 'direct' ? 'رابط مباشر' : 'بدون فيديو'}
+                                    <span class="badge ${l.videoType === 'youtube' ? 'badge-warning' : 'badge-success'}">
+                                        <i class="fa-solid fa-play"></i> ${l.videoType === 'youtube' ? 'يوتيوب' : 'فيديو مباشر'}
                                     </span>
                                 </div>
-                                <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.8rem; align-self:flex-start;" onclick="App.deleteLesson('${l.id}')">حذف الدرس</button>
+                                <div style="display:flex; gap:8px;">
+                                    <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.openEditLessonModal('${l.id}')">تعديل</button>
+                                    <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.8rem; border-color:var(--danger); color:var(--danger);" onclick="App.deleteLesson('${l.id}')">حذف</button>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -2184,37 +2428,72 @@
             },
 
             openCreateLessonModal() {
+                this.openEditLessonModal(null);
+            },
+
+            async openEditLessonModal(lessonId = null) {
                 const body = document.getElementById('generic-modal-body');
                 const footer = document.getElementById('generic-modal-footer');
                 if (!body || !footer) return;
-                document.getElementById('generic-modal-title').textContent = 'نشر وتثبيت درس جديد';
+
+                let isEdit = lessonId !== null;
+                let lesson = { title: '', content: '', grade: '', videoType: 'none', videoUrl: '' };
+
+                if (isEdit) {
+                    const lessons = await DBService.get('lessons');
+                    lesson = lessons.find(l => l.id === lessonId) || lesson;
+                }
+
+                document.getElementById('generic-modal-title').textContent = isEdit ? 'تعديل الدرس الحالي' : 'نشر وتثبيت درس جديد';
+
+                const gradeOptions = `
+                    <option value="عام" ${lesson.grade === 'عام' ? 'selected' : ''}>عام / جميع الصفوف</option>
+                    <option value="الصف الأول" ${lesson.grade === 'الصف الأول' ? 'selected' : ''}>الصف الأول</option>
+                    <option value="الصف الثاني" ${lesson.grade === 'الصف الثاني' ? 'selected' : ''}>الصف الثاني</option>
+                    <option value="الصف الثالث" ${lesson.grade === 'الصف الثالث' ? 'selected' : ''}>الصف الثالث</option>
+                    <option value="الصف الرابع" ${lesson.grade === 'الصف الرابع' ? 'selected' : ''}>الصف الرابع</option>
+                    <option value="الصف الخامس" ${lesson.grade === 'الصف الخامس' ? 'selected' : ''}>الصف الخامس</option>
+                    <option value="الصف السادس" ${lesson.grade === 'الصف السادس' ? 'selected' : ''}>الصف السادس</option>
+                    <option value="الصف السابع" ${lesson.grade === 'الصف السابع' ? 'selected' : ''}>الصف السابع</option>
+                    <option value="الصف الثامن" ${lesson.grade === 'الصف الثامن' ? 'selected' : ''}>الصف الثامن</option>
+                    <option value="الصف التاسع" ${lesson.grade === 'الصف التاسع' ? 'selected' : ''}>الصف التاسع</option>
+                    <option value="الصف العاشر" ${lesson.grade === 'الصف العاشر' ? 'selected' : ''}>الصف العاشر</option>
+                    <option value="الصف الحادي عشر" ${lesson.grade === 'الصف الحادي عشر' ? 'selected' : ''}>الصف الحادي عشر</option>
+                    <option value="الصف الثاني عشر" ${lesson.grade === 'الصف الثاني عشر' ? 'selected' : ''}>الصف الثاني عشر</option>
+                `;
 
                 body.innerHTML = `
                     <div class="form-group">
                         <label>عنوان الدرس</label>
-                        <input type="text" id="les-title" class="form-control" placeholder="مثال: الجبر والهندسة التفاضلية">
+                        <input type="text" id="les-title" class="form-control" placeholder="مثال: الجبر والهندسة" value="${lesson.title}">
+                    </div>
+                    <div class="form-group">
+                        <label>الصف المستهدف بالدراسة</label>
+                        <select id="les-grade" class="form-control">
+                            ${gradeOptions}
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>شرح الدرس بالتفصيل</label>
-                        <textarea id="les-content" class="form-control" rows="5" placeholder="اكتب الشرح هنا..."></textarea>
+                        <textarea id="les-content" class="form-control" rows="5" placeholder="اكتب الشرح هنا...">${lesson.content}</textarea>
                     </div>
                     <div class="form-group">
                         <label>نوع الفيديو المرفق</label>
                         <select id="les-video-type" class="form-control" onchange="App.toggleLessonVideoFields()">
-                            <option value="none">بدون فيديو</option>
-                            <option value="youtube">فيديو يوتيوب (YouTube Embed Link)</option>
-                            <option value="direct">رابط فيديو مباشر (Direct MP4 URL)</option>
+                            <option value="none" ${lesson.videoType === 'none' ? 'selected' : ''}>بدون فيديو</option>
+                            <option value="youtube" ${lesson.videoType === 'youtube' ? 'selected' : ''}>يوتيوب</option>
+                            <option value="direct" ${lesson.videoType === 'direct' ? 'selected' : ''}>رابط فيديو مباشر</option>
                         </select>
                     </div>
-                    <div class="form-group" id="video-url-container" style="display:none;">
+                    <div class="form-group" id="video-url-container" style="display:${lesson.videoType !== 'none' ? 'block' : 'none'};">
                         <label id="video-url-label">رابط الفيديو</label>
-                        <input type="url" id="les-video-url" class="form-control" placeholder="">
+                        <input type="url" id="les-video-url" class="form-control" placeholder="" value="${lesson.videoUrl}">
                     </div>
                 `;
 
                 footer.innerHTML = `
                     <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
-                    <button class="btn" onclick="App.saveLesson()">نشر الدرس الآن</button>
+                    <button class="btn" onclick="App.saveLesson('${lessonId}')">${isEdit ? 'حفظ التعديلات' : 'نشر الدرس الآن'}</button>
                 `;
 
                 this.openModal('generic-modal');
@@ -2223,50 +2502,45 @@
             toggleLessonVideoFields() {
                 const type = document.getElementById('les-video-type').value;
                 const container = document.getElementById('video-url-container');
-                const label = document.getElementById('video-url-label');
-                const input = document.getElementById('les-video-url');
-                if (!container || !label || !input) return;
-
-                if (type === 'none') {
-                    container.style.display = 'none';
-                } else if (type === 'youtube') {
-                    container.style.display = 'block';
-                    label.textContent = 'رابط التضمين من يوتيوب (مثال: https://www.youtube.com/embed/xxxxxx)';
-                    input.placeholder = 'https://www.youtube.com/embed/dQw4w9WgXcQ';
-                } else if (type === 'direct') {
-                    container.style.display = 'block';
-                    label.textContent = 'رابط الفيديو المباشر (MP4/WebM)';
-                    input.placeholder = 'https://example.com/lecture.mp4';
-                }
+                if (!container) return;
+                container.style.display = type === 'none' ? 'none' : 'block';
             },
 
-            async saveLesson() {
+            async saveLesson(lessonId) {
                 const title = document.getElementById('les-title').value.trim();
+                const grade = document.getElementById('les-grade').value;
                 const content = document.getElementById('les-content').value.trim();
                 const videoType = document.getElementById('les-video-type').value;
                 const videoUrl = document.getElementById('les-video-url') ? document.getElementById('les-video-url').value.trim() : '';
 
                 if (!title || !content) {
-                    this.showToast('يرجى كتابة العنوان ومحتوى الشرح أولاً.', 'danger');
-                    return;
-                }
-
-                if (videoType !== 'none' && !videoUrl) {
-                    this.showToast('الرجاء إدخال رابط الفيديو المرفق.', 'danger');
+                    this.showToast('يرجى تعبئة كافة الحقول المطلوبة.', 'danger');
                     return;
                 }
 
                 const teacher = AppState.getCurrentUser();
                 const lessons = await DBService.get('lessons');
-                lessons.push({
-                    id: 'les_' + Date.now(),
-                    title, content, videoType, videoUrl,
-                    teacherId: teacher.id // ربط الدرس بالمعلم لضمان الخصوصية
-                });
-                await DBService.set('lessons', lessons);
 
+                if (lessonId && lessonId !== 'null') {
+                    const idx = lessons.findIndex(l => l.id === lessonId);
+                    if (idx !== -1) {
+                        lessons[idx].title = title;
+                        lessons[idx].grade = grade;
+                        lessons[idx].content = content;
+                        lessons[idx].videoType = videoType;
+                        lessons[idx].videoUrl = videoUrl;
+                    }
+                } else {
+                    lessons.push({
+                        id: 'les_' + Date.now(),
+                        title, grade, content, videoType, videoUrl,
+                        teacherId: teacher.id
+                    });
+                }
+
+                await DBService.set('lessons', lessons);
                 this.closeModal('generic-modal');
-                this.showToast('تم نشر الدرس الجديد بنجاح.', 'success');
+                this.showToast('تم حفظ الدرس التعليمي بنجاح.', 'success');
                 this.renderTeacherLessons(document.getElementById('app-rendered-view'));
             },
 
@@ -2278,6 +2552,7 @@
                 this.renderTeacherLessons(document.getElementById('app-rendered-view'));
             },
 
+            // إدارة بنك الاختبارات والتقييمات
             async renderTeacherAssignments(view) {
                 const teacher = AppState.getCurrentUser();
                 const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === teacher.id);
@@ -2287,41 +2562,83 @@
                     listHTML += `
                         <div style="background-color:var(--bg-white); border:1px solid var(--border-color); padding:16px; border-radius:var(--radius-lg); box-shadow:var(--shadow-premium); margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                             <div>
-                                <h4 style="margin-bottom:4px; font-weight:800; font-size:1rem;">${a.title}</h4>
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <h4 style="font-weight:800; font-size:1rem; margin:0;">${a.title}</h4>
+                                    <span class="badge badge-accent">${a.grade || 'عام / كل الفصول'}</span>
+                                </div>
                                 <span style="font-size:0.8rem; color:var(--text-muted);">الوقت: ${a.duration} دقيقة | عدد الأسئلة: ${a.questions.length}</span>
                             </div>
-                            <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.deleteAssignment('${a.id}')">حذف</button>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.openEditAssignmentModal('${a.id}')">تعديل</button>
+                                <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.8rem; border-color:var(--danger); color:var(--danger);" onclick="App.deleteAssignment('${a.id}')">حذف</button>
+                            </div>
                         </div>
                     `;
                 });
 
                 view.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
-                        <h4 style="font-size:1.1rem;">قائمة اختباراتك النشطة</h4>
+                        <h4 style="font-size:1.1rem;">قائمة التقييمات والاختبارات التفاعلية</h4>
                         <button class="btn" style="width:auto;" onclick="App.openCreateAssignmentModal()">
-                            <i class="fa-solid fa-plus"></i> إنشاء اختبار تفاعلي
+                            <i class="fa-solid fa-plus"></i> إنشاء اختبار جديد
                         </button>
                     </div>
                     <div>
-                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد اختبارات مدرجة بملفك بعد.</p>'}
+                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد اختبارات مضافة لملفك بعد.</p>'}
                     </div>
                 `;
             },
 
             openCreateAssignmentModal() {
+                this.openEditAssignmentModal(null);
+            },
+
+            async openEditAssignmentModal(assignId = null) {
                 const body = document.getElementById('generic-modal-body');
                 const footer = document.getElementById('generic-modal-footer');
                 if (!body || !footer) return;
-                document.getElementById('generic-modal-title').textContent = 'إنشاء اختبار تفاعلي جديد';
+
+                let isEdit = assignId !== null;
+                let assign = { title: '', duration: 10, grade: 'عام', questions: [] };
+
+                if (isEdit) {
+                    const assigns = await DBService.get('assignments');
+                    assign = assigns.find(a => a.id === assignId) || assign;
+                }
+
+                document.getElementById('generic-modal-title').textContent = isEdit ? 'تعديل الاختبار والأسئلة' : 'إنشاء اختبار تفاعلي جديد';
+                this.tempQuestionImages = {}; // تصفير الذاكرة المؤقتة للصور
+
+                const gradeOptions = `
+                    <option value="عام" ${assign.grade === 'عام' ? 'selected' : ''}>عام / جميع الصفوف</option>
+                    <option value="الصف الأول" ${assign.grade === 'الصف الأول' ? 'selected' : ''}>الصف الأول</option>
+                    <option value="الصف الثاني" ${assign.grade === 'الصف الثاني' ? 'selected' : ''}>الصف الثاني</option>
+                    <option value="الصف الثالث" ${assign.grade === 'الصف الثالث' ? 'selected' : ''}>الصف الثالث</option>
+                    <option value="الصف الرابع" ${assign.grade === 'الصف الرابع' ? 'selected' : ''}>الصف الرابع</option>
+                    <option value="الصف الخامس" ${assign.grade === 'الصف الخامس' ? 'selected' : ''}>الصف الخامس</option>
+                    <option value="الصف السادس" ${assign.grade === 'الصف السادس' ? 'selected' : ''}>الصف السادس</option>
+                    <option value="الصف السابع" ${assign.grade === 'الصف السابع' ? 'selected' : ''}>الصف السابع</option>
+                    <option value="الصف الثامن" ${assign.grade === 'الصف الثامن' ? 'selected' : ''}>الصف الثامن</option>
+                    <option value="الصف التاسع" ${assign.grade === 'الصف التاسع' ? 'selected' : ''}>الصف التاسع</option>
+                    <option value="الصف العاشر" ${assign.grade === 'الصف العاشر' ? 'selected' : ''}>الصف العاشر</option>
+                    <option value="الصف الحادي عشر" ${assign.grade === 'الصف الحادي عشر' ? 'selected' : ''}>الصف الحادي عشر</option>
+                    <option value="الصف الثاني عشر" ${assign.grade === 'الصف الثاني عشر' ? 'selected' : ''}>الصف الثاني عشر</option>
+                `;
 
                 body.innerHTML = `
                     <div class="form-group">
                         <label>عنوان الاختبار</label>
-                        <input type="text" id="assign-title" class="form-control" placeholder="مثال: الاختبار الفصلي الأول">
+                        <input type="text" id="assign-title" class="form-control" placeholder="مثال: الاختبار الفصلي الأول" value="${assign.title}">
                     </div>
                     <div class="form-group">
-                        <label>زمن الاختبار التنازلي بالدقائق</label>
-                        <input type="number" id="assign-duration" class="form-control" value="10" min="1" required>
+                        <label>الصف المستهدف</label>
+                        <select id="assign-grade" class="form-control">
+                            ${gradeOptions}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>زمن الاختبار بالدقائق</label>
+                        <input type="number" id="assign-duration" class="form-control" value="${assign.duration}" min="1" required>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                         <h4 style="font-size:0.85rem;">الأسئلة والخيارات:</h4>
@@ -2334,51 +2651,109 @@
 
                 footer.innerHTML = `
                     <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
-                    <button class="btn" onclick="App.saveDynamicAssignment()">حفظ ونشر التقييم</button>
+                    <button class="btn" onclick="App.saveDynamicAssignment('${assignId}')">حفظ ونشر التقييم</button>
                 `;
 
                 this.openModal('generic-modal');
-                this.addDynamicQuestionBlock();
+
+                if (isEdit && assign.questions.length > 0) {
+                    assign.questions.forEach((q, idx) => {
+                        this.addDynamicQuestionBlock(q, idx);
+                    });
+                } else {
+                    this.addDynamicQuestionBlock();
+                }
             },
 
-            addDynamicQuestionBlock() {
+            addDynamicQuestionBlock(qData = null, forcedIdx = null) {
                 const container = document.getElementById('dynamic-questions-builder');
                 if (!container) return;
-                const qIndex = container.children.length;
+                
+                const qIndex = forcedIdx !== null ? forcedIdx : container.children.length;
                 const qNum = qIndex + 1;
 
                 const qBlock = document.createElement('div');
                 qBlock.className = 'dynamic-question-block';
                 qBlock.setAttribute('data-q-index', qIndex);
                 qBlock.style = 'border: 1px solid var(--border-color); padding: 15px; border-radius: var(--radius-md); margin-bottom: 15px; background-color: var(--bg-light);';
+
+                let qText = qData ? qData.text : '';
+                let qPoints = qData ? qData.points : 10;
+                let qImg = qData ? qData.image : '';
+
+                let optionsHTML = '';
+                if (qData && qData.options) {
+                    qData.options.forEach((opt, oIdx) => {
+                        const isCorrect = opt === qData.correct;
+                        optionsHTML += `
+                            <div class="option-row" style="display:flex; gap:8px; margin-bottom:8px;">
+                                <input type="text" class="form-control opt-value-input" placeholder="خيار الإجابة" value="${opt}" required>
+                                <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-blue);" ${isCorrect ? 'checked' : ''}>
+                            </div>
+                        `;
+                    });
+                } else {
+                    optionsHTML = `
+                        <div class="option-row" style="display:flex; gap:8px; margin-bottom:8px;">
+                            <input type="text" class="form-control opt-value-input" placeholder="الخيار الأول" required>
+                            <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-blue);" checked>
+                        </div>
+                        <div class="option-row" style="display:flex; gap:8px; margin-bottom:8px;">
+                            <input type="text" class="form-control opt-value-input" placeholder="الخيار الثاني" required>
+                            <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-blue);">
+                        </div>
+                    `;
+                }
+
                 qBlock.innerHTML = `
                     <div class="form-group" style="margin-bottom:12px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <label style="margin:0; font-size:0.8rem;">السؤال ${qNum}</label>
                             <button type="button" class="btn btn-secondary" style="width:auto; padding:2px 6px; font-size:0.7rem;" onclick="this.parentElement.parentElement.parentElement.remove()">حذف</button>
                         </div>
-                        <input type="text" class="form-control q-text-input" placeholder="مثال: ما قيمة الزاوية س؟" required>
+                        <input type="text" class="form-control q-text-input" placeholder="مثال: ما حاصل ضرب القيمة؟" value="${qText}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>إرفاق صورة توضيحية للسؤال (اختياري)</label>
+                        <input type="file" accept="image/*" class="form-control" onchange="App.handleQuestionImage(this, ${qIndex})">
+                        <div id="q-img-preview-box-${qIndex}" style="margin-top:10px; display:${qImg ? 'block' : 'none'};">
+                            <img id="q-img-preview-tag-${qIndex}" src="${qImg}" style="max-height:140px; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+                        </div>
                     </div>
                     <div class="form-group" style="margin-bottom:12px;">
-                        <label>الدرجة المخصصة</label>
-                        <input type="number" class="form-control q-points-input" value="10" min="1" required style="max-width:120px;">
+                        <label>الدرجة المخصصة للسؤال</label>
+                        <input type="number" class="form-control q-points-input" value="${qPoints}" min="1" required style="max-width:120px;">
                     </div>
                     <div class="options-container" id="opts-container-${qIndex}">
-                        <label style="font-weight:700; font-size:0.8rem; display:block; margin-bottom:6px;">خيارات الإجابة (حدد الخيار الصحيح بالزر الدائري):</label>
-                        <div class="option-row" style="display:flex; gap:8px; margin-bottom:8px;">
-                            <input type="text" class="form-control opt-value-input" placeholder="الخيار الأول" required>
-                            <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-yellow);" checked>
-                        </div>
-                        <div class="option-row" style="display:flex; gap:8px; margin-bottom:8px;">
-                            <input type="text" class="form-control opt-value-input" placeholder="الخيار الثاني" required>
-                            <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-yellow);">
-                        </div>
+                        <label style="font-weight:700; font-size:0.8rem; display:block; margin-bottom:6px;">الخيارات المتاحة للاختبار:</label>
+                        ${optionsHTML}
                     </div>
                     <button type="button" class="btn btn-secondary" style="width:auto; padding:4px 8px; font-size:0.75rem; margin-top:5px;" onclick="App.addOptionToQuestion(${qIndex})">
                         <i class="fa-solid fa-plus-circle"></i> إضافة خيار آخر
                     </button>
                 `;
                 container.appendChild(qBlock);
+                if (qImg) {
+                    this.tempQuestionImages[qIndex] = qImg;
+                }
+            },
+
+            handleQuestionImage(input, index) {
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const base64Data = e.target.result;
+                        this.tempQuestionImages[index] = base64Data;
+                        const previewBox = document.getElementById(`q-img-preview-box-${index}`);
+                        const previewTag = document.getElementById(`q-img-preview-tag-${index}`);
+                        if (previewBox && previewTag) {
+                            previewTag.src = base64Data;
+                            previewBox.style.display = 'block';
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
             },
 
             addOptionToQuestion(qIndex) {
@@ -2389,18 +2764,19 @@
                 optRow.style = 'display:flex; gap:8px; margin-bottom:8px; align-items:center;';
                 optRow.innerHTML = `
                     <input type="text" class="form-control opt-value-input" placeholder="خيار إضافي" required>
-                    <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-yellow);">
+                    <input type="radio" name="correct_radio_${qIndex}" class="correct-radio" style="width:18px; accent-color:var(--primary-blue);">
                     <button type="button" class="btn btn-secondary" style="width:auto; padding:5px; font-size:0.75rem;" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>
                 `;
                 container.appendChild(optRow);
             },
 
-            async saveDynamicAssignment() {
+            async saveDynamicAssignment(assignId) {
                 const title = document.getElementById('assign-title').value.trim();
                 const duration = parseInt(document.getElementById('assign-duration').value) || 10;
+                const grade = document.getElementById('assign-grade').value;
 
                 if (!title) {
-                    this.showToast('يرجى كتابة عنوان الاختبار.', 'danger');
+                    this.showToast('يرجى تحديد عنوان الاختبار الدراسي.', 'danger');
                     return;
                 }
 
@@ -2411,6 +2787,7 @@
                     const text = block.querySelector('.q-text-input').value.trim();
                     const points = parseInt(block.querySelector('.q-points-input').value) || 10;
                     const optRows = block.querySelectorAll('.option-row');
+                    const imgData = this.tempQuestionImages[qIdx] || '';
                     
                     const options = [];
                     let correctValue = '';
@@ -2432,29 +2809,42 @@
                             text,
                             options,
                             correct: correctValue,
-                            points
+                            points,
+                            image: imgData
                         });
                     }
                 });
 
                 if (questions.length === 0) {
-                    this.showToast('يرجى إنشاء سؤال واحد على الأقل مع تحديد الخيار الصحيح.', 'danger');
+                    this.showToast('يرجى إضافة سؤال واحد على الأقل يحتوي على الخيارات المناسبة.', 'danger');
                     return;
                 }
 
                 const teacher = AppState.getCurrentUser();
                 const assigns = await DBService.get('assignments');
-                assigns.push({
-                    id: 'assign_' + Date.now(),
-                    title,
-                    duration,
-                    questions,
-                    teacherId: teacher.id // حصر وربط الاختبار بالمعلم لمنع تداخل الخصوصية
-                });
-                await DBService.set('assignments', assigns);
 
+                if (assignId && assignId !== 'null') {
+                    const idx = assigns.findIndex(a => a.id === assignId);
+                    if (idx !== -1) {
+                        assigns[idx].title = title;
+                        assigns[idx].duration = duration;
+                        assigns[idx].grade = grade;
+                        assigns[idx].questions = questions;
+                    }
+                } else {
+                    assigns.push({
+                        id: 'assign_' + Date.now(),
+                        title,
+                        duration,
+                        grade,
+                        questions,
+                        teacherId: teacher.id
+                    });
+                }
+
+                await DBService.set('assignments', assigns);
                 this.closeModal('generic-modal');
-                this.showToast('تم نشر الاختبار التفاعلي بنجاح.', 'success');
+                this.showToast('تم نشر وحفظ الاختبار الدراسي التفاعلي بنجاح.', 'success');
                 this.renderTeacherAssignments(document.getElementById('app-rendered-view'));
             },
 
@@ -2462,15 +2852,15 @@
                 let assigns = await DBService.get('assignments');
                 assigns = assigns.filter(a => a.id !== id);
                 await DBService.set('assignments', assigns);
-                this.showToast('تم حذف الواجب المختار.', 'warning');
+                this.showToast('تم حذف التقييم المختار.', 'warning');
                 this.renderTeacherAssignments(document.getElementById('app-rendered-view'));
             },
 
+            // تصحيح ورصد الدرجات لطلاب المعلم
             async renderTeacherGrading(view) {
                 const teacher = AppState.getCurrentUser();
                 const subs = await DBService.get('submissions') || [];
                 
-                // عزل تصفية الدرجات ورصدها للطلاب التابعين للمعلم الحالي فقط
                 const students = (await DBService.get('users')).filter(u => u.role === 'student' && u.teacherId === teacher.id);
                 const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === teacher.id);
 
@@ -2486,7 +2876,7 @@
                                 <td>${assign.title}</td>
                                 <td><span class="badge ${s.graded ? 'badge-success' : 'badge-warning'}">${s.graded ? s.score + '%' : 'بانتظار الرصد'}</span></td>
                                 <td>
-                                    <button class="btn" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.openGradeSubmissionModal('${s.id}')">رصد الدرجة</button>
+                                    <button class="btn" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.openGradeSubmissionModal('${s.id}')">رصد / تعديل الدرجة</button>
                                 </td>
                             </tr>
                         `;
@@ -2500,8 +2890,8 @@
                                 <tr>
                                     <th>اسم الطالب</th>
                                     <th>اسم الواجب</th>
-                                    <th>الدرجة</th>
-                                    <th>الإجراء</th>
+                                    <th>الدرجة المرصودة</th>
+                                    <th>التحكم ورصد النتيجة</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -2535,7 +2925,7 @@
 
                 footer.innerHTML = `
                     <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إلغاء</button>
-                    <button class="btn" onclick="App.submitGrading('${sub.id}')">اعتماد الدرجة</button>
+                    <button class="btn" onclick="App.submitGrading('${sub.id}')">رصد الدرجة الآن</button>
                 `;
 
                 this.openModal('generic-modal');
@@ -2546,7 +2936,7 @@
                 const feedback = document.getElementById('grade-feedback').value.trim();
 
                 if (isNaN(score) || score < 0 || score > 100) {
-                    this.showToast('يرجى تحديد درجة صحيحة بين 0 و 100.', 'danger');
+                    this.showToast('يرجى رصد درجة صحيحة مابين 0 و 100.', 'danger');
                     return;
                 }
 
@@ -2562,24 +2952,21 @@
                 notifs.push({
                     id: 'not_' + Date.now(),
                     userId: sub.studentId,
-                    text: `تم رصد درجة تقييمك بنجاح! النتيجة النهائية: ${score}%`,
+                    text: `تم رصد نتيجتك بنجاح! النتيجة النهائية: ${score}%`,
                     read: false
                 });
                 await DBService.set('notifications', notifs);
 
                 this.closeModal('generic-modal');
-                this.showToast('تم رصد الدرجة بنجاح وإرسال الإخطار لطلابك المعنيين.', 'success');
+                this.showToast('تم رصد الدرجة بنجاح وإرسال الإخطار لطلابك.', 'success');
                 this.renderTeacherGrading(document.getElementById('app-rendered-view'));
             },
 
-            // ==========================================
-            // نظام المراسلات المطور للمعلم (Inbox)
-            // ==========================================
+            // صندوق المراسلات والرسائل (Inbox) لجميع الأطراف المربوطة
             async renderTeacherMessages(view) {
                 const teacher = AppState.getCurrentUser();
                 const users = await DBService.get('users');
                 
-                // عزل جهات الاتصال بحيث لا يرى المعلم سوى طلابه النشطين وأولياء أمورهم لضمان الخصوصية والسرية
                 const chatableUsers = users.filter(u => u.id !== teacher.id && u.teacherId === teacher.id && u.status === 'approved');
 
                 let userCardsHTML = '';
@@ -2600,15 +2987,15 @@
                 view.innerHTML = `
                     <div class="inbox-layout">
                         <div class="inbox-sidebar">
-                            <div class="inbox-sidebar-header"><i class="fa-solid fa-address-book"></i> طلابك وأولياء أمورهم</div>
+                            <div class="inbox-sidebar-header"><i class="fa-solid fa-address-book"></i> قائمتك التعليمية</div>
                             <div class="inbox-user-list">
-                                ${userCardsHTML || '<div style="text-align:center; padding:20px; font-size:0.8rem; color:var(--text-muted);">لا يوجد جهات اتصال مسجلة تحت إشرافك حالياً.</div>'}
+                                ${userCardsHTML || '<div style="text-align:center; padding:20px; font-size:0.8rem; color:var(--text-muted);">لا يوجد جهات اتصال نشطة تحت إشرافك حالياً.</div>'}
                             </div>
                         </div>
                         <div class="inbox-chat-area" id="inbox-chat-container">
                             <div class="inbox-chat-placeholder">
                                 <i class="fa-solid fa-comments"></i>
-                                <span>الرجاء اختيار مستخدم من القائمة الجانبية لبدء المحادثة معه</span>
+                                <span>الرجاء تحديد جهة اتصال لبدء الدردشة الآمنة الفورية</span>
                             </div>
                         </div>
                     </div>
@@ -2649,7 +3036,7 @@
 
                 container.innerHTML = `
                     <div style="padding:15px; border-bottom:1px solid var(--border-color); font-weight:bold; font-size:0.95rem; display:flex; align-items:center; gap:8px; background-color: var(--bg-light);">
-                        <i class="fa-solid fa-circle-user" style="color:var(--primary-yellow); font-size:1.2rem;"></i> ${name}
+                        <i class="fa-solid fa-circle-user" style="color:var(--primary-blue); font-size:1.2rem;"></i> ${name}
                     </div>
                     <div class="chat-history" id="chat-history-box" style="flex:1;">
                         ${msgsHTML || '<p style="color:var(--text-muted); text-align:center; margin-top:100px; font-size:0.85rem;">لم تبدأ المراسلة بعد، اكتب رسالتك الأولى بالأسفل.</p>'}
@@ -2689,16 +3076,17 @@
                 input.value = '';
                 
                 this.selectInboxUser(recipientId, recipientName);
-                this.showToast('تم إرسال رسالتك.', 'success');
+                this.showToast('تم إرسال رسالتك الفورية.', 'success');
             },
 
 
             // ==========================================
-            // 6. واجهات لوحة التحكم الخاصة بالطالب
+            // 7. لوحة تحكم ومستويات الطالب (Student)
             // ==========================================
 
             async renderStudentHome(view, student) {
-                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
+                // تصفية المحتوى الموجه للصف المحدد للطالب
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId && (a.grade === 'عام' || a.grade === student.grade));
                 const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id && assigns.some(a => a.id === s.assignmentId));
                 const gradedSubs = subs.filter(s => s.graded);
 
@@ -2711,21 +3099,21 @@
                     <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-info">
-                                <span style="font-size:0.8rem; color:var(--text-muted);">معدل إنجاز المقررات</span>
-                                <div class="stat-value" style="color:var(--primary-yellow);">${student.progress || 0}%</div>
+                                <span style="font-size:0.8rem; color:var(--text-muted);">نسبة إنهاء مناهجك</span>
+                                <div class="stat-value" style="color:var(--primary-blue);">${student.progress || 0}%</div>
                             </div>
                             <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-info">
-                                <span style="font-size:0.8rem; color:var(--text-muted);">المهام المنجزة</span>
+                                <span style="font-size:0.8rem; color:var(--text-muted);">الامتحانات المنجزة</span>
                                 <div class="stat-value">${subs.length}</div>
                             </div>
                             <div class="stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-info">
-                                <span style="font-size:0.8rem; color:var(--text-muted);">متوسط التحصيل الدراسي</span>
+                                <span style="font-size:0.8rem; color:var(--text-muted);">المعدل التحصيلي</span>
                                 <div class="stat-value" style="color:var(--success);">${avgGrade}%</div>
                             </div>
                             <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
@@ -2733,41 +3121,44 @@
                     </div>
 
                     <div class="chart-container">
-                        <h4 style="margin-bottom:15px; font-size:1rem; font-weight:800;">تتبع مستواك التعليمي والتحصيلي البياني</h4>
+                        <h4 style="margin-bottom:15px; font-size:1rem; font-weight:800;">تتبع مستواك البياني التحصيلي</h4>
                         <div class="chart-canvas-wrapper">
                             <canvas id="student-home-canvas" class="chart-canvas" width="600" height="240"></canvas>
                         </div>
                     </div>
                 `;
 
-                const labels = subs.map((s, idx) => `المهمة ${idx + 1}`);
+                const labels = subs.map((s, idx) => `الواجب ${idx + 1}`);
                 const dataPoints = subs.map(s => s.score || 0);
 
                 setTimeout(() => {
-                    this.drawCanvasChart('student-home-canvas', labels.length > 0 ? labels : ['مسارك الدراسي'], dataPoints.length > 0 ? dataPoints : [0], '#10B981');
+                    this.drawCanvasChart('student-home-canvas', labels.length > 0 ? labels : ['مستوى صفك الحالي'], dataPoints.length > 0 ? dataPoints : [0], '#1E40AF');
                 }, 50);
             },
 
             async renderStudentLessons(view) {
                 const student = AppState.getCurrentUser();
                 
-                // عزل الدروس تلافياً لتداخل خصوصية المواد بين المعلمين
-                const lessons = (await DBService.get('lessons')).filter(l => l.teacherId === student.teacherId);
+                // عزل كامل للدروس للتأكد من ملاءمتها للصف الدراسي للطالب حصراً
+                const lessons = (await DBService.get('lessons')).filter(l => l.teacherId === student.teacherId && (l.grade === 'عام' || l.grade === student.grade));
 
                 let listHTML = '';
                 lessons.forEach(l => {
                     listHTML += `
                         <div style="background-color:var(--bg-white); border:1px solid var(--border-color); padding:20px; border-radius:var(--radius-lg); box-shadow:var(--shadow-premium); margin-bottom:15px;">
-                            <h4 style="margin-bottom:6px; font-weight:800; font-size:1.1rem;">${l.title}</h4>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <h4 style="font-weight:800; font-size:1.1rem; margin:0;">${l.title}</h4>
+                                <span class="badge badge-accent">${l.grade || 'كل الصفوف (عام)'}</span>
+                            </div>
                             <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:12px;">${l.content.substring(0, 160)}...</p>
-                            <button class="btn" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.openViewLessonModal('${l.id}')">فتح ودراسة الدرس</button>
+                            <button class="btn" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.openViewLessonModal('${l.id}')">فتح ودراسة المنهج</button>
                         </div>
                     `;
                 });
 
                 view.innerHTML = `
                     <div style="display:flex; flex-direction:column;">
-                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد دروس مدرجة من قبل معلمك المشرف حالياً.</p>'}
+                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد دروس أو مناهج معتمدة لصفك الدراسي حالياً.</p>'}
                     </div>
                 `;
             },
@@ -2794,7 +3185,6 @@
                             <div class="video-container">
                                 <video controls>
                                     <source src="${lesson.videoUrl}" type="video/mp4">
-                                    تصفحك لا يدعم مشغلات الفيديو الافتراضية.
                                 </video>
                             </div>
                         `;
@@ -2808,7 +3198,7 @@
 
                 footer.innerHTML = `
                     <button class="btn btn-secondary" onclick="App.closeModal('generic-modal')">إغلاق</button>
-                    <button class="btn" style="background-color:var(--success); color:#ffffff; box-shadow:none;" onclick="App.markLessonCompleted()">تأكيد الدراسة ✓</button>
+                    <button class="btn" style="background-color:var(--success); color:#ffffff; box-shadow:none;" onclick="App.markLessonCompleted()">تأكيد وإتمام قراءة الدرس ✓</button>
                 `;
 
                 this.openModal('generic-modal');
@@ -2818,7 +3208,7 @@
                 const user = AppState.getCurrentUser();
                 let currentProgress = user.progress || 0;
                 if (currentProgress < 100) {
-                    currentProgress = Math.min(100, currentProgress + 15);
+                    currentProgress = Math.min(100, currentProgress + 10);
                 }
 
                 user.progress = currentProgress;
@@ -2832,13 +3222,13 @@
                 }
 
                 this.closeModal('generic-modal');
-                this.showToast('تم تسجيل تقدمك بنجاح وتحديث نسبة الإنجاز.', 'success');
+                this.showToast('تم تسجيل تقدمك الدراسي بنجاح.', 'success');
                 this.renderActiveView();
             },
 
             async renderStudentAssignments(view, student) {
-                // تصفية وعزل الواجبات الموجهة من معلم هذا الطالب فقط لضمان الخصوصية والسرية
-                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
+                // تصفية وعزل التقييمات وفقاً للصف الدراسي للطالب
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId && (a.grade === 'عام' || a.grade === student.grade));
                 const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id);
 
                 let listHTML = '';
@@ -2851,8 +3241,8 @@
                                 <span style="font-size:0.8rem; color:var(--text-muted);">زمن الاختبار: ${a.duration} دقيقة | عدد الأسئلة: ${a.questions.length}</span>
                             </div>
                             <div style="display:flex; gap:10px; align-items:center;">
-                                ${hasSubmitted ? `<span class="badge badge-success">تم التقديم (${hasSubmitted.score}%)</span>` : '<span class="badge badge-warning">مطلوب للحل</span>'}
-                                ${hasSubmitted ? '' : `<button class="btn" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.startInteractiveExamMode('${a.id}')">دخول الاختبار</button>`}
+                                ${hasSubmitted ? `<span class="badge badge-success">تم تقديمه بنتيجة (${hasSubmitted.score}%)</span>` : '<span class="badge badge-warning">جاهز للبدء والحل</span>'}
+                                ${hasSubmitted ? '' : `<button class="btn" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="App.startInteractiveExamMode('${a.id}')">بدء الاختبار</button>`}
                             </div>
                         </div>
                     `;
@@ -2860,13 +3250,139 @@
 
                 view.innerHTML = `
                     <div id="student-assignments-container" style="display:flex; flex-direction:column;">
-                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد أي مهام واجبة مرسلة من معلمك حالياً.</p>'}
+                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد أي مهام واجبة مرسلة لصفك الدراسي حالياً.</p>'}
                     </div>
                 `;
             },
 
+            // محاكي وبيئة الاختبار التفاعلية للطلاب
+            async startInteractiveExamMode(assignId) {
+                const assigns = await DBService.get('assignments');
+                const assign = assigns.find(a => a.id === assignId);
+                if (!assign) return;
+
+                const container = document.getElementById('student-assignments-container');
+                if (!container) return;
+
+                let currentQIndex = 0;
+                let answers = {};
+                let timeLeft = assign.duration * 60;
+
+                const renderQuestion = () => {
+                    const q = assign.questions[currentQIndex];
+                    let imgHTML = q.image ? `<div style="margin-bottom:15px; text-align:center;"><img src="${q.image}" style="max-height:180px; border-radius:var(--radius-md); border:1px solid var(--border-color);"></div>` : '';
+
+                    let optionsHTML = '';
+                    q.options.forEach((opt, idx) => {
+                        const isSelected = answers[currentQIndex] === opt;
+                        optionsHTML += `
+                            <label class="exam-option-label ${isSelected ? 'selected-option' : ''}">
+                                <input type="radio" name="exam_q_opt" value="${opt}" ${isSelected ? 'checked' : ''} onchange="App.saveExamAnswer(${currentQIndex}, '${opt}')">
+                                <span>${opt}</span>
+                            </label>
+                        `;
+                    });
+
+                    container.innerHTML = `
+                        <div class="exam-mode-card">
+                            <div class="exam-header">
+                                <h3 style="font-weight:800; font-size:1.15rem; color:var(--primary-blue);"><i class="fa-solid fa-file-signature"></i> ${assign.title}</h3>
+                                <div class="exam-timer" id="exam-timer-display"><i class="fa-solid fa-hourglass-half"></i> 00:00</div>
+                                <span class="exam-progress">السؤال ${currentQIndex + 1} من ${assign.questions.length}</span>
+                            </div>
+                            <div class="exam-question-box">
+                                ${imgHTML}
+                                <div class="exam-question-text">${q.text}</div>
+                                <div class="exam-options-grid">${optionsHTML}</div>
+                            </div>
+                            <div class="exam-footer">
+                                <button class="btn btn-secondary" onclick="App.prevExamQuestion()" ${currentQIndex === 0 ? 'disabled' : ''}>السابق</button>
+                                ${currentQIndex === assign.questions.length - 1 
+                                    ? `<button class="btn" style="background-color:var(--success);" onclick="App.submitExamSubmission('${assign.id}')">تسجيل وإرسال الإجابات</button>` 
+                                    : `<button class="btn" onclick="App.nextExamQuestion()">التالي</button>`}
+                            </div>
+                        </div>
+                    `;
+                };
+
+                App.saveExamAnswer = (idx, value) => {
+                    answers[idx] = value;
+                    const labels = document.querySelectorAll('.exam-option-label');
+                    labels.forEach(l => l.classList.remove('selected-option'));
+                    const selectedInput = document.querySelector(`input[value="${value}"]`);
+                    if (selectedInput) {
+                        selectedInput.parentElement.classList.add('selected-option');
+                    }
+                };
+
+                App.nextExamQuestion = () => {
+                    if (currentQIndex < assign.questions.length - 1) {
+                        currentQIndex++;
+                        renderQuestion();
+                    }
+                };
+
+                App.prevExamQuestion = () => {
+                    if (currentQIndex > 0) {
+                        currentQIndex--;
+                        renderQuestion();
+                    }
+                };
+
+                App.submitExamSubmission = async (aId) => {
+                    clearInterval(App.examTimerInterval);
+                    
+                    let correctCount = 0;
+                    let totalPoints = 0;
+                    assign.questions.forEach((q, idx) => {
+                        totalPoints += q.points;
+                        if (answers[idx] === q.correct) {
+                            correctCount += q.points;
+                        }
+                    });
+
+                    let finalScorePercentage = totalPoints > 0 ? Math.round((correctCount / totalPoints) * 100) : 0;
+                    const student = AppState.getCurrentUser();
+
+                    const subs = await DBService.get('submissions') || [];
+                    subs.push({
+                        id: 'sub_' + Date.now(),
+                        assignmentId: aId,
+                        studentId: student.id,
+                        score: finalScorePercentage,
+                        graded: true,
+                        feedback: 'تصحيح تلقائي من النظام بنجاح'
+                    });
+
+                    await DBService.set('submissions', subs);
+                    App.showToast('تم إرسال وحفظ نتيجتك التفاعلية بالمنصة.', 'success');
+                    App.navigateTo('assignments');
+                };
+
+                // محاكي الميقاتي التنازلي التلقائي
+                const startTimer = () => {
+                    App.examTimerInterval = setInterval(() => {
+                        let mins = Math.floor(timeLeft / 60);
+                        let secs = timeLeft % 60;
+                        const display = document.getElementById('exam-timer-display');
+                        if (display) {
+                            display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                        }
+                        
+                        if (timeLeft <= 0) {
+                            clearInterval(App.examTimerInterval);
+                            App.showToast('انتهى الوقت المحدد للاختبار! سيتم تسليم إجابتك تلقائياً.', 'danger');
+                            App.submitExamSubmission(assign.id);
+                        }
+                        timeLeft--;
+                    }, 1000);
+                };
+
+                renderQuestion();
+                startTimer();
+            },
+
             async renderStudentGrades(view, student) {
-                // حصر درجات الواجبات التابعة لمعلم الطالب الحالي فقط
                 const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
                 const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id && assigns.some(a => a.id === s.assignmentId));
 
@@ -2878,7 +3394,7 @@
                             <tr>
                                 <td><strong>${assign.title}</strong></td>
                                 <td><span class="badge badge-success">${s.score}%</span></td>
-                                <td>${s.feedback || 'أداء مستقر'}</td>
+                                <td>${s.feedback || 'أداء رائع ومميز'}</td>
                             </tr>
                         `;
                     }
@@ -2889,13 +3405,13 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>اسم التقييم</th>
-                                    <th>الدرجة النهائية</th>
-                                    <th>ملاحظات المعلم</th>
+                                    <th>اسم التقييم والاختبار</th>
+                                    <th>النسبة المئوية المرصودة</th>
+                                    <th>ملاحظات وتوجيهات معلم المادة</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${rows || '<tr><td colspan="3" style="text-align:center;">لم يتم تسجيل أي درجات لك حالياً.</td></tr>'}
+                                ${rows || '<tr><td colspan="3" style="text-align:center;">لم يتم تسجيل أو رصد أي درجات لملفك حالياً.</td></tr>'}
                             </tbody>
                         </table>
                     </div>
@@ -2910,11 +3426,11 @@
 
 
             // ==========================================
-            // 7. واجهات لوحة التحكم الخاصة بولي الأمر
+            // 8. واجهات لوحة تحكم ولي الأمر (Parent)
             // ==========================================
 
             async renderParentHome(view, student) {
-                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId && (a.grade === 'عام' || a.grade === student.grade));
                 const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id && assigns.some(a => a.id === s.assignmentId));
 
                 let listHTML = '';
@@ -2925,7 +3441,7 @@
                             <div class="stat-card" style="margin-bottom:10px; border-right:4px solid ${s.score >= 80 ? 'var(--success)' : 'var(--warning)'};">
                                 <div class="stat-info">
                                     <h4 style="font-size:0.9rem; margin-bottom:4px; font-weight:800;">${assign.title}</h4>
-                                    <span style="font-size:0.8rem; color:var(--text-muted);">النتيجة: ${s.score}% - الملاحظات: ${s.feedback || 'أداء مستقر'}</span>
+                                    <span style="font-size:0.8rem; color:var(--text-muted);">النتيجة الإجمالية: ${s.score}% | التوجيهات: ${s.feedback || 'أداء ثابت'}</span>
                                 </div>
                             </div>
                         `;
@@ -2937,33 +3453,33 @@
                         <div class="stat-card">
                             <div class="stat-info">
                                 <span style="font-size:0.8rem; color:var(--text-muted);">الابن الخاضع للمتابعة</span>
-                                <div class="stat-value" style="font-size:1.1rem; color:var(--primary-yellow);">${student.name}</div>
+                                <div class="stat-value" style="font-size:1.1rem; color:var(--primary-blue);">${student.name}</div>
                             </div>
                             <div class="stat-icon"><i class="fa-solid fa-child"></i></div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-info">
-                                <span style="font-size:0.8rem; color:var(--text-muted);">معدل الإنجاز والمقررات</span>
+                                <span style="font-size:0.8rem; color:var(--text-muted);">معدل إنجازه الحالي</span>
                                 <div class="stat-value">${student.progress || 0}%</div>
                             </div>
                             <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
                         </div>
                     </div>
 
-                    <h4 style="margin-bottom:12px; font-size:1rem;">أوراق التقييم الأخيرة وحلول الابن</h4>
+                    <h4 style="margin-bottom:12px; font-size:1rem;">التقييمات الأخيرة وحلول الابن:</h4>
                     <div style="display:flex; flex-direction:column; gap:8px;">
-                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد واجبات تم حلها مسبقاً.</p>'}
+                        ${listHTML || '<p style="color:var(--text-muted); text-align:center;">لا توجد تقييمات تم حلها للابن حتى الآن.</p>'}
                     </div>
                 `;
             },
 
             async renderParentReports(view, student) {
-                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId);
+                const assigns = (await DBService.get('assignments')).filter(a => a.teacherId === student.teacherId && (a.grade === 'عام' || a.grade === student.grade));
                 const subs = (await DBService.get('submissions') || []).filter(s => s.studentId === student.id && assigns.some(a => a.id === s.assignmentId));
 
                 view.innerHTML = `
                     <div class="chart-container">
-                        <h4 style="margin-bottom:15px; font-size:1rem;">منحنى تتبع مستويات وتحصيل الابن البياني</h4>
+                        <h4 style="margin-bottom:15px; font-size:1rem;">تتبع أداء وتحصيل الابن الدراسي</h4>
                         <div class="chart-canvas-wrapper">
                             <canvas id="parent-home-canvas" class="chart-canvas" width="600" height="240"></canvas>
                         </div>
@@ -2974,7 +3490,7 @@
                 const dataPoints = subs.map(s => s.score || 0);
 
                 setTimeout(() => {
-                    this.drawCanvasChart('parent-home-canvas', labels.length > 0 ? labels : ['بداية المراقبة'], dataPoints.length > 0 ? dataPoints : [0], '#D97706');
+                    this.drawCanvasChart('parent-home-canvas', labels.length > 0 ? labels : ['سجل الأداء المبدئي'], dataPoints.length > 0 ? dataPoints : [0], '#1E40AF');
                 }, 50);
             },
 
@@ -3001,12 +3517,12 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>تاريخ اليوم الدراسي</th>
-                                    <th>حالة الحضور</th>
+                                    <th>تاريخ الحصة/اليوم</th>
+                                    <th>حالة الحضور والغياب للابن</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${rows || '<tr><td colspan="2" style="text-align:center;">لا توجد بيانات غياب وحضور مسجلة حالياً.</td></tr>'}
+                                ${rows || '<tr><td colspan="2" style="text-align:center;">لا يوجد أي بيانات حضور مسجلة حالياً لملف الابن.</td></tr>'}
                             </tbody>
                         </table>
                     </div>
@@ -3024,7 +3540,7 @@
 
 
             // ==========================================
-            // 8. غرف المراسلات والتواصل الفوري
+            // 9. غرف المراسلات والتواصل الفوري
             // ==========================================
 
             async renderChatInterface(view, myId, recipientId, recipientName) {
@@ -3047,13 +3563,13 @@
 
                 view.innerHTML = `
                     <div style="background-color:var(--bg-white); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:20px; box-shadow:var(--shadow-premium);">
-                        <h4 style="margin-bottom:12px; font-size:1rem;"><i class="fa-solid fa-circle-user" style="color:var(--primary-yellow); margin-left:5px;"></i> تواصل مباشر مع: ${recipientName}</h4>
+                        <h4 style="margin-bottom:12px; font-size:1rem;"><i class="fa-solid fa-circle-user" style="color:var(--primary-blue); margin-left:5px;"></i> تواصل مباشر مع: ${recipientName}</h4>
                         <div class="chat-layout">
                             <div class="chat-history" id="chat-history-box">
                                 ${msgsHTML || '<p style="color:var(--text-muted); text-align:center; margin-top:100px; font-size:0.85rem;">لم تبدأ المراسلة بعد، اكتب رسالتك الأولى بالأسفل.</p>'}
                             </div>
                             <div class="chat-bar">
-                                <input type="text" id="chat-input-field" class="chat-input" placeholder="اكتب سؤالك أو استفسارك هنا..." onkeypress="if(event.key === 'Enter') App.sendDirectMessage('${myId}', '${recipientId}')">
+                                <input type="text" id="chat-input-field" class="chat-input" placeholder="اكتب استفسارك هنا..." onkeypress="if(event.key === 'Enter') App.sendDirectMessage('${myId}', '${recipientId}')">
                                 <button class="chat-btn" onclick="App.sendDirectMessage('${myId}', '${recipientId}')">إرسال</button>
                             </div>
                         </div>
@@ -3073,7 +3589,6 @@
                 if (!text) return;
 
                 const allMsgs = await DBService.get('messages') || [];
-                
                 const now = new Date();
                 const timeString = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
 
@@ -3089,12 +3604,12 @@
                 await DBService.set('messages', allMsgs);
                 input.value = '';
                 this.renderActiveView();
-                this.showToast('تم إرسال رسالتك بنجاح.', 'success');
+                this.showToast('تم إرسال الرسالة بنجاح.', 'success');
             },
 
 
             // ==========================================
-            // 9. محرك الرسم البياني باستخدام Canvas النقي
+            // 10. محرك الرسم البياني النقي (Canvas Engine)
             // ==========================================
 
             drawCanvasChart(canvasId, labels, dataPoints, color) {
@@ -3106,7 +3621,6 @@
                 canvas.width = wrapper.clientWidth || 600;
 
                 const ctx = canvas.getContext('2d');
-                
                 const width = canvas.width;
                 const height = canvas.height;
                 ctx.clearRect(0, 0, width, height);
@@ -3134,7 +3648,7 @@
                 ctx.stroke();
 
                 if (dataPoints.length === 0) return;
-                const maxVal = 100;
+                const maxVal = Math.max(...dataPoints, 100);
                 const xStep = chartWidth / (dataPoints.length - 1 || 1);
 
                 ctx.strokeStyle = color;
@@ -3163,7 +3677,7 @@
 
                     ctx.fillStyle = '#0F172A';
                     ctx.font = 'bold 11px IBM Plex Sans Arabic, Tajawal';
-                    ctx.fillText(`${val}%`, x - 12, y - 10);
+                    ctx.fillText(`${val}`, x - 8, y - 10);
 
                     if (labels[index]) {
                         ctx.fillStyle = '#475569';
@@ -3182,19 +3696,18 @@
                 const anns = await DBService.get('announcements') || [];
                 const notifs = await DBService.get('notifications') || [];
                 
-                // تصفية وعزل الإشعارات والإعلانات المخصصة لمعلم هذا المستخدم فقط
                 const myTeacherId = user.role === 'teacher' ? user.id : user.teacherId;
                 const myAnns = anns.filter(a => a.teacherId === myTeacherId);
                 const myNotifs = notifs.filter(n => n.userId === user.id);
 
                 if (myAnns.length === 0 && myNotifs.length === 0) {
-                    container.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-size:0.85rem; padding:15px;">لا توجد تنبيهات حالياً.</p>';
+                    container.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-size:0.85rem; padding:15px;">لا توجد أي تنبيهات واردة حالياً.</p>';
                 } else {
                     if (myAnns.length > 0) {
-                        container.innerHTML += '<h4 style="margin-bottom:10px; color:var(--primary-yellow); font-size:0.9rem;">إعلانات معلمك المشرف:</h4>';
+                        container.innerHTML += '<h4 style="margin-bottom:10px; color:var(--primary-blue); font-size:0.9rem;">إعلانات وتوجيهات الإدارة والمعلمين:</h4>';
                         myAnns.forEach(a => {
                             container.innerHTML += `
-                                <div style="padding:12px; border:1px solid var(--border-color); border-radius:var(--radius-md); margin-bottom:10px; background-color:var(--primary-yellow-light);">
+                                <div style="padding:12px; border:1px solid var(--border-color); border-radius:var(--radius-md); margin-bottom:10px; background-color:var(--primary-blue-light);">
                                     <p style="font-weight:700; font-size:0.85rem; color:var(--text-dark);">${a.text}</p>
                                     <small style="color:var(--text-muted); display:block; margin-top:5px;"><i class="fa-solid fa-clock"></i> التاريخ: ${a.date}</small>
                                 </div>
@@ -3203,7 +3716,7 @@
                     }
 
                     if (myNotifs.length > 0) {
-                        container.innerHTML += '<h4 style="margin-top:15px; margin-bottom:10px; color:var(--success); font-size:0.9rem;">إشعاراتك الخاصة:</h4>';
+                        container.innerHTML += '<h4 style="margin-top:15px; margin-bottom:10px; color:var(--success); font-size:0.9rem;">إشعارات نظامك الخاصة:</h4>';
                         myNotifs.forEach(n => {
                             container.innerHTML += `
                                 <div style="padding:10px; border:1px solid var(--border-color); border-radius:var(--radius-md); margin-bottom:8px; background-color: var(--bg-light);">
